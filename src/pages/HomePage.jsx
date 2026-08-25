@@ -267,16 +267,32 @@ export default function HomePage({ onNavigate }) {
 
     // Touch support for mobile & touchpad gestures
     let touchStartY = 0;
+    let touchStartX = 0;
     const handleTouchStart = (e) => {
-      touchStartY = e.touches[0].clientY;
+      if (e.touches && e.touches.length > 0) {
+        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
+      }
     };
     const handleTouchMove = (e) => {
-      const touchY = e.touches[0].clientY;
-      const diffY = touchStartY - touchY;
-      touchStartY = touchY;
+      if (!e.touches || e.touches.length === 0) return;
 
-      // Higher sensitivity when scrolling back UP (diffY < 0) so scroll-up never gets stuck
-      const multiplier = diffY < 0 ? 0.0012 : 0.0007;
+      const touchY = e.touches[0].clientY;
+      const touchX = e.touches[0].clientX;
+
+      const diffY = touchStartY - touchY;
+      const diffX = touchStartX - touchX;
+
+      touchStartY = touchY;
+      touchStartX = touchX;
+
+      // If user is swiping horizontally (e.g. scrolling card galleries), ignore main vertical page progress
+      if (Math.abs(diffX) > Math.abs(diffY) * 1.2) {
+        return;
+      }
+
+      // Smooth, natural touch sensitivity tuned for mobile displays
+      const multiplier = diffY < 0 ? 0.00025 : 0.00020;
       updateTargetProgress(diffY * multiplier);
     };
 
@@ -295,12 +311,12 @@ export default function HomePage({ onNavigate }) {
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('keydown', handleKeyDown);
 
-    // Responsive 0.20 Lerp Loop (4X faster physics, zero lag, smooth motion)
+    // Responsive Lerp Loop (Silky smooth motion, butter physics)
     let animId;
     const renderLoop = () => {
       const diff = targetProgressRef.current - currentProgressRef.current;
       if (Math.abs(diff) > 0.00003) {
-        currentProgressRef.current += diff * 0.20;
+        currentProgressRef.current += diff * 0.14;
         setProgress(currentProgressRef.current);
       }
       animId = requestAnimationFrame(renderLoop);
