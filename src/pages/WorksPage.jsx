@@ -432,7 +432,9 @@ export default function WorksPage({ onNavigate }) {
       )}
 
       {/* Footer */}
-      <Footer onNavigate={onNavigate} />
+      <div className="relative z-10 w-full shrink-0 bg-white">
+        <Footer onNavigate={onNavigate} />
+      </div>
     </div>
   );
 }

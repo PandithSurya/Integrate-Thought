@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import KineticGrid from '../components/KineticGrid';
 import { Footer } from '../components/Footer';
+import { StackedTestimonials } from '../components/StackedTestimonials';
 import {
   Mail,
   Phone,
@@ -841,6 +842,11 @@ export default function ContactPage({ onNavigate }) {
               Call Us Now
             </a>
           </div>
+        </section>
+
+        {/* Verified Feedback / Stacked Testimonials Section */}
+        <section className="w-full bg-white py-12 sm:py-16 border-t border-slate-200/80 my-12">
+          <StackedTestimonials />
         </section>
 
         {/* Universal Footer */}

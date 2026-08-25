@@ -7,6 +7,7 @@ import { ProcessStageCard } from '../components/ui/process-stage-card';
 import { Footer } from '../components/Footer';
 import Navbar from '../components/Navbar';
 import CompanyMarqueeBanner from '../components/CompanyMarqueeBanner';
+import { StackedTestimonials } from '../components/StackedTestimonials';
 import { submitInquiry } from '../utils/inquiryHandler';
 
 const SERVICES_DATA = [
@@ -244,6 +245,7 @@ export default function HomePage({ onNavigate }) {
   const targetProgressRef = useRef(0);
   const currentProgressRef = useRef(0);
   const [progress, setProgress] = useState(0);
+  const [selectedStageModal, setSelectedStageModal] = useState(null);
 
   const heroText = "Integrate Thought";
 
@@ -252,12 +254,14 @@ export default function HomePage({ onNavigate }) {
   };
 
   useEffect(() => {
-    // Lock body scrolling so viewport is 100% fixed
+    // Lock body scrolling and disable pull-to-refresh overscroll reload
     document.body.style.overflow = 'hidden';
+    document.body.style.overscrollBehavior = 'none';
+    document.documentElement.style.overscrollBehavior = 'none';
 
-    // Wheel event handler updating target progress (reduced for smooth slow scrolling)
+    // Wheel event handler updating target progress
     const handleWheel = (e) => {
-      const sensitivity = 0.00015;
+      const sensitivity = e.deltaY < 0 ? 0.00045 : 0.00035;
       updateTargetProgress(e.deltaY * sensitivity);
     };
 
@@ -268,18 +272,21 @@ export default function HomePage({ onNavigate }) {
     };
     const handleTouchMove = (e) => {
       const touchY = e.touches[0].clientY;
-      const deltaY = (touchStartY - touchY) * 1.5;
+      const diffY = touchStartY - touchY;
       touchStartY = touchY;
-      updateTargetProgress(deltaY * 0.0003);
+
+      // Higher sensitivity when scrolling back UP (diffY < 0) so scroll-up never gets stuck
+      const multiplier = diffY < 0 ? 0.0012 : 0.0007;
+      updateTargetProgress(diffY * multiplier);
     };
 
     // Keyboard arrow navigation
     const handleKeyDown = (e) => {
-      if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-        updateTargetProgress(0.03);
+        updateTargetProgress(0.04);
       } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        updateTargetProgress(-0.03);
+        updateTargetProgress(-0.04);
       }
     };
 
@@ -288,12 +295,12 @@ export default function HomePage({ onNavigate }) {
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('keydown', handleKeyDown);
 
-    // Silky Smooth requestAnimationFrame Physics Lerp Loop (0.05 lerp for weighted luxury feel)
+    // Responsive 0.20 Lerp Loop (4X faster physics, zero lag, smooth motion)
     let animId;
     const renderLoop = () => {
       const diff = targetProgressRef.current - currentProgressRef.current;
-      if (Math.abs(diff) > 0.00005) {
-        currentProgressRef.current += diff * 0.05;
+      if (Math.abs(diff) > 0.00003) {
+        currentProgressRef.current += diff * 0.20;
         setProgress(currentProgressRef.current);
       }
       animId = requestAnimationFrame(renderLoop);
@@ -302,6 +309,8 @@ export default function HomePage({ onNavigate }) {
 
     return () => {
       document.body.style.overflow = 'auto';
+      document.body.style.overscrollBehavior = 'auto';
+      document.documentElement.style.overscrollBehavior = 'auto';
       cancelAnimationFrame(animId);
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('touchstart', handleTouchStart);
@@ -334,14 +343,16 @@ export default function HomePage({ onNavigate }) {
 
   // Continuous page transitions between sections
   const phase4TransitionP = Math.min(1, Math.max(0, (progress - 0.44) / 0.08));
-  const phase5TransitionP = Math.min(1, Math.max(0, (progress - 0.64) / 0.08));
-  const phase6TransitionP = Math.min(1, Math.max(0, (progress - 0.84) / 0.08));
+  const phase5TransitionP = Math.min(1, Math.max(0, (progress - 0.58) / 0.08));
+  const phase6TransitionP = Math.min(1, Math.max(0, (progress - 0.70) / 0.10));
+  const tailProgress = Math.min(1, Math.max(0, (progress - 0.80) / 0.20));
 
   // Natural document continuation translates (Section N pushes Section N-1 UP)
   const whiteSheetTranslateY = (1 - whiteSheetP) * 100 - phase4TransitionP * 100;
   const worksSheetTranslateY = (1 - phase4TransitionP) * 100 - phase5TransitionP * 100;
   const processSheetTranslateY = (1 - phase5TransitionP) * 100 - phase6TransitionP * 100;
-  const contactSheetTranslateY = (1 - phase6TransitionP) * 100;
+  const tailSheetTranslateY = (1 - phase6TransitionP) * 100;
+  const tailInnerTranslateY = -tailProgress * 16;
 
   // Phase 6 internal momentum scroll: disabled in favor of natural overflow-y-auto scrolling for 100% form accessibility
   const contactContentTranslateY = 0;
@@ -655,8 +666,57 @@ export default function HomePage({ onNavigate }) {
           </div>
         </div>
 
-        {/* RADIAL SCROLL GALLERY COMPONENT */}
-        <div className="w-full flex-1 relative flex items-center justify-center my-auto overflow-visible">
+        {/* MOBILE VIEW: SIDE-BY-SIDE HORIZONTAL CARDS TRACK (sm:hidden) */}
+        <div className="w-full flex sm:hidden overflow-x-auto gap-4 px-4 py-4 snap-x snap-mandatory no-scrollbar my-auto">
+          {WORKS_DATA.map((work) => (
+            <div
+              key={work.id}
+              onClick={() => {
+                if (work.url && work.url !== '#') {
+                  window.open(work.url, '_blank');
+                } else {
+                  alert(`Exploring case study for "${work.title}".`);
+                }
+              }}
+              className="shrink-0 snap-center w-[250px] h-[330px] relative overflow-hidden rounded-2xl bg-slate-900 border border-slate-700/50 shadow-xl active:scale-95 transition-transform"
+            >
+              <div className="absolute inset-0 overflow-hidden">
+                <img
+                  src={work.img}
+                  alt={work.title}
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent opacity-85" />
+              </div>
+
+              <div className="absolute inset-0 flex flex-col justify-between p-4">
+                <div className="flex justify-between items-start gap-2">
+                  <span className="px-2.5 py-1 rounded-full bg-white/90 text-slate-950 font-bold text-[10px] shadow-md font-sans">
+                    {work.cat}
+                  </span>
+                  <div className="w-7 h-7 rounded-full bg-[#1e3a8a] text-white flex items-center justify-center shadow-lg">
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <h3 className="text-base font-extrabold leading-tight text-white font-sans drop-shadow-md">
+                    {work.title}
+                  </h3>
+                  <div>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 text-slate-950 font-bold text-[10px] shadow-lg font-sans">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#3b70b2]" />
+                      <span>Detailed Case Study</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* DESKTOP VIEW: RADIAL SCROLL GALLERY COMPONENT (hidden sm:flex) */}
+        <div className="hidden sm:flex w-full flex-1 relative items-center justify-center my-auto overflow-visible">
           <RadialScrollGallery
             className="!min-h-[360px] sm:!min-h-[460px] md:!min-h-[520px] w-full overflow-visible"
             baseRadius={380}
@@ -726,6 +786,10 @@ export default function HomePage({ onNavigate }) {
 
 
       {/* ================================================================== */}
+      {/* ================================================================== */}
+      {/* ================================================================== */}
+      {/* ================================================================== */}
+      {/* ================================================================== */}
       {/* PHASE 5: OUR PROCESS SECTION                                      */}
       {/* ================================================================== */}
       <div
@@ -734,11 +798,11 @@ export default function HomePage({ onNavigate }) {
           pointerEvents: phase5TransitionP < 0.05 ? 'none' : 'auto',
           willChange: 'transform',
         }}
-        className="absolute inset-0 w-full h-full bg-[#f5f3ec] text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.3)] flex flex-col items-center justify-between p-6 sm:p-10 z-40 pointer-events-auto overflow-hidden"
+        className="absolute inset-0 w-full h-full bg-[#f5f3ec] text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center p-4 sm:p-8 z-40 pointer-events-auto overflow-hidden select-none"
       >
-        <div className="w-full flex flex-col items-center justify-between min-h-full">
-          {/* Header - Offset pt-24 sm:pt-28 to avoid Navbar overlap */}
-          <div className="w-full max-w-5xl mx-auto text-center pt-24 sm:pt-28 shrink-0">
+        <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center min-h-full py-8 sm:py-12 my-auto">
+          {/* Header - Centered with balanced top clearance below Navbar */}
+          <div className="w-full max-w-5xl mx-auto text-center shrink-0 mb-6 sm:mb-8">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-300/80 text-slate-700 text-[11px] font-mono font-semibold tracking-widest uppercase mb-3 shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-slate-900 animate-pulse" />
               <span>05 / OUR PROCESS</span>
@@ -751,247 +815,103 @@ export default function HomePage({ onNavigate }) {
             </p>
           </div>
 
-          {/* 4 PROCESS CARDS GRID (EXACT MATCH TO REFERENCE SCREENSHOTS) */}
-          <div className="w-full max-w-6xl mx-auto my-auto py-10">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center items-stretch">
-              {PROCESS_STAGES_DATA.map((stage, idx) => (
+          {/* MOBILE VIEW: SIDE-BY-SIDE HORIZONTAL SWIPEABLE TRACK (sm:hidden) */}
+          <div className="w-full flex sm:hidden overflow-x-auto gap-4 px-4 py-2 snap-x snap-mandatory no-scrollbar my-auto">
+            {PROCESS_STAGES_DATA.map((stage, idx) => (
+              <div key={stage.id} className="shrink-0 snap-center w-[250px]">
                 <ProcessStageCard
-                  key={stage.id}
                   stage={stage}
                   index={idx}
+                  onSelect={(stg) => setSelectedStageModal(stg)}
                 />
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
+
+          {/* DESKTOP VIEW: 4-COLUMN GRID (hidden sm:grid) */}
+          <div className="hidden sm:grid w-full max-w-6xl mx-auto py-2 sm:py-4 grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 justify-items-center items-stretch">
+            {PROCESS_STAGES_DATA.map((stage, idx) => (
+              <ProcessStageCard
+                key={stage.id}
+                stage={stage}
+                index={idx}
+                onSelect={(stg) => setSelectedStageModal(stg)}
+              />
+            ))}
           </div>
         </div>
       </div>
 
-
       {/* ================================================================== */}
-      {/* PHASE 6: CONTACT SECTION ("Ready to build what's next?") & FOOTER */}
+      {/* PHASE 6: TESTIMONIALS, MARQUEE BANNER & TAIL FOOTER SHEET        */}
       {/* ================================================================== */}
       <div
         style={{
-          transform: `translate3d(0, ${contactSheetTranslateY}vh, 0)`,
+          transform: `translate3d(0, ${tailSheetTranslateY}vh, 0)`,
           pointerEvents: phase6TransitionP < 0.05 ? 'none' : 'auto',
           willChange: 'transform',
         }}
-        className="absolute inset-0 w-full h-full bg-[#050505] text-white shadow-[0_-30px_80px_rgba(0,0,0,0.5)] flex flex-col justify-between pt-20 sm:pt-28 px-4 sm:px-8 pb-0 z-50 pointer-events-auto overflow-y-auto"
+        className="absolute inset-0 w-full h-full bg-white text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.15)] flex flex-col justify-between z-50 pointer-events-auto overflow-hidden select-none"
       >
-        {/* Dedicated KineticGrid Canvas inside Phase 6 to block wheel cards */}
-        <div className="absolute inset-0 pointer-events-auto z-0">
-          <KineticGrid
-            spacing={64}
-            dotSize={2}
-            gridStroke={1}
-            gridOpacity={0.22}
-            repulsion={5}
-            radius={60}
-            stiffness={1.0}
-            damping={0.09}
-            clickIntensity={30}
-            trailIntensity={0.15}
-            backgroundColor="#050505"
-            lineColor="#262626"
-            dotColor="#404040"
-          />
-        </div>
-
         <div
           style={{
-            transform: `translate3d(0, ${contactContentTranslateY}px, 0)`,
+            transform: `translate3d(0, ${tailInnerTranslateY}vh, 0)`,
             willChange: 'transform',
           }}
-          className="relative z-10 w-full flex flex-col items-center justify-between min-h-full transition-transform duration-75"
+          className="w-full flex flex-col justify-between min-h-full"
         >
-          {/* Main 2-Column Contact Container */}
-          <div className="w-full max-w-7xl mx-auto pt-2 sm:pt-4 pb-12 grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 items-center">
-            
-            {/* Left Column: Let's Talk Heading + Direct Contact Card */}
-            <div className="lg:col-span-6 flex flex-col justify-center space-y-6 sm:space-y-8">
-              <div>
-                <span className="inline-block px-3.5 py-1 rounded-full bg-white/5 border border-white/15 text-slate-300 font-mono text-[11px] font-semibold tracking-widest uppercase mb-4">
-                  LET'S TALK
-                </span>
-                <h2 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.05] font-sans">
-                  Ready to build <br />
-                  what's next?
-                </h2>
-                <p className="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed font-normal max-w-md font-sans">
-                  Tell us what you're trying to solve. We'll help you figure out what to build.
-                </p>
-              </div>
-
-              {/* DIRECT CONTACT CARD */}
-              <div className="rounded-2xl bg-[#080d1a]/90 border border-white/10 p-6 sm:p-8 backdrop-blur-md space-y-5 shadow-2xl">
-                <div className="text-[11px] font-mono font-bold tracking-[0.25em] text-slate-400 uppercase">
-                  DIRECT CONTACT
-                </div>
-
-                <div className="space-y-1">
-                  <div className="text-xs text-slate-400 font-mono font-semibold">EMAIL</div>
-                  <a
-                    href="mailto:integratethought24@gmail.com"
-                    className="text-sm sm:text-base font-semibold text-white hover:text-slate-300 transition-colors block"
-                  >
-                    integratethought24@gmail.com
-                  </a>
-                </div>
-
-                <div className="space-y-1">
-                  <div className="text-xs text-slate-400 font-mono font-semibold">PHONE</div>
-                  <div className="text-sm sm:text-base font-semibold text-white flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                    <a href="tel:+916303148269" className="hover:text-slate-300 transition-colors">
-                      +91 6303148269
-                    </a>
-                    <span className="hidden sm:inline text-slate-500">/</span>
-                    <a href="tel:+919010221396" className="hover:text-slate-300 transition-colors">
-                      +91 9010221396
-                    </a>
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <div className="text-xs text-slate-400 font-mono font-semibold">LOCATION</div>
-                  <a
-                    href="https://maps.app.goo.gl/Tte7zY8BP4cEaBa79"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm sm:text-base font-semibold text-white hover:text-blue-400 transition-colors leading-relaxed block"
-                  >
-                    Vijaylakshmi complex, 4-105/11/C, Sriramnagar Colony, Turkayamjal, Hyderabad, Telangana 501510 ↗
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Dark Glassmorphic Form Card */}
-            <div className="lg:col-span-6">
-              <div className="bg-[#0a0d1a]/90 rounded-3xl p-6 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.6)] text-white border border-slate-800/80 backdrop-blur-xl">
-                <form
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    const form = e.target;
-                    const firstName = form.querySelector('input[placeholder="John"]')?.value || '';
-                    const lastName = form.querySelector('input[placeholder="Doe"]')?.value || '';
-                    const email = form.querySelector('input[type="email"]')?.value || '';
-                    const topic = form.querySelector('select')?.value || 'General Inquiry';
-                    const message = form.querySelector('textarea')?.value || '';
-
-                    await submitInquiry({
-                      type: 'Homepage Contact Form',
-                      name: `${firstName} ${lastName}`.trim(),
-                      email,
-                      courseOrService: topic,
-                      message,
-                    });
-
-                    alert("Thank you! Your message has been submitted to Integrate Thought. Our engineering lead will contact you shortly.");
-                    form.reset();
-                  }}
-                  className="space-y-4 sm:space-y-5"
-                >
-                  {/* First Name & Last Name */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">
-                        FIRST NAME *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="John"
-                        className="w-full px-4 py-3 rounded-xl border border-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm text-white bg-slate-900/90 placeholder-slate-500 transition-all font-sans"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">
-                        LAST NAME *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="Doe"
-                        className="w-full px-4 py-3 rounded-xl border border-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm text-white bg-slate-900/90 placeholder-slate-500 transition-all font-sans"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Company Email */}
-                  <div className="space-y-1.5">
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">
-                      COMPANY EMAIL *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="john@company.com"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm text-white bg-slate-900/90 placeholder-slate-500 transition-all font-sans"
-                    />
-                  </div>
-
-                  {/* Topic Select Dropdown */}
-                  <div className="space-y-1.5">
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">
-                      TOPIC *
-                    </label>
-                    <select
-                      required
-                      defaultValue=""
-                      className="w-full px-4 py-3 rounded-xl border border-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm text-white bg-slate-900 transition-all cursor-pointer font-sans"
-                    >
-                      <option value="" disabled className="bg-slate-900 text-slate-400">Please select</option>
-                      <option value="web-dev" className="bg-slate-900 text-white">Web Design & Development</option>
-                      <option value="ai-automation" className="bg-slate-900 text-white">AI Automation & Workflows</option>
-                      <option value="rag-systems" className="bg-slate-900 text-white">RAG Knowledge Systems</option>
-                      <option value="ai-agents" className="bg-slate-900 text-white">Custom Autonomous AI Agents</option>
-                      <option value="consulting" className="bg-slate-900 text-white">Consultation & Strategy</option>
-                    </select>
-                  </div>
-
-                  {/* Message Textarea */}
-                  <div className="space-y-1.5">
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">
-                      MESSAGE *
-                    </label>
-                    <textarea
-                      required
-                      rows={4}
-                      placeholder="Briefly describe what you're trying to solve..."
-                      className="w-full px-4 py-3 rounded-xl border border-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm text-white bg-slate-900/90 placeholder-slate-500 transition-all resize-none font-sans"
-                    />
-                  </div>
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    className="w-full py-4 rounded-full bg-white hover:bg-slate-200 text-slate-950 font-bold text-sm tracking-wide transition-all duration-300 shadow-xl active:scale-98 cursor-pointer mt-2 font-sans"
-                  >
-                    Submit
-                  </button>
-
-                  {/* Terms & Privacy disclaimer */}
-                  <p className="text-xs text-slate-400 text-center font-sans pt-1">
-                    By pressing submit you agree to the Integrate Thought <a href="#" className="underline hover:text-white">terms of service</a> and <a href="#" className="underline hover:text-white">privacy policy</a>
-                  </p>
-                </form>
-              </div>
-            </div>
-
+          {/* 1. STACKED TESTIMONIALS CAROUSEL */}
+          <div className="w-full pt-4 sm:pt-8 pb-2">
+            <StackedTestimonials />
           </div>
 
-          {/* INFINITE SCROLLING COMPANY TEXT MARQUEE BANNER (ABOVE FOOTER) */}
-          <div className="w-full shrink-0 z-30">
+          {/* 2. MARQUEE BANNER & FOOTER (CONNECTED FLUSH AT BOTTOM WITH ZERO GAP) */}
+          <div className="w-full shrink-0 bg-white text-slate-900">
             <CompanyMarqueeBanner />
-          </div>
-
-          {/* NATURAL DOCUMENT TAIL FOOTER COMPONENT FLUSH AT BOTTOM */}
-          <div className="w-full shrink-0 bg-white pb-6">
             <Footer onNavigate={onNavigate} />
           </div>
         </div>
       </div>
+
+      {/* Operating Standards Detail Modal */}
+      {selectedStageModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn select-none font-sans">
+          <div className="relative w-full max-w-lg bg-white rounded-3xl p-6 sm:p-8 text-slate-900 shadow-2xl border border-slate-200">
+            <button
+              onClick={() => setSelectedStageModal(null)}
+              className="absolute top-5 right-5 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors font-bold text-sm"
+            >
+              ✕
+            </button>
+            <div className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest mb-2">
+              OPERATING STANDARD 0{selectedStageModal.id}
+            </div>
+            <h3 className="text-2xl font-black text-slate-950 mb-3 font-sans">
+              {selectedStageModal.title}
+            </h3>
+            <div className="w-full h-48 rounded-2xl overflow-hidden mb-4">
+              <img
+                src={selectedStageModal.image}
+                alt={selectedStageModal.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <p className="text-slate-600 text-sm leading-relaxed mb-6 font-sans">
+              {selectedStageModal.description}
+            </p>
+            <div className="p-4 rounded-2xl bg-blue-50/80 border border-blue-100 text-blue-900 text-xs font-medium space-y-1 font-sans">
+              <div className="font-bold uppercase tracking-wider text-[11px] text-blue-700">Verification Standard</div>
+              <div>Audited annually by Integrate Thought Quality &amp; Compliance Team.</div>
+            </div>
+            <button
+              onClick={() => setSelectedStageModal(null)}
+              className="w-full mt-6 py-3 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs tracking-wide transition-all shadow-md cursor-pointer font-sans"
+            >
+              Close Operating Standard
+            </button>
+          </div>
+        </div>
+      )}
 
     </div>
   );
