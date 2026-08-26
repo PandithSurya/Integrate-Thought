@@ -217,9 +217,9 @@ export default function HomePage({ onNavigate }) {
         return;
       }
 
-      // Controlled touch multiplier: smooth, gradual progress per touch drag
+      // Balanced touch multiplier: effortless, natural progress per touch drag
       const isMobile = window.innerWidth < 640;
-      const multiplier = isMobile ? (diffY < 0 ? 0.00035 : 0.00028) : (diffY < 0 ? 0.00045 : 0.00035);
+      const multiplier = isMobile ? (diffY < 0 ? 0.00055 : 0.00048) : (diffY < 0 ? 0.00045 : 0.00035);
       updateTargetProgress(diffY * multiplier);
     };
 
@@ -238,14 +238,14 @@ export default function HomePage({ onNavigate }) {
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('keydown', handleKeyDown);
 
-    // Controlled Lerp Loop (Smooth 60fps physics, avoiding micro re-renders on mobile)
+    // Responsive Lerp Loop (Crisp 60fps physics)
     let animId;
     const renderLoop = () => {
       const diff = targetProgressRef.current - currentProgressRef.current;
       const isMobile = window.innerWidth < 640;
-      const threshold = isMobile ? 0.00015 : 0.00003;
+      const threshold = isMobile ? 0.00008 : 0.00003;
       if (Math.abs(diff) > threshold) {
-        const lerpFactor = isMobile ? 0.12 : 0.14;
+        const lerpFactor = isMobile ? 0.17 : 0.14;
         currentProgressRef.current += diff * lerpFactor;
         setProgress(currentProgressRef.current);
       }
