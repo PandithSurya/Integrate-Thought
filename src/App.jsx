@@ -25,6 +25,8 @@ export default function App() {
       return <WorksPage onNavigate={handleNavigate} />;
     case 'courses':
     case 'training':
+    case 'it school':
+    case 'itschool':
       return <CoursesPage onNavigate={handleNavigate} />;
     case 'contact':
       return <ContactPage onNavigate={handleNavigate} />;

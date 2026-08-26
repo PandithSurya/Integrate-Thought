@@ -172,58 +172,65 @@ export default function HomePage({ onNavigate }) {
   const currentProgressRef = useRef(0);
   const [progress, setProgress] = useState(0);
   const [selectedStageModal, setSelectedStageModal] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const heroText = "Integrate Thought";
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 640;
+      setIsMobile(mobile);
+      if (mobile) {
+        document.body.style.overflow = 'auto';
+        document.body.style.overscrollBehavior = 'auto';
+        document.documentElement.style.overscrollBehavior = 'auto';
+      } else {
+        document.body.style.overflow = 'hidden';
+        document.body.style.overscrollBehavior = 'none';
+        document.documentElement.style.overscrollBehavior = 'none';
+      }
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => {
+      document.body.style.overflow = 'auto';
+      document.body.style.overscrollBehavior = 'auto';
+      document.documentElement.style.overscrollBehavior = 'auto';
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
+  const [mobileScrollY, setMobileScrollY] = useState(0);
+
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const handleMobileScroll = () => {
+      setMobileScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleMobileScroll, { passive: true });
+    handleMobileScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleMobileScroll);
+    };
+  }, [isMobile]);
 
   const updateTargetProgress = (delta) => {
     targetProgressRef.current = Math.min(1, Math.max(0, targetProgressRef.current + delta));
   };
 
   useEffect(() => {
-    // Lock body scrolling to enable silky smooth scroll animation timeline
-    document.body.style.overflow = 'hidden';
-    document.body.style.overscrollBehavior = 'none';
-    document.documentElement.style.overscrollBehavior = 'none';
+    if (isMobile) return; // Free flow document scrolling on mobile
 
-    // Wheel event handler updating target progress
     const handleWheel = (e) => {
       const sensitivity = e.deltaY < 0 ? 0.00045 : 0.00035;
       updateTargetProgress(e.deltaY * sensitivity);
     };
 
-    // Touch support tuned specifically for controlled, smooth mobile responsiveness
-    let touchStartY = 0;
-    let touchStartX = 0;
-    const handleTouchStart = (e) => {
-      if (e.touches && e.touches.length > 0) {
-        touchStartY = e.touches[0].clientY;
-        touchStartX = e.touches[0].clientX;
-      }
-    };
-    const handleTouchMove = (e) => {
-      if (!e.touches || e.touches.length === 0) return;
-
-      const touchY = e.touches[0].clientY;
-      const touchX = e.touches[0].clientX;
-
-      const diffY = touchStartY - touchY;
-      const diffX = touchStartX - touchX;
-
-      touchStartY = touchY;
-      touchStartX = touchX;
-
-      // Ignore horizontal swiping over galleries/carousels
-      if (Math.abs(diffX) > Math.abs(diffY) * 1.2) {
-        return;
-      }
-
-      // Balanced touch multiplier: effortless, natural progress per touch drag
-      const isMobile = window.innerWidth < 640;
-      const multiplier = isMobile ? (diffY < 0 ? 0.00055 : 0.00048) : (diffY < 0 ? 0.00045 : 0.00035);
-      updateTargetProgress(diffY * multiplier);
-    };
-
-    // Keyboard arrow navigation
     const handleKeyDown = (e) => {
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
@@ -234,19 +241,13 @@ export default function HomePage({ onNavigate }) {
     };
 
     window.addEventListener('wheel', handleWheel, { passive: true });
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('keydown', handleKeyDown);
 
-    // Responsive Lerp Loop (Crisp 60fps physics)
     let animId;
     const renderLoop = () => {
       const diff = targetProgressRef.current - currentProgressRef.current;
-      const isMobile = window.innerWidth < 640;
-      const threshold = isMobile ? 0.00008 : 0.00003;
-      if (Math.abs(diff) > threshold) {
-        const lerpFactor = isMobile ? 0.17 : 0.14;
-        currentProgressRef.current += diff * lerpFactor;
+      if (Math.abs(diff) > 0.00003) {
+        currentProgressRef.current += diff * 0.14;
         setProgress(currentProgressRef.current);
       }
       animId = requestAnimationFrame(renderLoop);
@@ -254,58 +255,19 @@ export default function HomePage({ onNavigate }) {
     animId = requestAnimationFrame(renderLoop);
 
     return () => {
-      document.body.style.overflow = 'auto';
-      document.body.style.overscrollBehavior = 'auto';
-      document.documentElement.style.overscrollBehavior = 'auto';
       cancelAnimationFrame(animId);
       window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
-
-  // --------------------------------------------------------------------------
-  // OVERLAPPING ANIMATION TIMELINE (0.00 -> 1.00)
-  // --------------------------------------------------------------------------
-
-  // Phase 1: Hero Logo & Title (0.00 -> 0.16)
-  const heroOpacity = Math.max(0, 1 - progress / 0.14);
-  const heroScale = 1 - progress * 0.15;
-  const heroTranslateY = -progress * 90;
-
-  // Phase 2: Our Purpose (0.10 -> 0.28)
-  let purposeOpacity = 0;
-  if (progress >= 0.10 && progress <= 0.18) {
-    purposeOpacity = Math.min(1, (progress - 0.10) / 0.08);
-  } else if (progress > 0.18 && progress <= 0.28) {
-    purposeOpacity = Math.max(0, 1 - (progress - 0.18) / 0.10);
-  }
-  const purposeTranslateY = progress < 0.18 ? Math.max(0, (0.18 - progress) * 120) : 0;
-
-  // Phase 3: White Sheet Overlay for Services Cards Deck (0.20 -> 0.52)
-  const whiteSheetP = Math.min(1, Math.max(0, (progress - 0.20) / 0.08));
-  const deckProgress = Math.min(1, Math.max(0, (progress - 0.26) / 0.24));
-
-  // Continuous page transitions between sections
-  const phase4TransitionP = Math.min(1, Math.max(0, (progress - 0.46) / 0.08));
-  const phase5TransitionP = Math.min(1, Math.max(0, (progress - 0.60) / 0.08));
-  const phase6TransitionP = Math.min(1, Math.max(0, (progress - 0.72) / 0.10));
-  const tailProgress = Math.min(1, Math.max(0, (progress - 0.82) / 0.18));
-
-  // Document continuation translates
-  const whiteSheetTranslateY = (1 - whiteSheetP) * 100 - phase4TransitionP * 100;
-  const worksSheetTranslateY = (1 - phase4TransitionP) * 100 - phase5TransitionP * 100;
-  const processSheetTranslateY = (1 - phase5TransitionP) * 100 - phase6TransitionP * 100;
-  const tailSheetTranslateY = (1 - phase6TransitionP) * 100;
-  const tailInnerTranslateY = -tailProgress * 16;
-
-  // Wheel rotation animation phase: 0.46 -> 0.66
-  const phase4Progress = Math.min(1, Math.max(0, (progress - 0.46) / 0.20));
+  }, [isMobile]);
 
   const handleNavClick = (link) => {
     if (link === 'Home') {
-      targetProgressRef.current = 0;
+      if (isMobile) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        targetProgressRef.current = 0;
+      }
       return;
     }
     if (onNavigate) {
@@ -314,13 +276,339 @@ export default function HomePage({ onNavigate }) {
   };
 
   const handleScrollPrompt = () => {
-    targetProgressRef.current = 0.18;
+    if (isMobile) {
+      const purposeEl = document.getElementById('purpose-section-mobile');
+      if (purposeEl) purposeEl.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      targetProgressRef.current = 0.18;
+    }
   };
 
   const handleProposalClick = (title) => {
     alert(`Initiated project proposal request for "${title}".`);
   };
 
+  // --------------------------------------------------------------------------
+  // DESKTOP OVERLAPPING TIMELINE MATH (0.00 -> 1.00)
+  // --------------------------------------------------------------------------
+  const heroOpacity = Math.max(0, 1 - progress / 0.14);
+  const heroScale = 1 - progress * 0.15;
+  const heroTranslateY = -progress * 90;
+
+  let purposeOpacity = 0;
+  if (progress >= 0.10 && progress <= 0.18) {
+    purposeOpacity = Math.min(1, (progress - 0.10) / 0.08);
+  } else if (progress > 0.18 && progress <= 0.28) {
+    purposeOpacity = Math.max(0, 1 - (progress - 0.18) / 0.10);
+  }
+  const purposeTranslateY = progress < 0.18 ? Math.max(0, (0.18 - progress) * 120) : 0;
+
+  const whiteSheetP = Math.min(1, Math.max(0, (progress - 0.20) / 0.08));
+  const deckProgress = Math.min(1, Math.max(0, (progress - 0.26) / 0.24));
+
+  const phase4TransitionP = Math.min(1, Math.max(0, (progress - 0.46) / 0.08));
+  const phase5TransitionP = Math.min(1, Math.max(0, (progress - 0.60) / 0.08));
+  const phase6TransitionP = Math.min(1, Math.max(0, (progress - 0.72) / 0.10));
+  const tailProgress = Math.min(1, Math.max(0, (progress - 0.82) / 0.18));
+
+  const whiteSheetTranslateY = (1 - whiteSheetP) * 100 - phase4TransitionP * 100;
+  const worksSheetTranslateY = (1 - phase4TransitionP) * 100 - phase5TransitionP * 100;
+  const processSheetTranslateY = (1 - phase5TransitionP) * 100 - phase6TransitionP * 100;
+  const tailSheetTranslateY = (1 - phase6TransitionP) * 100;
+  const tailInnerTranslateY = -tailProgress * 16;
+  const phase4Progress = Math.min(1, Math.max(0, (progress - 0.46) / 0.20));
+
+  // --------------------------------------------------------------------------
+  // MOBILE SCROLL ANIMATIONS MATH FOR FIRST 2 SECTIONS (HERO & PURPOSE)
+  // --------------------------------------------------------------------------
+  // Driven by mobileScrollY over a 220vh scroll container (~1500px)
+  const heroFadeP = Math.min(1, Math.max(0, mobileScrollY / 500));
+  const mobileHeroOpacity = Math.max(0, 1 - heroFadeP * 1.3);
+  const mobileHeroScale = 1 - heroFadeP * 0.15;
+  const mobileHeroTranslateY = -heroFadeP * 90;
+
+  let mobilePurposeOpacity = 0;
+  let mobilePurposeTranslateY = 0;
+
+  if (mobileScrollY < 450) {
+    mobilePurposeOpacity = Math.min(1, Math.max(0, (mobileScrollY - 200) / 250));
+    mobilePurposeTranslateY = Math.max(0, (450 - mobileScrollY) * 0.4);
+  } else if (mobileScrollY >= 450 && mobileScrollY <= 1050) {
+    mobilePurposeOpacity = 1;
+    mobilePurposeTranslateY = 0;
+  } else {
+    mobilePurposeOpacity = Math.max(0, 1 - (mobileScrollY - 1050) / 300);
+    mobilePurposeTranslateY = -(mobileScrollY - 1050) * 0.3;
+  }
+
+  // ==========================================================================
+  // MOBILE VIEW: 100% SEAMLESS CONTINUOUS DOCUMENT FLOW (OUR PURPOSE HERO)
+  // ==========================================================================
+  if (isMobile) {
+    return (
+      <div className="relative w-full min-h-screen bg-[#050505] text-white font-sans selection:bg-[#00b4d8] selection:text-black">
+        {/* Universal Adaptive Navbar Header */}
+        <Navbar progress={0.5} onNavigate={handleNavClick} activePage="Home" />
+
+        {/* Interactive Background Grid Canvas at z-0 */}
+        <div className="fixed inset-0 pointer-events-none z-0">
+          <KineticGrid
+            spacing={80}
+            dotSize={2}
+            gridStroke={1}
+            gridOpacity={0.15}
+            repulsion={5}
+            radius={60}
+            stiffness={1.0}
+            damping={0.09}
+            clickIntensity={30}
+            trailIntensity={0.15}
+            backgroundColor="#050505"
+            lineColor="#262626"
+            dotColor="#404040"
+          />
+        </div>
+
+        {/* 1. MAIN HERO / PURPOSE SECTION FOR MOBILE */}
+        <section id="purpose-section-mobile" className="relative z-10 w-full pt-28 pb-16 px-6 max-w-5xl mx-auto flex flex-col items-start justify-center min-h-[75vh]">
+          <div className="mb-6">
+            <img
+              src="/logo.png"
+              alt="Integrate Thought Logo"
+              className="w-40 h-auto object-contain drop-shadow-2xl"
+            />
+          </div>
+
+          <div className="text-[10px] font-mono font-semibold tracking-widest text-slate-400 uppercase mb-3">
+            DIGITAL EXPERIENCE &bull; GROWTH &bull; AI & AUTOMATION
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-white uppercase font-sans mb-4">
+            BUILDING DIGITAL <br />
+            SYSTEMS THAT <br />
+            MOVE BUSINESSES <br />
+            <span className="text-[#00b4d8]">FORWARD.</span>
+          </h1>
+
+          <p className="text-slate-300 text-xs sm:text-sm leading-relaxed font-normal mb-8 font-sans max-w-xl">
+            Digital experiences, AI and automation designed to help businesses attract customers, streamline operations and scale.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => alert("Initiating project consultation with Integrate Thought.")}
+              className="px-5 py-2.5 rounded-md bg-[#48a9dc] text-white font-bold text-xs tracking-wide shadow-md active:scale-95 font-sans"
+            >
+              Start a Project
+            </button>
+            <button
+              onClick={() => {
+                const worksEl = document.getElementById('works-section-mobile');
+                if (worksEl) worksEl.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="px-5 py-2.5 rounded-md bg-white/10 border border-white/20 text-white font-semibold text-xs tracking-wide active:scale-95 font-sans"
+            >
+              Explore Our Work
+            </button>
+          </div>
+        </section>
+
+        {/* 3. SERVICES SECTION (FREE FLOW VERTICAL CARDS LIST - NO STACKING ANIMATION) */}
+        <section className="relative z-20 w-full py-12 px-4 bg-white text-slate-950 shadow-2xl">
+          <div className="max-w-xl mx-auto">
+            <div className="flex flex-col gap-2 mb-6">
+              <div className="inline-flex items-center px-3 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] font-mono font-semibold tracking-widest text-slate-600 uppercase self-start">
+                03 / OUR SERVICES
+              </div>
+              <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">
+                Architecting High-Impact Systems
+              </h2>
+            </div>
+
+            {/* Natural Vertical List of 4 Services Cards (Zero Card Stacking Lock) */}
+            <div className="grid grid-cols-1 gap-4">
+              {SERVICES_DATA.map((service, index) => {
+                const IconComponent = service.icon || Globe;
+                return (
+                  <div
+                    key={service.id}
+                    className={`rounded-2xl ${service.bgClass} text-white p-5 shadow-lg border border-white/20 flex flex-col justify-between space-y-3`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="px-2.5 py-0.5 rounded-full bg-white/20 border border-white/30 text-[10px] font-mono font-bold uppercase">
+                        {service.tag}
+                      </span>
+                      <span className="text-xs font-mono font-bold text-white/80">
+                        0{index + 1} / 04
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg font-bold text-white leading-snug">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-white/90 text-xs leading-relaxed font-normal">
+                      {service.description}
+                    </p>
+
+                    <div className="pt-2">
+                      <button
+                        onClick={() => handleProposalClick(service.title)}
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-semibold text-xs border border-white/30 cursor-pointer active:scale-95"
+                      >
+                        <span>Request Proposal</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* 4. FEATURED WORKS SECTION (FREE FLOW - ZERO FULLSCREEN LOCKING) */}
+        <section id="works-section-mobile" className="relative z-30 w-full py-12 px-4 bg-[#f4f7fa] text-slate-950 shadow-2xl">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-col gap-2 mb-6">
+              <div className="text-[11px] font-mono font-bold tracking-widest text-slate-500 uppercase">
+                FEATURED WORK
+              </div>
+              <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">
+                Work that moves the needle.
+              </h2>
+              <p className="text-slate-600 text-xs font-medium">
+                Long-term engagements where design, engineering and automation shipped together.
+              </p>
+            </div>
+
+            {/* Horizontal Touch Track */}
+            <div className="w-full flex overflow-x-auto gap-4 py-2 snap-x snap-mandatory no-scrollbar touch-pan-x">
+              {WORKS_DATA.map((work) => (
+                <div
+                  key={work.id}
+                  onClick={() => {
+                    if (work.url && work.url !== '#') {
+                      window.open(work.url, '_blank');
+                    } else {
+                      alert(`Exploring case study for "${work.title}".`);
+                    }
+                  }}
+                  className="shrink-0 snap-center w-[250px] h-[330px] relative overflow-hidden rounded-2xl bg-slate-900 border border-slate-700/50 shadow-xl active:scale-95 transition-transform cursor-pointer"
+                >
+                  <div className="absolute inset-0 overflow-hidden">
+                    <img
+                      src={work.img}
+                      alt={work.title}
+                      className="h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent opacity-85" />
+                  </div>
+
+                  <div className="absolute inset-0 flex flex-col justify-between p-4">
+                    <div className="flex justify-between items-start gap-2">
+                      <span className="px-2.5 py-1 rounded-full bg-white/90 text-slate-950 font-bold text-[10px] shadow-md font-sans">
+                        {work.cat}
+                      </span>
+                      <div className="w-7 h-7 rounded-full bg-[#1e3a8a] text-white flex items-center justify-center shadow-lg">
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <h3 className="text-base font-extrabold leading-tight text-white font-sans drop-shadow-md">
+                        {work.title}
+                      </h3>
+                      <div>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 text-slate-950 font-bold text-[10px] shadow-lg font-sans">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#3b70b2]" />
+                          <span>Detailed Case Study</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 5. OUR PROCESS SECTION (2 ROWS x 2 COLUMNS MOBILE GRID) */}
+        <section className="relative z-40 w-full py-12 px-4 bg-[#f5f3ec] text-slate-900 shadow-2xl">
+          <div className="max-w-6xl mx-auto text-center mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-300 text-slate-700 text-[10px] font-mono font-semibold uppercase mb-2">
+              05 / OUR PROCESS
+            </div>
+            <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 mb-1">
+              Our Operating Standards
+            </h2>
+            <p className="text-slate-600 text-xs font-medium max-w-sm mx-auto">
+              Frameworks designed to align operations and validate benchmarks.
+            </p>
+          </div>
+
+          {/* 2 Rows x 2 Columns Grid Layout for Mobile Screens */}
+          <div className="w-full max-w-xl mx-auto grid grid-cols-2 gap-2.5 sm:gap-6 justify-items-center">
+            {PROCESS_STAGES_DATA.map((stage, idx) => (
+              <ProcessStageCard
+                key={stage.id}
+                stage={stage}
+                index={idx}
+                onSelect={(stg) => setSelectedStageModal(stg)}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* 6. TESTIMONIALS, MARQUEE & FOOTER SECTION */}
+        <section className="relative z-50 w-full bg-white text-slate-900 pt-10">
+          <StackedTestimonials />
+          <CompanyMarqueeBanner />
+          <Footer onNavigate={onNavigate} />
+        </section>
+
+        {/* Modal */}
+        {selectedStageModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md font-sans">
+            <div className="relative w-full max-w-lg bg-white rounded-3xl p-6 text-slate-900 shadow-2xl border border-slate-200">
+              <button
+                onClick={() => setSelectedStageModal(null)}
+                className="absolute top-4 right-4 p-2 rounded-full bg-slate-100 text-slate-700 font-bold text-xs"
+              >
+                ✕
+              </button>
+              <div className="text-[10px] font-mono font-bold text-blue-600 uppercase mb-1">
+                OPERATING STANDARD 0{selectedStageModal.id}
+              </div>
+              <h3 className="text-xl font-black text-slate-950 mb-2">
+                {selectedStageModal.title}
+              </h3>
+              <div className="w-full h-40 rounded-2xl overflow-hidden mb-3">
+                <img
+                  src={selectedStageModal.image}
+                  alt={selectedStageModal.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <p className="text-slate-600 text-xs leading-relaxed mb-4">
+                {selectedStageModal.description}
+              </p>
+              <button
+                onClick={() => setSelectedStageModal(null)}
+                className="w-full py-2.5 rounded-full bg-slate-950 text-white font-bold text-xs shadow-md"
+              >
+                Close Operating Standard
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ==========================================================================
+  // DESKTOP VIEW: INTERACTIVE OVERLAPPING SLIDE DECK & ROTATING WHEEL
+  // ==========================================================================
   return (
     <div className="fixed inset-0 w-full h-screen overflow-hidden z-10 bg-[#050505] text-white select-none font-sans">
       
@@ -344,9 +632,7 @@ export default function HomePage({ onNavigate }) {
         dotColor="#404040"
       />
 
-      {/* ================================================================== */}
-      {/* PHASE 1: HERO LOGO & TITLE                                         */}
-      {/* ================================================================== */}
+      {/* PHASE 1: HERO LOGO & TITLE */}
       <div
         style={{
           opacity: heroOpacity,
@@ -356,7 +642,6 @@ export default function HomePage({ onNavigate }) {
         }}
         className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center max-w-5xl mx-auto"
       >
-        {/* Static Brain Logo */}
         <div className="mb-6 sm:mb-8 pointer-events-none">
           <img
             src="/logo.png"
@@ -365,7 +650,6 @@ export default function HomePage({ onNavigate }) {
           />
         </div>
 
-        {/* Title - Single Line Non-wrapping Layout */}
         <h1 className="group whitespace-nowrap text-[22px] sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter sm:tracking-tight text-white transition-all duration-300">
           <span className="inline-flex justify-center">
             {heroText.split("").map((char, index) => (
@@ -382,7 +666,6 @@ export default function HomePage({ onNavigate }) {
           </span>
         </h1>
 
-        {/* Scroll Prompt Button */}
         <button
           onClick={handleScrollPrompt}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-white transition-opacity cursor-pointer z-20 pointer-events-auto active:scale-95"
@@ -395,9 +678,7 @@ export default function HomePage({ onNavigate }) {
         </button>
       </div>
 
-      {/* ================================================================== */}
-      {/* PHASE 2: OUR PURPOSE                                               */}
-      {/* ================================================================== */}
+      {/* PHASE 2: OUR PURPOSE */}
       <div
         style={{
           opacity: purposeOpacity,
@@ -407,7 +688,6 @@ export default function HomePage({ onNavigate }) {
         }}
         className="absolute inset-0 flex flex-col justify-center px-6 sm:px-16 md:px-24 max-w-7xl mx-auto pointer-events-auto z-10 pt-20 sm:pt-24 pb-10"
       >
-        {/* Top Tagline + Massive Bold Heading */}
         <div className="max-w-5xl">
           <div className="text-[11px] sm:text-xs font-mono font-semibold tracking-[0.25em] text-slate-400 uppercase mb-4 sm:mb-6">
             DIGITAL EXPERIENCE &bull; GROWTH &bull; AI & AUTOMATION &bull; TECHNOLOGY &bull; DATA
@@ -423,7 +703,6 @@ export default function HomePage({ onNavigate }) {
           </h2>
         </div>
 
-        {/* Bottom Row: Subtext & Action Buttons */}
         <div className="mt-8 sm:mt-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
           <p className="text-slate-300 text-xs sm:text-sm md:text-base font-normal leading-relaxed max-w-md font-sans">
             Digital experiences, AI and automation designed to help businesses attract customers, streamline operations and scale.
@@ -449,9 +728,7 @@ export default function HomePage({ onNavigate }) {
         </div>
       </div>
 
-      {/* ================================================================== */}
-      {/* PHASE 3: STACKED SERVICES CARDS DECK (White Sheet Overlay)         */}
-      {/* ================================================================== */}
+      {/* PHASE 3: DESKTOP STACKED SERVICES CARDS DECK */}
       <div
         style={{
           transform: `translate3d(0, ${whiteSheetTranslateY}vh, 0)`,
@@ -460,15 +737,14 @@ export default function HomePage({ onNavigate }) {
         }}
         className="absolute inset-0 w-full h-full bg-white text-slate-950 shadow-[0_-30px_80px_rgba(0,0,0,0.5)] flex flex-col items-center justify-between z-20 pointer-events-auto overflow-hidden"
       >
-        <div className="w-full max-w-lg sm:max-w-xl mx-auto flex flex-col items-center pt-5 sm:pt-8 px-4 sm:px-8 my-auto">
+        <div className="w-full max-w-lg sm:max-w-xl mx-auto flex flex-col items-center pt-6 sm:pt-8 px-4 sm:px-8 my-auto">
           
-          {/* Section Header */}
-          <div className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-2.5 mb-3 sm:mb-8 shrink-0 text-center sm:text-left">
+          <div className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 sm:mb-8 shrink-0 text-center sm:text-left">
             <div>
-              <div className="inline-flex items-center px-3 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] sm:text-xs font-mono font-semibold tracking-widest text-slate-600 uppercase mb-1 sm:mb-2">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-[10px] sm:text-xs font-mono font-semibold tracking-widest text-slate-600 uppercase mb-2">
                 03 / OUR SERVICES
               </div>
-              <h2 className="text-xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950">
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950">
                 Architecting High-Impact Systems
               </h2>
             </div>
@@ -477,16 +753,15 @@ export default function HomePage({ onNavigate }) {
                 onClick={() => {
                   if (onNavigate) onNavigate('Services');
                 }}
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-[11px] sm:text-xs font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer shrink-0"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-xs font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer shrink-0"
               >
                 <span>View All Services</span>
-                <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
-          {/* Cards Deck Container (Resized Smaller for Mobile Viewport) */}
-          <div className="relative w-full h-[350px] sm:h-[480px]">
+          <div className="relative w-full h-[400px] sm:h-[480px]">
             {SERVICES_DATA.map((service, index) => {
               let cardP = 1;
               if (index > 0) {
@@ -497,11 +772,10 @@ export default function HomePage({ onNavigate }) {
                 cardP = 1 - Math.pow(1 - rawP, 3);
               }
 
-              const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-              const stackedTop = index * (isMobile ? 22 : 24);
+              const stackedTop = index * 24;
               const zIndex = 10 + index * 10;
-              const translateY = index === 0 ? 0 : (1 - cardP) * (isMobile ? 260 : 700);
-              const scale = index === 0 ? 1 : (isMobile ? 0.97 + cardP * 0.03 : 0.94 + cardP * 0.06);
+              const translateY = index === 0 ? 0 : (1 - cardP) * 700;
+              const scale = index === 0 ? 1 : 0.94 + cardP * 0.06;
               const opacity = index === 0 ? 1 : Math.min(1, cardP * 2.2);
 
               const IconComponent = service.icon || Globe;
@@ -516,44 +790,31 @@ export default function HomePage({ onNavigate }) {
                     zIndex: zIndex,
                     willChange: 'transform, opacity',
                   }}
-                  className={`absolute inset-x-0 rounded-[20px] sm:rounded-[32px] ${service.bgClass} ${service.shadowStyle} text-white p-3.5 sm:p-9 md:p-10 border border-white/20 transition-transform duration-75 max-h-[220px] sm:max-h-none flex flex-col justify-between overflow-hidden`}
+                  className={`absolute inset-x-0 rounded-[32px] ${service.bgClass} ${service.shadowStyle} text-white p-6 sm:p-9 md:p-10 border border-white/20 transition-transform duration-75`}
                 >
-                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-6 items-center h-full">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6 items-center">
                     
-                    {/* Left Text Column */}
-                    <div className="sm:col-span-8 flex flex-col justify-between h-full space-y-1.5 sm:space-y-4">
-                      <div className="flex items-center justify-between sm:justify-start gap-2">
-                        <span className="px-2 py-0.5 rounded-full bg-white/20 border border-white/30 text-[9px] sm:text-[10px] font-mono font-bold tracking-wider uppercase text-white">
-                          {service.tag}
-                        </span>
-                        <span className="sm:hidden text-[10px] font-mono font-bold text-white/80">
-                          0{index + 1} / 04
-                        </span>
-                      </div>
-
-                      <h3 className="text-sm sm:text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight">
+                    <div className="md:col-span-7 flex flex-col justify-center space-y-3 sm:space-y-4">
+                      <h3 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight">
                         {service.title}
                       </h3>
-
-                      <p className="text-white/90 text-[11px] sm:text-sm leading-snug font-normal line-clamp-2 sm:line-clamp-none">
+                      <p className="text-white/90 text-xs sm:text-sm leading-relaxed font-normal max-w-xs sm:max-w-sm">
                         {service.description}
                       </p>
-
-                      <div className="pt-0.5 sm:pt-2">
+                      <div className="pt-2">
                         <button
                           onClick={() => handleProposalClick(service.title)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl bg-white/20 hover:bg-white/30 text-white font-semibold text-[10px] sm:text-xs transition-all backdrop-blur-md border border-white/30 cursor-pointer active:scale-95"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/20 hover:bg-white/30 text-white font-semibold text-xs transition-all backdrop-blur-md border border-white/30 cursor-pointer active:scale-95"
                         >
                           <span>Request Proposal</span>
-                          <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                          <ArrowUpRight className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </div>
 
-                    {/* Right Vector Icon Frame */}
-                    <div className="hidden sm:flex sm:col-span-4 items-center justify-center p-4 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-xl aspect-square max-h-[170px] mx-auto shadow-inner">
-                      <div className="w-14 h-14 sm:w-18 sm:h-18 rounded-2xl bg-white text-slate-950 flex items-center justify-center shadow-2xl ring-4 ring-white/30">
-                        <IconComponent className="w-7 h-7 sm:w-9 sm:h-9" strokeWidth={1.75} />
+                    <div className="md:col-span-5 flex items-center justify-center p-5 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-xl aspect-square max-h-[170px] sm:max-h-[200px] mx-auto shadow-inner">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white text-slate-950 flex items-center justify-center shadow-2xl ring-4 ring-white/30">
+                        <IconComponent className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={1.75} />
                       </div>
                     </div>
 
@@ -566,9 +827,7 @@ export default function HomePage({ onNavigate }) {
         </div>
       </div>
 
-      {/* ================================================================== */}
-      {/* PHASE 4: FEATURED CLIENT WORKS SECTION                             */}
-      {/* ================================================================== */}
+      {/* PHASE 4: DESKTOP FEATURED CLIENT WORKS (RADIAL WHEEL) */}
       <div
         style={{
           transform: `translate3d(0, ${worksSheetTranslateY}vh, 0)`,
@@ -577,8 +836,7 @@ export default function HomePage({ onNavigate }) {
         }}
         className="absolute inset-0 w-full h-full bg-[#f4f7fa] text-slate-950 shadow-[0_-30px_80px_rgba(0,0,0,0.3)] flex flex-col justify-between p-4 sm:p-8 z-30 pointer-events-auto overflow-visible"
       >
-        {/* Header */}
-        <div className="w-full max-w-5xl mx-auto pt-10 sm:pt-14 shrink-0 z-40 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="w-full max-w-5xl mx-auto pt-12 sm:pt-14 shrink-0 z-40 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <div className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.25em] text-slate-500 uppercase mb-1.5">
               FEATURED WORK
@@ -605,57 +863,7 @@ export default function HomePage({ onNavigate }) {
           </div>
         </div>
 
-        {/* MOBILE VIEW: SIDE-BY-SIDE HORIZONTAL CARDS TRACK (sm:hidden) */}
-        <div className="w-full flex sm:hidden overflow-x-auto gap-4 px-4 py-4 snap-x snap-mandatory no-scrollbar touch-pan-x my-auto">
-          {WORKS_DATA.map((work) => (
-            <div
-              key={work.id}
-              onClick={() => {
-                if (work.url && work.url !== '#') {
-                  window.open(work.url, '_blank');
-                } else {
-                  alert(`Exploring case study for "${work.title}".`);
-                }
-              }}
-              className="shrink-0 snap-center w-[250px] h-[330px] relative overflow-hidden rounded-2xl bg-slate-900 border border-slate-700/50 shadow-xl active:scale-95 transition-transform cursor-pointer"
-            >
-              <div className="absolute inset-0 overflow-hidden">
-                <img
-                  src={work.img}
-                  alt={work.title}
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent opacity-85" />
-              </div>
-
-              <div className="absolute inset-0 flex flex-col justify-between p-4">
-                <div className="flex justify-between items-start gap-2">
-                  <span className="px-2.5 py-1 rounded-full bg-white/90 text-slate-950 font-bold text-[10px] shadow-md font-sans">
-                    {work.cat}
-                  </span>
-                  <div className="w-7 h-7 rounded-full bg-[#1e3a8a] text-white flex items-center justify-center shadow-lg">
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <h3 className="text-base font-extrabold leading-tight text-white font-sans drop-shadow-md">
-                    {work.title}
-                  </h3>
-                  <div>
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 text-slate-950 font-bold text-[10px] shadow-lg font-sans">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#3b70b2]" />
-                      <span>Detailed Case Study</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* DESKTOP VIEW: RADIAL SCROLL GALLERY COMPONENT (hidden sm:flex) */}
-        <div className="hidden sm:flex w-full flex-1 relative items-center justify-center my-auto overflow-visible">
+        <div className="w-full flex-1 relative flex items-center justify-center my-auto overflow-visible">
           <RadialScrollGallery
             className="!min-h-[360px] sm:!min-h-[460px] md:!min-h-[520px] w-full overflow-visible"
             baseRadius={380}
@@ -721,9 +929,7 @@ export default function HomePage({ onNavigate }) {
         </div>
       </div>
 
-      {/* ================================================================== */}
-      {/* PHASE 5: OUR PROCESS SECTION                                       */}
-      {/* ================================================================== */}
+      {/* PHASE 5: DESKTOP OUR PROCESS */}
       <div
         style={{
           transform: `translate3d(0, ${processSheetTranslateY}vh, 0)`,
@@ -733,7 +939,6 @@ export default function HomePage({ onNavigate }) {
         className="absolute inset-0 w-full h-full bg-[#f5f3ec] text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center p-4 sm:p-8 z-40 pointer-events-auto overflow-hidden select-none"
       >
         <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center min-h-full py-8 sm:py-12 my-auto">
-          {/* Header */}
           <div className="w-full max-w-5xl mx-auto text-center shrink-0 mb-6 sm:mb-8">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-300/80 text-slate-700 text-[11px] font-mono font-semibold tracking-widest uppercase mb-3 shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-slate-900 animate-pulse" />
@@ -747,21 +952,7 @@ export default function HomePage({ onNavigate }) {
             </p>
           </div>
 
-          {/* MOBILE VIEW: SIDE-BY-SIDE HORIZONTAL SWIPE TRACK (sm:hidden) */}
-          <div className="w-full flex sm:hidden overflow-x-auto gap-4 px-4 py-2 snap-x snap-mandatory no-scrollbar touch-pan-x my-auto">
-            {PROCESS_STAGES_DATA.map((stage, idx) => (
-              <div key={stage.id} className="shrink-0 snap-center w-[250px]">
-                <ProcessStageCard
-                  stage={stage}
-                  index={idx}
-                  onSelect={(stg) => setSelectedStageModal(stg)}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* DESKTOP VIEW: 4-COLUMN GRID (hidden sm:grid) */}
-          <div className="hidden sm:grid w-full max-w-6xl mx-auto py-2 sm:py-4 grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 justify-items-center items-stretch">
+          <div className="w-full max-w-6xl mx-auto py-2 sm:py-4 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 justify-items-center items-stretch">
             {PROCESS_STAGES_DATA.map((stage, idx) => (
               <ProcessStageCard
                 key={stage.id}
@@ -774,9 +965,7 @@ export default function HomePage({ onNavigate }) {
         </div>
       </div>
 
-      {/* ================================================================== */}
-      {/* PHASE 6: TESTIMONIALS, MARQUEE BANNER & TAIL FOOTER SHEET        */}
-      {/* ================================================================== */}
+      {/* PHASE 6: DESKTOP TESTIMONIALS & FOOTER */}
       <div
         style={{
           transform: `translate3d(0, ${tailSheetTranslateY}vh, 0)`,
@@ -792,12 +981,10 @@ export default function HomePage({ onNavigate }) {
           }}
           className="w-full flex flex-col justify-between min-h-full"
         >
-          {/* 1. STACKED TESTIMONIALS CAROUSEL */}
           <div className="w-full pt-4 sm:pt-8 pb-2">
             <StackedTestimonials />
           </div>
 
-          {/* 2. MARQUEE BANNER & FOOTER */}
           <div className="w-full shrink-0 bg-white text-slate-900">
             <CompanyMarqueeBanner />
             <Footer onNavigate={onNavigate} />

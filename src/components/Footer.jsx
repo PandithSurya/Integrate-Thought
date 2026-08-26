@@ -86,7 +86,7 @@ export function Footer({ onNavigate }) {
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:text-sm font-bold font-sans">
               <button onClick={(e) => handleLinkClick(e, 'about')} className="text-[#3b70b2] hover:underline cursor-pointer">About</button>
               <button onClick={(e) => handleLinkClick(e, 'services')} className="text-slate-800 hover:text-[#3b70b2] transition-colors cursor-pointer">Services</button>
-              <button onClick={(e) => handleLinkClick(e, 'courses')} className="text-slate-800 hover:text-[#3b70b2] transition-colors cursor-pointer">Training</button>
+              <button onClick={(e) => handleLinkClick(e, 'IT School')} className="text-slate-800 hover:text-[#3b70b2] transition-colors cursor-pointer">IT School</button>
               <button onClick={(e) => handleLinkClick(e, 'works')} className="text-slate-800 hover:text-[#3b70b2] transition-colors cursor-pointer">Works</button>
               <button onClick={(e) => handleLinkClick(e, 'contact')} className="text-slate-800 hover:text-[#3b70b2] transition-colors cursor-pointer">Contact</button>
             </div>

@@ -20,7 +20,9 @@ import {
   AppWindow,
   Palette,
   Sparkles,
-  ArrowUpRight
+  ArrowUpRight,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 
 const SERVICES_CATALOG = [
@@ -31,7 +33,7 @@ const SERVICES_CATALOG = [
       title: 'WEBSITE DESIGN & DEVELOPMENT',
       subtext: 'Custom, responsive websites that represent your brand and drive results.',
       icon: Code2,
-      initialRotate: -3,
+      cat: 'WEB ENGINEERING',
       bgClass: 'bg-[#c73827]'
     },
     {
@@ -39,7 +41,7 @@ const SERVICES_CATALOG = [
       title: 'DIGITAL MARKETING',
       subtext: 'SEO, PPC, social media marketing, and content to grow your online presence.',
       icon: TrendingUp,
-      initialRotate: 2,
+      cat: 'GROWTH & MARKETING',
       bgClass: 'bg-[#1351d8]'
     },
     {
@@ -47,7 +49,7 @@ const SERVICES_CATALOG = [
       title: 'E-COMMERCE SOLUTIONS',
       subtext: 'Complete online store development and seamless order management solutions.',
       icon: ShoppingBag,
-      initialRotate: -2,
+      cat: 'COMMERCE SYSTEMS',
       bgClass: 'bg-[#0e593c]'
     },
     {
@@ -55,7 +57,7 @@ const SERVICES_CATALOG = [
       title: 'CRM & CUSTOMER MANAGEMENT',
       subtext: 'Manage leads, customers, and relationships efficiently in one system.',
       icon: UserCheck,
-      initialRotate: 4,
+      cat: 'ENTERPRISE CRM',
       bgClass: 'bg-[#7c3aed]'
     }
   ],
@@ -66,7 +68,7 @@ const SERVICES_CATALOG = [
       title: 'AI AUTOMATION & INTEGRATION',
       subtext: 'Automate workflows, save valuable time, and reduce manual tasks with tailored AI.',
       icon: Workflow,
-      initialRotate: -4,
+      cat: 'AI AUTOMATION',
       bgClass: 'bg-[#0284c7]'
     },
     {
@@ -74,7 +76,7 @@ const SERVICES_CATALOG = [
       title: 'RAG SYSTEMS FOR BUSINESS',
       subtext: 'Build intelligent AI systems that understand your custom data with precision.',
       icon: BrainCircuit,
-      initialRotate: 3,
+      cat: 'KNOWLEDGE RAG',
       bgClass: 'bg-[#a82828]'
     },
     {
@@ -82,7 +84,7 @@ const SERVICES_CATALOG = [
       title: 'CUSTOM AI AGENTS & CHATBOTS',
       subtext: 'AI-powered chatbots and agents to engage leads and automate support.',
       icon: Bot,
-      initialRotate: -2,
+      cat: 'AUTONOMOUS AGENTS',
       bgClass: 'bg-[#059669]'
     },
     {
@@ -90,7 +92,7 @@ const SERVICES_CATALOG = [
       title: 'BUSINESS AUTOMATION',
       subtext: 'End-to-end operational automation for approvals, alerts, and processes.',
       icon: Layers,
-      initialRotate: 4,
+      cat: 'OPERATIONS',
       bgClass: 'bg-[#4f46e5]'
     }
   ],
@@ -101,7 +103,7 @@ const SERVICES_CATALOG = [
       title: 'CLOUD SERVICES',
       subtext: 'Cloud storage, high-speed hosting, deployments, and scalable infrastructure.',
       icon: Server,
-      initialRotate: -3,
+      cat: 'CLOUD & DEVOPS',
       bgClass: 'bg-[#00b4d8]'
     },
     {
@@ -109,7 +111,7 @@ const SERVICES_CATALOG = [
       title: 'IT SUPPORT & SECURITY',
       subtext: 'Network security, data protection, backups, and dependable IT support.',
       icon: ShieldCheck,
-      initialRotate: 2,
+      cat: 'SECURITY & INFRA',
       bgClass: 'bg-[#0f766e]'
     },
     {
@@ -117,7 +119,7 @@ const SERVICES_CATALOG = [
       title: 'DATA ANALYTICS & REPORTING',
       subtext: 'Turn raw metrics into visual insights with dashboards, reports, and analytics.',
       icon: PieChart,
-      initialRotate: -4,
+      cat: 'DATA ANALYTICS',
       bgClass: 'bg-[#8b5cf6]'
     },
     {
@@ -125,7 +127,7 @@ const SERVICES_CATALOG = [
       title: 'CONTENT CREATION',
       subtext: 'High-converting copy, multimedia graphics, promo videos, and ad creatives.',
       icon: PenTool,
-      initialRotate: 3,
+      cat: 'CREATIVE MEDIA',
       bgClass: 'bg-[#dc2626]'
     }
   ],
@@ -136,7 +138,7 @@ const SERVICES_CATALOG = [
       title: 'EMAIL MARKETING & AUTOMATION',
       subtext: 'Build campaigns, trigger workflows, and nurture leads that convert.',
       icon: Send,
-      initialRotate: -2,
+      cat: 'EMAIL AUTOMATION',
       bgClass: 'bg-[#2563eb]'
     },
     {
@@ -144,7 +146,7 @@ const SERVICES_CATALOG = [
       title: 'SOCIAL MEDIA MANAGEMENT',
       subtext: 'Content calendars, scheduled posting, and engagement that grows community.',
       icon: Compass,
-      initialRotate: 4,
+      cat: 'SOCIAL MEDIA',
       bgClass: 'bg-[#0369a1]'
     },
     {
@@ -152,7 +154,7 @@ const SERVICES_CATALOG = [
       title: 'MOBILE APP DEVELOPMENT',
       subtext: 'Custom Android and iOS apps with smooth, modern user experiences.',
       icon: AppWindow,
-      initialRotate: -3,
+      cat: 'MOBILE APPS',
       bgClass: 'bg-[#10b981]'
     },
     {
@@ -160,25 +162,24 @@ const SERVICES_CATALOG = [
       title: 'BRANDING & DESIGN',
       subtext: 'Logo design, visual identity guidelines, and UI/UX design systems.',
       icon: Palette,
-      initialRotate: 3,
+      cat: 'BRAND IDENTITY',
       bgClass: 'bg-[#9333ea]'
     }
   ]
 ];
 
 export default function ServicesPage({ onNavigate }) {
-  const targetProgressRef = useRef(0);
-  const currentProgressRef = useRef(0);
-  const [progress, setProgress] = useState(0);
-
-  // Minimal Quote Form State
+  // Step Index State (0: Set 1, 1: Set 2, 2: Set 3, 3: Set 4, 4: Tail Section)
+  const [activeStep, setActiveStep] = useState(0);
   const [selectedService, setSelectedService] = useState('');
   const [formData, setFormData] = useState({ name: '', email: '', details: '' });
   const [quoteSubmitted, setQuoteSubmitted] = useState(false);
 
+  const totalSteps = 5; // 4 Card Sets + 1 Tail Form & Footer
+
   const handleCardClick = (title) => {
     setSelectedService(title);
-    targetProgressRef.current = 0.95;
+    setActiveStep(4); // Jump to Quote Form
   };
 
   const handleQuoteSubmit = (e) => {
@@ -192,86 +193,80 @@ export default function ServicesPage({ onNavigate }) {
     }, 4500);
   };
 
-  const updateTargetProgress = (delta) => {
-    targetProgressRef.current = Math.min(1, Math.max(0, targetProgressRef.current + delta));
+  const nextStep = () => {
+    setActiveStep((prev) => Math.min(totalSteps - 1, prev + 1));
+  };
+
+  const prevStep = () => {
+    setActiveStep((prev) => Math.max(0, prev - 1));
   };
 
   useEffect(() => {
-    // Lock body scrolling so viewport is 100% frozen in place
+    // Pin body overflow for smooth GPU step transitions
     document.body.style.overflow = 'hidden';
+    document.body.style.overscrollBehavior = 'none';
+    document.documentElement.style.overscrollBehavior = 'none';
 
-    // Wheel event handler updating target progress
+    let isCooldown = false;
+
     const handleWheel = (e) => {
-      const sensitivity = 0.00018;
-      updateTargetProgress(e.deltaY * sensitivity);
+      if (isCooldown) return;
+      if (Math.abs(e.deltaY) < 15) return;
+
+      isCooldown = true;
+      if (e.deltaY > 0) {
+        setActiveStep((prev) => Math.min(totalSteps - 1, prev + 1));
+      } else {
+        setActiveStep((prev) => Math.max(0, prev - 1));
+      }
+
+      setTimeout(() => {
+        isCooldown = false;
+      }, 500); // 500ms smooth debounce interval
     };
 
-    // Touch support for mobile & touchpad gestures
     let touchStartY = 0;
     const handleTouchStart = (e) => {
       touchStartY = e.touches[0].clientY;
     };
-    const handleTouchMove = (e) => {
-      const touchY = e.touches[0].clientY;
-      const deltaY = touchStartY - touchY;
-      touchStartY = touchY;
-      updateTargetProgress(deltaY * 0.00020);
+
+    const handleTouchEnd = (e) => {
+      const touchEndY = e.changedTouches[0].clientY;
+      const diffY = touchStartY - touchEndY;
+
+      if (Math.abs(diffY) > 35) {
+        if (diffY > 0) {
+          setActiveStep((prev) => Math.min(totalSteps - 1, prev + 1));
+        } else {
+          setActiveStep((prev) => Math.max(0, prev - 1));
+        }
+      }
     };
 
-    // Keyboard arrow navigation
     const handleKeyDown = (e) => {
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-        updateTargetProgress(0.04);
+        nextStep();
       } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        updateTargetProgress(-0.04);
+        prevStep();
       }
     };
 
     window.addEventListener('wheel', handleWheel, { passive: true });
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
     window.addEventListener('keydown', handleKeyDown);
-
-    // Silky Smooth requestAnimationFrame Physics Lerp Loop (0.09 lerp weight for fluid response)
-    let animId;
-    const renderLoop = () => {
-      const diff = targetProgressRef.current - currentProgressRef.current;
-      if (Math.abs(diff) > 0.00002) {
-        currentProgressRef.current += diff * 0.09;
-        setProgress(currentProgressRef.current);
-      }
-      animId = requestAnimationFrame(renderLoop);
-    };
-    animId = requestAnimationFrame(renderLoop);
 
     return () => {
       document.body.style.overflow = 'auto';
-      cancelAnimationFrame(animId);
+      document.body.style.overscrollBehavior = 'auto';
+      document.documentElement.style.overscrollBehavior = 'auto';
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
-
-  // --------------------------------------------------------------------------
-  // OVERLAPPING TIMELINE MATH (0.00 -> 1.00)
-  // --------------------------------------------------------------------------
-
-  // Hero Banner Opacity (0.00 -> 0.12)
-  const heroOpacity = Math.max(0, 1 - progress / 0.10);
-  const heroTranslateY = -progress * 120;
-
-  // 4 Card Set Progress Windows:
-  // Set 0 (Cards 1-4): 0.08 -> 0.28
-  // Set 1 (Cards 5-8): 0.28 -> 0.48
-  // Set 2 (Cards 9-12): 0.48 -> 0.68
-  // Set 3 (Cards 13-16): 0.68 -> 0.88
-  // Footer Tail Sheet: 0.84 -> 1.00
-
-  const tailProgress = Math.min(1, Math.max(0, (progress - 0.84) / 0.16));
-  const footerSheetTranslateY = (1 - tailProgress) * 100;
 
   return (
     <div className="fixed inset-0 w-full h-screen overflow-hidden z-10 bg-[#f8fafc] text-slate-900 select-none font-sans">
@@ -279,12 +274,12 @@ export default function ServicesPage({ onNavigate }) {
       {/* Universal Fixed Adaptive Navbar */}
       <Navbar progress={0.32} onNavigate={onNavigate} activePage="Services" />
 
-      {/* Interactive KineticGrid Canvas Background at z-0 (Lighter Grid Theme) */}
+      {/* Interactive KineticGrid Canvas Background */}
       <KineticGrid
         spacing={64}
         dotSize={2}
         gridStroke={1}
-        gridOpacity={0.45}
+        gridOpacity={0.4}
         repulsion={5}
         radius={60}
         stiffness={1.0}
@@ -296,212 +291,108 @@ export default function ServicesPage({ onNavigate }) {
         dotColor="#94a3b8"
       />
 
-      {/* HERO BANNER OVERLAY */}
-      <div
-        style={{
-          opacity: heroOpacity,
-          transform: `translate3d(0, ${heroTranslateY}px, 0)`,
-          pointerEvents: heroOpacity < 0.05 ? 'none' : 'auto',
-          willChange: 'transform, opacity',
-        }}
-        className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center max-w-5xl mx-auto z-20"
-      >
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-200/80 border border-slate-300 text-slate-700 text-[11px] font-mono font-semibold tracking-widest uppercase mb-4 shadow-sm">
-          <Sparkles className="w-3.5 h-3.5 text-slate-900" />
+      {/* HERO BANNER TOP HEADER (COMPACT & SEPARATED FROM CARDS) */}
+      <div className="absolute top-16 sm:top-20 inset-x-0 pt-2 sm:pt-4 px-4 text-center max-w-5xl mx-auto z-10 pointer-events-none">
+        <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-slate-200/80 border border-slate-300 text-slate-700 text-[10px] font-mono font-semibold tracking-widest uppercase mb-1.5 shadow-sm">
+          <Sparkles className="w-3 h-3 text-slate-900" />
           <span>OUR SERVICES CATALOG</span>
         </div>
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-950 leading-[1.05] font-sans">
-          Comprehensive Digital &amp; <br />
-          <span className="text-slate-900">
-            AI Engineering Solutions
-          </span>
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 leading-tight font-sans">
+          Comprehensive Digital &amp; AI Engineering Solutions
         </h1>
-        <p className="mt-4 text-slate-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto font-normal leading-relaxed font-sans">
-          Scroll down to draw each set of service cards out of the stack.
-        </p>
-
-        <div className="mt-8 flex flex-col items-center gap-2 text-slate-400 text-[11px] font-mono uppercase tracking-widest">
-          <span>Scroll to draw cards</span>
-          <div className="w-5 h-9 rounded-full border-2 border-slate-400 flex justify-center p-1">
-            <div className="w-1.5 h-2.5 rounded-full bg-slate-950 animate-bounce" />
-          </div>
-        </div>
       </div>
 
       {/* ==================================================================== */}
-      {/* 4 CARD SETS CENTERED VIEWPORT                                         */}
+      {/* 4 HARDWARE-ACCELERATED VIBRANT CARD SETS (POSITIONED BELOW HEADER)   */}
       {/* ==================================================================== */}
-      <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center z-20 px-4 sm:px-8">
+      <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center pt-28 sm:pt-36 z-20 px-3 sm:px-8">
         
         {/* CENTERED STACK VIEWPORT */}
-        <div className="relative w-full max-w-7xl h-[380px] sm:h-[500px] flex items-center justify-center">
+        <div className="relative w-full max-w-7xl h-[340px] sm:h-[480px] flex items-center justify-center">
           {SERVICES_CATALOG.map((cardSet, setIdx) => {
-            const windowStart = 0.08 + setIdx * 0.20;
-            const windowEnd = windowStart + 0.20;
-
-            const isActive = progress >= windowStart && (setIdx === 3 ? progress <= 1.0 : progress < windowEnd);
-
-            if (!isActive) {
-              return (
-                <div
-                  key={setIdx}
-                  style={{ opacity: 0, pointerEvents: 'none' }}
-                  className="absolute inset-x-0 w-full grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6"
-                />
-              );
-            }
-
-            const p = Math.min(1, Math.max(0, (progress - windowStart) / 0.20));
-
-            let scale = 0.85;
-            let y = 140;
-            let opacity = 1;
-            let isSettled = false;
-
-            if (setIdx === 3) {
-              // Set 4 (Last Group): Draws up, settles, and fades out cleanly as footer sheet slides up
-              if (p < 0.45) {
-                const p1 = p / 0.45;
-                const easeP1 = 1 - Math.pow(1 - p1, 2);
-                scale = 0.85 + 0.15 * easeP1;
-                y = 140 * (1 - easeP1);
-                opacity = Math.min(1, p1 * 2);
-              } else {
-                scale = 1.0;
-                y = 0;
-                // Fade out cleanly as tailProgress (footer sheet) slides up
-                opacity = Math.max(0, 1 - tailProgress * 2.0);
-                isSettled = true;
-              }
-            } else {
-              // Sets 1, 2, 3: Draw, hold, and exit upward
-              if (p < 0.40) {
-                const p1 = p / 0.40;
-                const easeP1 = 1 - Math.pow(1 - p1, 2);
-                scale = 0.85 + 0.15 * easeP1;
-                y = 140 * (1 - easeP1);
-                opacity = Math.min(1, p1 * 2);
-              } else if (p <= 0.70) {
-                scale = 1.0;
-                y = 0;
-                opacity = 1;
-                isSettled = true;
-              } else {
-                const p3 = (p - 0.70) / 0.30;
-                scale = 1.0 - p3 * 0.05;
-                y = -180 * p3;
-                opacity = Math.max(0, 1 - p3 * 1.5);
-                isSettled = true;
-              }
-            }
+            const isCurrent = activeStep === setIdx;
+            const isBefore = activeStep > setIdx;
 
             return (
               <div
                 key={setIdx}
-                style={{
-                  transform: `translate3d(0, ${y}px, 0) scale(${scale})`,
-                  opacity: opacity,
-                  zIndex: 20,
-                  willChange: 'transform, opacity',
-                }}
-                className="absolute inset-x-0 w-full grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6 pointer-events-auto max-h-[360px] sm:max-h-none"
-              >
-                {cardSet.map((service, cardIdx) => {
-                  const IconComp = service.icon;
-                  const rotateDeg = isSettled ? 0 : service.initialRotate;
-                  const cardStaggerY = isSettled ? 0 : (1 - p) * ((cardIdx - 1.5) * 12);
-
-                  return (
-                    <div
-                      key={service.id}
-                      onClick={() => handleCardClick(service.title)}
-                      style={{
-                        transform: `translate3d(0, ${cardStaggerY}px, 0) rotate(${rotateDeg}deg)`,
-                        transformOrigin: 'center center',
-                        willChange: 'transform',
-                      }}
-                      className={`group relative ${service.bgClass} text-white rounded-[20px] sm:rounded-[28px] p-3 sm:p-7 shadow-[0_25px_60px_rgba(0,0,0,0.4)] border border-white/20 flex flex-col justify-between items-center text-center transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:-translate-y-1.5 cursor-pointer h-[170px] sm:h-auto overflow-hidden`}
-                    >
-                      {/* Top Centered Vector Icon Badge */}
-                      <div className="w-9 h-9 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white text-slate-950 flex items-center justify-center mb-1.5 sm:mb-4 shadow-md ring-2 sm:ring-4 ring-white/25 group-hover:scale-110 transition-all duration-300 shrink-0">
-                        <IconComp className="w-4 h-4 sm:w-7 sm:h-7" strokeWidth={1.75} />
-                      </div>
-
-                      {/* Title & Description */}
-                      <div className="space-y-1 my-auto">
-                        <h3 className="text-[11px] sm:text-base font-extrabold tracking-tight text-white uppercase leading-tight font-sans line-clamp-2">
-                          {service.title}
-                        </h3>
-                        <p className="text-[9px] sm:text-xs text-white/90 leading-tight font-normal font-sans line-clamp-2">
-                          {service.subtext}
-                        </p>
-                      </div>
-
-                      {/* Bottom Action Line */}
-                      <div className="pt-1.5 mt-auto border-t border-white/20 w-full flex items-center justify-center shrink-0">
-                        <span className="text-[9px] sm:text-[11px] font-bold text-white group-hover:text-white/80 transition-colors inline-flex items-center gap-1 font-mono uppercase">
-                          <span>Get Quote</span>
-                          <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Set Indicator Dots */}
-        <div className="absolute bottom-6 z-20 flex items-center gap-2">
-          {SERVICES_CATALOG.map((_, idx) => {
-            let activeIdx = 0;
-            if (progress >= 0.28 && progress < 0.48) activeIdx = 1;
-            else if (progress >= 0.48 && progress < 0.68) activeIdx = 2;
-            else if (progress >= 0.68) activeIdx = 3;
-
-            return (
-              <div
-                key={idx}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  activeIdx === idx ? 'w-8 bg-slate-950' : 'w-2 bg-slate-300'
+                className={`absolute inset-x-0 w-full grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu ${
+                  isCurrent
+                    ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+                    : isBefore
+                    ? 'opacity-0 -translate-y-24 scale-95 pointer-events-none'
+                    : 'opacity-0 translate-y-24 scale-95 pointer-events-none'
                 }`}
-              />
+              >
+                {cardSet.map((card) => (
+                  <div
+                    key={card.id}
+                    onClick={() => handleCardClick(card.title)}
+                    className={`group relative h-[165px] sm:h-[370px] rounded-2xl sm:rounded-3xl ${card.bgClass} text-white p-3.5 sm:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.15)] hover:shadow-[0_25px_65px_rgba(0,0,0,0.28)] hover:-translate-y-1.5 active:scale-95 transition-all duration-300 flex flex-col justify-between border border-white/20 overflow-hidden cursor-pointer`}
+                  >
+                    {/* Subtle Glass Glow Highlight */}
+                    <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                    <div className="flex justify-between items-start z-10">
+                      <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center transition-all duration-300 shadow-sm group-hover:bg-white group-hover:text-slate-950">
+                        <card.icon className="w-4 h-4 sm:w-6 sm:h-6" />
+                      </div>
+                      <span className="text-[10px] sm:text-xs font-mono font-bold text-white/80">
+                        #{card.id}
+                      </span>
+                    </div>
+
+                    <div className="space-y-1 sm:space-y-2 mt-auto z-10">
+                      <div className="inline-block px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[8px] sm:text-[10px] font-mono font-bold uppercase tracking-wider">
+                        {card.cat}
+                      </div>
+                      <h3 className="text-xs sm:text-lg font-bold text-white leading-snug group-hover:text-white/90 transition-colors line-clamp-2 font-sans">
+                        {card.title}
+                      </h3>
+                      <p className="text-white/80 text-[10px] sm:text-xs leading-tight sm:leading-relaxed font-normal line-clamp-2 font-sans">
+                        {card.subtext}
+                      </p>
+                    </div>
+
+                    <div className="pt-1.5 border-t border-white/20 flex items-center justify-between text-[9px] sm:text-xs font-bold text-white z-10">
+                      <span>Request Quote</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/90 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             );
           })}
         </div>
       </div>
 
       {/* ==================================================================== */}
-      {/* MINIMAL SERVICE QUOTE FORM & FOOTER TAIL SLIDING SHEET (0.84 -> 1.00)  */}
+      {/* HARDWARE-ACCELERATED TAIL SECTION: QUOTE FORM & FOOTER (STEP 4)       */}
       {/* ==================================================================== */}
       <div
-        style={{
-          transform: `translate3d(0, ${footerSheetTranslateY}vh, 0)`,
-          pointerEvents: tailProgress < 0.05 ? 'none' : 'auto',
-          willChange: 'transform',
-        }}
-        className="absolute inset-0 w-full h-full bg-[#f8fafc] text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.12)] border-t border-slate-200 flex flex-col justify-between pt-12 px-4 sm:px-8 pb-0 z-40 pointer-events-auto overflow-y-auto"
+        className={`absolute inset-0 w-full h-full bg-[#f8fafc] text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.12)] border-t border-slate-200 flex flex-col justify-between pt-10 sm:pt-14 px-4 sm:px-12 pb-0 z-40 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu ${
+          activeStep === 4 ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-full pointer-events-none'
+        }`}
       >
-        <div className="max-w-2xl mx-auto w-full my-auto py-6 px-4 sm:px-6">
+        <div className="max-w-2xl mx-auto w-full my-auto py-4 sm:py-6 px-4 sm:px-6">
           
           {/* Section Badge & Title */}
-          <div className="text-center mb-6">
-            <span className="inline-block px-3.5 py-1 rounded-full bg-slate-200/80 border border-slate-300 text-slate-700 font-mono text-[11px] font-semibold tracking-widest uppercase mb-2">
+          <div className="text-center mb-5 sm:mb-6">
+            <span className="inline-block px-3.5 py-1 rounded-full bg-slate-200/80 border border-slate-300 text-slate-700 font-mono text-[10px] sm:text-[11px] font-semibold tracking-widest uppercase mb-2">
               05 / GET A CUSTOM QUOTE
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight font-sans">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-950 tracking-tight font-sans">
               Request a Service Quote
             </h2>
-            <p className="text-slate-600 text-xs sm:text-sm max-w-md mx-auto mt-1.5 font-normal font-sans">
+            <p className="text-slate-600 text-xs sm:text-sm max-w-md mx-auto mt-1 font-normal font-sans">
               Select your required service and enter basic details for a tailored project estimate.
             </p>
           </div>
 
           {/* Minimal Form Card */}
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-8 shadow-xl">
             {quoteSubmitted ? (
-              <div className="py-8 text-center space-y-3 animate-fadeIn">
+              <div className="py-8 text-center space-y-3">
                 <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto text-xl font-bold">
                   ✓
                 </div>
@@ -511,18 +402,18 @@ export default function ServicesPage({ onNavigate }) {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleQuoteSubmit} className="space-y-4">
+              <form onSubmit={handleQuoteSubmit} className="space-y-3.5 sm:space-y-4">
                 
                 {/* Select Service Dropdown */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5 font-mono">
+                  <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1 font-mono">
                     Select Service *
                   </label>
                   <select
                     value={selectedService}
                     onChange={(e) => setSelectedService(e.target.value)}
                     required
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all cursor-pointer"
+                    className="w-full px-3.5 py-2.5 sm:py-3 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all cursor-pointer"
                   >
                     <option value="">-- Choose a Service --</option>
                     {SERVICES_CATALOG.flat().map((svc) => (
@@ -537,9 +428,9 @@ export default function ServicesPage({ onNavigate }) {
                 </div>
 
                 {/* Name & Email Fields */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5 font-mono">
+                    <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1 font-mono">
                       Full Name *
                     </label>
                     <input
@@ -548,12 +439,12 @@ export default function ServicesPage({ onNavigate }) {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Your Name / Organization"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all"
+                      className="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5 font-mono">
+                    <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1 font-mono">
                       Email Address *
                     </label>
                     <input
@@ -562,29 +453,29 @@ export default function ServicesPage({ onNavigate }) {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="john@company.com"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all"
+                      className="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all"
                     />
                   </div>
                 </div>
 
                 {/* Project Details Textarea */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5 font-mono">
+                  <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1 font-mono">
                     Project Details &amp; Scope
                   </label>
                   <textarea
-                    rows={3}
+                    rows={2}
                     value={formData.details}
                     onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                     placeholder="Briefly describe your requirements or timeline..."
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all resize-none"
+                    className="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all resize-none"
                   />
                 </div>
 
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-md active:scale-98 cursor-pointer flex items-center justify-center gap-2 font-sans"
+                  className="w-full py-3 sm:py-3.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-md active:scale-98 cursor-pointer flex items-center justify-center gap-2 font-sans"
                 >
                   <span>Submit Quote Request</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -594,10 +485,46 @@ export default function ServicesPage({ onNavigate }) {
           </div>
         </div>
 
-        {/* Footer Tail Component Flush at Bottom */}
+        {/* Footer Component Flush at Bottom */}
         <div className="w-full shrink-0 mt-auto">
           <Footer onNavigate={onNavigate} />
         </div>
+      </div>
+
+      {/* ==================================================================== */}
+      {/* ULTRA-CLEAN STEP NAVIGATION DOTS & ARROWS                            */}
+      {/* ==================================================================== */}
+      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-slate-900/80 backdrop-blur-md border border-slate-700/80 p-2 rounded-full shadow-2xl text-white">
+        <button
+          onClick={prevStep}
+          disabled={activeStep === 0}
+          className="p-1.5 rounded-full hover:bg-white/20 disabled:opacity-30 disabled:pointer-events-none transition-all"
+          title="Previous Batch"
+        >
+          <ChevronUp className="w-4 h-4" />
+        </button>
+
+        <div className="flex items-center gap-1.5 px-2">
+          {Array.from({ length: totalSteps }).map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveStep(idx)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                activeStep === idx ? 'w-6 bg-[#00b4d8]' : 'w-2 bg-slate-600 hover:bg-slate-400'
+              }`}
+              title={idx === 4 ? "Get Quote & Footer" : `Services Set ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+        <button
+          onClick={nextStep}
+          disabled={activeStep === totalSteps - 1}
+          className="p-1.5 rounded-full hover:bg-white/20 disabled:opacity-30 disabled:pointer-events-none transition-all"
+          title="Next Batch"
+        >
+          <ChevronDown className="w-4 h-4" />
+        </button>
       </div>
 
     </div>

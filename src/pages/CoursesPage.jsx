@@ -208,7 +208,7 @@ export default function CoursesPage({ onNavigate }) {
 
       <div className="relative z-10 font-poppins flex-1 flex flex-col">
         {/* Navigation Header */}
-        <Navbar progress={0.32} onNavigate={onNavigate} activePage="Courses" />
+        <Navbar progress={0.32} onNavigate={onNavigate} activePage="IT School" />
 
         {/* HERO SECTION */}
         <section className="pt-36 sm:pt-44 pb-12 px-6 max-w-5xl mx-auto text-center font-poppins">
@@ -219,7 +219,7 @@ export default function CoursesPage({ onNavigate }) {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
             </span>
-            <span className="text-slate-600 font-medium">Integrate Thought Training Academy</span>
+            <span className="text-slate-600 font-medium">Integrate Thought IT School</span>
             <span className="text-slate-300">•</span>
             <span className="text-blue-700 font-bold">New Batches Open</span>
           </div>
@@ -326,7 +326,7 @@ export default function CoursesPage({ onNavigate }) {
                   <span>TRAINING ADMISSIONS &amp; QUERIES</span>
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight font-poppins">
-                  Have Questions About Our Courses?
+                  Have Questions About IT School Programs?
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500 font-poppins mt-1">
                   Inquire about upcoming batch schedules, syllabus details, training mode (online/offline), or fees.
