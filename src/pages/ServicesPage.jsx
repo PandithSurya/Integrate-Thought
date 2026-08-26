@@ -213,9 +213,9 @@ export default function ServicesPage({ onNavigate }) {
     };
     const handleTouchMove = (e) => {
       const touchY = e.touches[0].clientY;
-      const deltaY = (touchStartY - touchY) * 1.5;
+      const deltaY = touchStartY - touchY;
       touchStartY = touchY;
-      updateTargetProgress(deltaY * 0.00035);
+      updateTargetProgress(deltaY * 0.00020);
     };
 
     // Keyboard arrow navigation
@@ -334,7 +334,7 @@ export default function ServicesPage({ onNavigate }) {
       <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center z-20 px-4 sm:px-8">
         
         {/* CENTERED STACK VIEWPORT */}
-        <div className="relative w-full max-w-7xl h-[460px] sm:h-[500px] flex items-center justify-center">
+        <div className="relative w-full max-w-7xl h-[380px] sm:h-[500px] flex items-center justify-center">
           {SERVICES_CATALOG.map((cardSet, setIdx) => {
             const windowStart = 0.08 + setIdx * 0.20;
             const windowEnd = windowStart + 0.20;
@@ -346,7 +346,7 @@ export default function ServicesPage({ onNavigate }) {
                 <div
                   key={setIdx}
                   style={{ opacity: 0, pointerEvents: 'none' }}
-                  className="absolute inset-x-0 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
+                  className="absolute inset-x-0 w-full grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6"
                 />
               );
             }
@@ -404,7 +404,7 @@ export default function ServicesPage({ onNavigate }) {
                   zIndex: 20,
                   willChange: 'transform, opacity',
                 }}
-                className="absolute inset-x-0 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 pointer-events-auto"
+                className="absolute inset-x-0 w-full grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6 pointer-events-auto max-h-[360px] sm:max-h-none"
               >
                 {cardSet.map((service, cardIdx) => {
                   const IconComp = service.icon;
@@ -420,28 +420,28 @@ export default function ServicesPage({ onNavigate }) {
                         transformOrigin: 'center center',
                         willChange: 'transform',
                       }}
-                      className={`group relative ${service.bgClass} text-white rounded-[28px] p-6 sm:p-7 shadow-[0_25px_60px_rgba(0,0,0,0.4)] border border-white/20 flex flex-col justify-between items-center text-center transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:-translate-y-1.5 cursor-pointer`}
+                      className={`group relative ${service.bgClass} text-white rounded-[20px] sm:rounded-[28px] p-3 sm:p-7 shadow-[0_25px_60px_rgba(0,0,0,0.4)] border border-white/20 flex flex-col justify-between items-center text-center transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:-translate-y-1.5 cursor-pointer h-[170px] sm:h-auto overflow-hidden`}
                     >
-                      {/* Top Centered Vector Icon Badge with Glassmorphic Ring */}
-                      <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-white text-slate-950 flex items-center justify-center mb-4 shadow-[0_10px_25px_rgba(0,0,0,0.25)] ring-4 ring-white/25 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-[0_15px_30px_rgba(0,0,0,0.35)] transition-all duration-300">
-                        <IconComp className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={1.75} />
+                      {/* Top Centered Vector Icon Badge */}
+                      <div className="w-9 h-9 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white text-slate-950 flex items-center justify-center mb-1.5 sm:mb-4 shadow-md ring-2 sm:ring-4 ring-white/25 group-hover:scale-110 transition-all duration-300 shrink-0">
+                        <IconComp className="w-4 h-4 sm:w-7 sm:h-7" strokeWidth={1.75} />
                       </div>
 
-                      {/* Title & Description (Inverted High-Contrast Text) */}
-                      <div className="space-y-2.5 my-auto">
-                        <h3 className="text-sm sm:text-base font-extrabold tracking-tight text-white uppercase leading-snug font-sans">
+                      {/* Title & Description */}
+                      <div className="space-y-1 my-auto">
+                        <h3 className="text-[11px] sm:text-base font-extrabold tracking-tight text-white uppercase leading-tight font-sans line-clamp-2">
                           {service.title}
                         </h3>
-                        <p className="text-xs text-white/90 leading-relaxed font-normal font-sans">
+                        <p className="text-[9px] sm:text-xs text-white/90 leading-tight font-normal font-sans line-clamp-2">
                           {service.subtext}
                         </p>
                       </div>
 
                       {/* Bottom Action Line */}
-                      <div className="pt-4 mt-auto border-t border-white/20 w-full flex items-center justify-center">
-                        <span className="text-[11px] font-bold text-white group-hover:text-white/80 transition-colors inline-flex items-center gap-1 font-mono uppercase">
+                      <div className="pt-1.5 mt-auto border-t border-white/20 w-full flex items-center justify-center shrink-0">
+                        <span className="text-[9px] sm:text-[11px] font-bold text-white group-hover:text-white/80 transition-colors inline-flex items-center gap-1 font-mono uppercase">
                           <span>Get Quote</span>
-                          <ArrowUpRight className="w-3.5 h-3.5" />
+                          <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                         </span>
                       </div>
                     </div>

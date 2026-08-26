@@ -2,13 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Sparkles, ArrowRight, Grid, ArrowUpRight, Globe, Cpu, Database, Bot } from 'lucide-react';
 import KineticGrid from '../components/KineticGrid';
 import { RadialScrollGallery } from '../components/ui/portfolio-and-image-gallery';
-import { Badge } from '../components/ui/badge';
 import { ProcessStageCard } from '../components/ui/process-stage-card';
 import { Footer } from '../components/Footer';
 import Navbar from '../components/Navbar';
 import CompanyMarqueeBanner from '../components/CompanyMarqueeBanner';
 import { StackedTestimonials } from '../components/StackedTestimonials';
-import { submitInquiry } from '../utils/inquiryHandler';
 
 const SERVICES_DATA = [
   {
@@ -59,14 +57,6 @@ const WORKS_DATA = [
     img: "/Hero-Images/wnbturkish-hero.png",
     url: "https://wnbturkishbarber.netlify.app/",
     description: "A luxury digital experience designed for WNB Turkish Barber, offering seamless service selection, instant appointment bookings, and an interactive grooming portfolio showcasing traditional and modern hair artistry.",
-    challenge: "Legacy phone-based booking system caused long wait times, scheduling conflicts, and poor online brand visibility among young urban professionals.",
-    solution: "Designed a high-converting web app featuring interactive service menus, automated time-slot reservations, real-time barber availability, and high-contrast aesthetic UI.",
-    services: ["UI/UX Design", "Full-Stack Web App", "Booking Engine Integration", "Brand Identity"],
-    results: [
-      { value: "3.8×", label: "Online Bookings Surge" },
-      { value: "4.9 ★", label: "Client Satisfaction" },
-      { value: "65%", label: "Reduced Wait Times" }
-    ]
   },
   {
     id: 2,
@@ -77,14 +67,6 @@ const WORKS_DATA = [
     img: "/Hero-Images/brim-tawny-hero.png",
     url: "https://brim-tawny.vercel.app/franchise",
     description: "An immersive digital franchise hub and interactive menu engine built for BRIM Burgers, highlighting gourmet halal burgers, franchise inquiry pipelines, and location finders.",
-    challenge: "Fragmented franchise applications and outdated online menus limited brand expansion across UK and international markets.",
-    solution: "Built a high-velocity franchise portal complete with financial calculators, interactive location maps, streamlined franchise application workflows, and mouth-watering visual menus.",
-    services: ["Franchise Web Portal", "Interactive Menu Design", "Lead Generation System", "Performance Optimization"],
-    results: [
-      { value: "250+", label: "Franchise Inquiries / Mo" },
-      { value: "4.2×", label: "Conversion Rate" },
-      { value: "<1.2s", label: "Page Load Speed" }
-    ]
   },
   {
     id: 3,
@@ -95,14 +77,6 @@ const WORKS_DATA = [
     img: "/Hero-Images/dr-rathod-hero.png",
     url: "https://gorgeous-daffodil-31a9c9.netlify.app/",
     description: "A modern, empathetic healthcare web platform designed for Sai Dental Clinic to facilitate patient onboarding, virtual consultations, dental procedure breakdowns, and appointment scheduling.",
-    challenge: "High patient drop-off rates on mobile and difficulty explaining complex dental treatments clearly to prospective patients.",
-    solution: "Created a clean, HIPAA-conscious responsive portal with visual treatment guides, before-and-after smile galleries, and 1-click WhatsApp/Online booking integrations.",
-    services: ["Healthcare Portal", "Patient UX", "Appointment Automation", "SEO Optimization"],
-    results: [
-      { value: "100%", label: "Mobile Optimized" },
-      { value: "3.5×", label: "New Patient Intake" },
-      { value: "98%", label: "Positive Feedback" }
-    ]
   },
   {
     id: 4,
@@ -113,14 +87,6 @@ const WORKS_DATA = [
     img: "/Hero-Images/usy'z-blizers-hero.png",
     url: "https://jazzy-pastelito-855f86.netlify.app/",
     description: "A visually striking streetwear e-commerce platform featuring dynamic product interaction, collection drop countdowns, and fluid micro-animations.",
-    challenge: "Mobile shoppers bounced due to slow loading lookbooks and clunky checkout steps on standard template platforms.",
-    solution: "Engineered a custom high-performance storefront with ultra-fast page transitions, interactive product lookbooks, and frictionless cart drawer interactions.",
-    services: ["E-Commerce UX", "Motion Design", "Frontend Development", "Custom Cart Flow"],
-    results: [
-      { value: "4.5×", label: "Session Duration" },
-      { value: "82%", label: "Checkout Completion" },
-      { value: "60fps", label: "Fluid Animation Rate" }
-    ]
   },
   {
     id: 5,
@@ -131,14 +97,6 @@ const WORKS_DATA = [
     img: "/Hero-Images/mayavi-mc-hero.png",
     url: "https://fancy-lokum-dfbfba.netlify.app/",
     description: "Next-gen creative media house producing high-impact vertical video campaigns, cinematic brand films, and viral storytelling content.",
-    challenge: "Demonstrating immersive video portfolios across desktop and mobile viewports without sacrificing video playback speed.",
-    solution: "Delivered an immersive media platform with full-bleed vertical video previews, dynamic campaign analytics, and brand booking.",
-    services: ["Cinematic Video", "Vertical Content", "Brand Campaigns", "Creative Production"],
-    results: [
-      { value: "10M+", label: "Organic views delivered" },
-      { value: "4.8×", label: "Brand engagement surge" },
-      { value: "100%", label: "Campaign delivery rate" }
-    ]
   },
   {
     id: 6,
@@ -149,14 +107,6 @@ const WORKS_DATA = [
     img: "/Hero-Images/old-glen-hero.png",
     url: "https://old-glen-landscapes.vercel.app/",
     description: "An elegant digital portfolio showcasing luxury residential landscaping, garden designs, stone masonry, and exterior living architectural projects.",
-    challenge: "High-value homeowners couldn't visualize scope or craftsmanship through low-res gallery photos.",
-    solution: "Crafted an editorial-style project showcase featuring high-definition interactive before/after sliders, material breakdown cards, and consultation request pipelines.",
-    services: ["Editorial Web Design", "Before/After Visualizers", "Lead Acquisition", "Content Architecture"],
-    results: [
-      { value: "4.8×", label: "High-Ticket Lead Growth" },
-      { value: "94%", label: "User Engagement" },
-      { value: "$50k+", label: "Avg Project Value" }
-    ]
   },
   {
     id: 7,
@@ -167,14 +117,6 @@ const WORKS_DATA = [
     img: "/Hero-Images/roof-nu-hero.png",
     url: "https://roof-nu.vercel.app/",
     description: "A high-converting roofing contractor platform engineered for instant quote estimates, storm damage inspection booking, and structural warranty management.",
-    challenge: "Slow response times on estimate requests caused lost deals to regional competitors.",
-    solution: "Implemented an instant 60-second online quote estimator, storm repair emergency portal, and interactive roofing material selector.",
-    services: ["Instant Estimator Engine", "Lead Automation", "Local SEO Dominance", "Responsive Web App"],
-    results: [
-      { value: "5.2×", label: "Quote Request Growth" },
-      { value: "<2 min", label: "Lead Response Time" },
-      { value: "#1", label: "Local Search Ranking" }
-    ]
   },
   {
     id: 8,
@@ -185,14 +127,6 @@ const WORKS_DATA = [
     img: "/Hero-Images/avs-hospitals-hero.png",
     url: "https://avs-hospitals-hmss.vercel.app/",
     description: "An enterprise-grade Healthcare Management System Interface for hospital networks, simplifying doctor scheduling, bed availability tracking, and online diagnostic booking.",
-    challenge: "Fragmented legacy hospital software caused registration bottlenecks and delayed critical patient admissions.",
-    solution: "Designed a modern, unified HMSS dashboard suite with real-time OPD booking, emergency triage status displays, and digital health records access.",
-    services: ["Enterprise Systems UI", "Healthcare UX", "Real-Time Sync", "Role-Based Access Control"],
-    results: [
-      { value: "99.9%", label: "Uptime & Reliability" },
-      { value: "40%", label: "Faster Patient Intake" },
-      { value: "10k+", label: "Daily Active Users" }
-    ]
   },
   {
     id: 9,
@@ -203,14 +137,6 @@ const WORKS_DATA = [
     img: "/Hero-Images/brim-burgers-hero.png",
     url: "https://jay0073.github.io/brim-demo/",
     description: "An experimental web experience utilizing canvas frame sequence scroll, interactive product exploded views, and micro-interactions for culinary branding.",
-    challenge: "Standard static web menus failed to deliver memorable visual impact or convey fresh ingredient quality.",
-    solution: "Built a scroll-driven canvas animation engine that unrolls burger layers, sauce drips, and ingredient freshness cards as the user scrolls.",
-    services: ["Canvas Scroll Engine", "3D Frame Sequence", "GSAP ScrollTrigger", "Interactive Branding"],
-    results: [
-      { value: "60fps", label: "Smooth Scroll Rate" },
-      { value: "5.0×", label: "Brand Recall Rate" },
-      { value: "100%", label: "WebGL/Canvas Optimized" }
-    ]
   }
 ];
 
@@ -254,7 +180,7 @@ export default function HomePage({ onNavigate }) {
   };
 
   useEffect(() => {
-    // Lock body scrolling and disable pull-to-refresh overscroll reload
+    // Lock body scrolling to enable silky smooth scroll animation timeline
     document.body.style.overflow = 'hidden';
     document.body.style.overscrollBehavior = 'none';
     document.documentElement.style.overscrollBehavior = 'none';
@@ -265,7 +191,7 @@ export default function HomePage({ onNavigate }) {
       updateTargetProgress(e.deltaY * sensitivity);
     };
 
-    // Touch support for mobile & touchpad gestures
+    // Touch support tuned specifically for controlled, smooth mobile responsiveness
     let touchStartY = 0;
     let touchStartX = 0;
     const handleTouchStart = (e) => {
@@ -286,13 +212,14 @@ export default function HomePage({ onNavigate }) {
       touchStartY = touchY;
       touchStartX = touchX;
 
-      // If user is swiping horizontally (e.g. scrolling card galleries), ignore main vertical page progress
+      // Ignore horizontal swiping over galleries/carousels
       if (Math.abs(diffX) > Math.abs(diffY) * 1.2) {
         return;
       }
 
-      // Smooth, natural touch sensitivity tuned for mobile displays
-      const multiplier = diffY < 0 ? 0.00025 : 0.00020;
+      // Controlled touch multiplier: smooth, gradual progress per touch drag
+      const isMobile = window.innerWidth < 640;
+      const multiplier = isMobile ? (diffY < 0 ? 0.00035 : 0.00028) : (diffY < 0 ? 0.00045 : 0.00035);
       updateTargetProgress(diffY * multiplier);
     };
 
@@ -311,12 +238,15 @@ export default function HomePage({ onNavigate }) {
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('keydown', handleKeyDown);
 
-    // Responsive Lerp Loop (Silky smooth motion, butter physics)
+    // Controlled Lerp Loop (Smooth 60fps physics, avoiding micro re-renders on mobile)
     let animId;
     const renderLoop = () => {
       const diff = targetProgressRef.current - currentProgressRef.current;
-      if (Math.abs(diff) > 0.00003) {
-        currentProgressRef.current += diff * 0.14;
+      const isMobile = window.innerWidth < 640;
+      const threshold = isMobile ? 0.00015 : 0.00003;
+      if (Math.abs(diff) > threshold) {
+        const lerpFactor = isMobile ? 0.12 : 0.14;
+        currentProgressRef.current += diff * lerpFactor;
         setProgress(currentProgressRef.current);
       }
       animId = requestAnimationFrame(renderLoop);
@@ -353,28 +283,25 @@ export default function HomePage({ onNavigate }) {
   }
   const purposeTranslateY = progress < 0.18 ? Math.max(0, (0.18 - progress) * 120) : 0;
 
-  // Phase 3: White Sheet Overlay for Services Cards Deck (0.22 -> 0.50)
-  const whiteSheetP = Math.min(1, Math.max(0, (progress - 0.22) / 0.08));
-  const deckProgress = Math.min(1, Math.max(0, (progress - 0.28) / 0.20));
+  // Phase 3: White Sheet Overlay for Services Cards Deck (0.20 -> 0.52)
+  const whiteSheetP = Math.min(1, Math.max(0, (progress - 0.20) / 0.08));
+  const deckProgress = Math.min(1, Math.max(0, (progress - 0.26) / 0.24));
 
   // Continuous page transitions between sections
-  const phase4TransitionP = Math.min(1, Math.max(0, (progress - 0.44) / 0.08));
-  const phase5TransitionP = Math.min(1, Math.max(0, (progress - 0.58) / 0.08));
-  const phase6TransitionP = Math.min(1, Math.max(0, (progress - 0.70) / 0.10));
-  const tailProgress = Math.min(1, Math.max(0, (progress - 0.80) / 0.20));
+  const phase4TransitionP = Math.min(1, Math.max(0, (progress - 0.46) / 0.08));
+  const phase5TransitionP = Math.min(1, Math.max(0, (progress - 0.60) / 0.08));
+  const phase6TransitionP = Math.min(1, Math.max(0, (progress - 0.72) / 0.10));
+  const tailProgress = Math.min(1, Math.max(0, (progress - 0.82) / 0.18));
 
-  // Natural document continuation translates (Section N pushes Section N-1 UP)
+  // Document continuation translates
   const whiteSheetTranslateY = (1 - whiteSheetP) * 100 - phase4TransitionP * 100;
   const worksSheetTranslateY = (1 - phase4TransitionP) * 100 - phase5TransitionP * 100;
   const processSheetTranslateY = (1 - phase5TransitionP) * 100 - phase6TransitionP * 100;
   const tailSheetTranslateY = (1 - phase6TransitionP) * 100;
   const tailInnerTranslateY = -tailProgress * 16;
 
-  // Phase 6 internal momentum scroll: disabled in favor of natural overflow-y-auto scrolling for 100% form accessibility
-  const contactContentTranslateY = 0;
-
-  // Wheel rotation animation phase: 0.44 -> 0.64
-  const phase4Progress = Math.min(1, Math.max(0, (progress - 0.44) / 0.20));
+  // Wheel rotation animation phase: 0.46 -> 0.66
+  const phase4Progress = Math.min(1, Math.max(0, (progress - 0.46) / 0.20));
 
   const handleNavClick = (link) => {
     if (link === 'Home') {
@@ -392,10 +319,6 @@ export default function HomePage({ onNavigate }) {
 
   const handleProposalClick = (title) => {
     alert(`Initiated project proposal request for "${title}".`);
-  };
-
-  const handleShowAllWorks = () => {
-    alert("Showing full case studies & client portfolio catalog.");
   };
 
   return (
@@ -438,7 +361,7 @@ export default function HomePage({ onNavigate }) {
           <img
             src="/logo.png"
             alt="Integrate Thought Logo"
-            className="w-44 sm:w-60 md:w-72 lg:w-[340px] h-auto object-contain"
+            className="w-40 sm:w-56 md:w-64 lg:w-[340px] h-auto object-contain drop-shadow-2xl"
           />
         </div>
 
@@ -462,7 +385,7 @@ export default function HomePage({ onNavigate }) {
         {/* Scroll Prompt Button */}
         <button
           onClick={handleScrollPrompt}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-white transition-opacity cursor-pointer z-20 pointer-events-auto"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-white transition-opacity cursor-pointer z-20 pointer-events-auto active:scale-95"
           title="Scroll to Our Purpose"
         >
           <span className="text-[11px] font-mono tracking-widest uppercase">Scroll</span>
@@ -472,9 +395,8 @@ export default function HomePage({ onNavigate }) {
         </button>
       </div>
 
-
       {/* ================================================================== */}
-      {/* PHASE 2: OUR PURPOSE (PERFECTLY VERTICALLY CENTERED)              */}
+      {/* PHASE 2: OUR PURPOSE                                               */}
       {/* ================================================================== */}
       <div
         style={{
@@ -483,17 +405,15 @@ export default function HomePage({ onNavigate }) {
           pointerEvents: purposeOpacity < 0.05 ? 'none' : 'auto',
           willChange: 'transform, opacity',
         }}
-        className="absolute inset-0 flex flex-col justify-center px-8 sm:px-16 md:px-24 max-w-7xl mx-auto pointer-events-auto z-10 pt-20 sm:pt-24 pb-10"
+        className="absolute inset-0 flex flex-col justify-center px-6 sm:px-16 md:px-24 max-w-7xl mx-auto pointer-events-auto z-10 pt-20 sm:pt-24 pb-10"
       >
         {/* Top Tagline + Massive Bold Heading */}
         <div className="max-w-5xl">
-          {/* Top Tagline Line */}
           <div className="text-[11px] sm:text-xs font-mono font-semibold tracking-[0.25em] text-slate-400 uppercase mb-4 sm:mb-6">
             DIGITAL EXPERIENCE &bull; GROWTH &bull; AI & AUTOMATION &bull; TECHNOLOGY &bull; DATA
           </div>
 
-          {/* Massive Uppercase 4-Line Heading */}
-          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-[84px] font-extrabold tracking-tight leading-[0.98] text-white uppercase font-sans">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-[84px] font-extrabold tracking-tight leading-[0.98] text-white uppercase font-sans">
             BUILDING DIGITAL <br />
             SYSTEMS THAT <br />
             MOVE BUSINESSES <br />
@@ -503,14 +423,12 @@ export default function HomePage({ onNavigate }) {
           </h2>
         </div>
 
-        {/* Bottom Row: Subtext (Left) & Action Buttons (Right) */}
+        {/* Bottom Row: Subtext & Action Buttons */}
         <div className="mt-8 sm:mt-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
-          {/* Subtext Description */}
           <p className="text-slate-300 text-xs sm:text-sm md:text-base font-normal leading-relaxed max-w-md font-sans">
             Digital experiences, AI and automation designed to help businesses attract customers, streamline operations and scale.
           </p>
 
-          {/* Action Buttons on Bottom Right */}
           <div className="flex items-center gap-3.5 shrink-0">
             <button
               onClick={() => alert("Initiating project consultation with Integrate Thought.")}
@@ -531,7 +449,6 @@ export default function HomePage({ onNavigate }) {
         </div>
       </div>
 
-
       {/* ================================================================== */}
       {/* PHASE 3: STACKED SERVICES CARDS DECK (White Sheet Overlay)         */}
       {/* ================================================================== */}
@@ -543,15 +460,15 @@ export default function HomePage({ onNavigate }) {
         }}
         className="absolute inset-0 w-full h-full bg-white text-slate-950 shadow-[0_-30px_80px_rgba(0,0,0,0.5)] flex flex-col items-center justify-between z-20 pointer-events-auto overflow-hidden"
       >
-        <div className="w-full max-w-lg sm:max-w-xl mx-auto flex flex-col items-center pt-4 sm:pt-8 px-4 sm:px-8">
+        <div className="w-full max-w-lg sm:max-w-xl mx-auto flex flex-col items-center pt-5 sm:pt-8 px-4 sm:px-8 my-auto">
           
           {/* Section Header */}
-          <div className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 sm:mb-8 shrink-0 text-center sm:text-left">
+          <div className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-2.5 mb-3 sm:mb-8 shrink-0 text-center sm:text-left">
             <div>
-              <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-mono font-semibold tracking-widest text-slate-600 uppercase mb-2">
+              <div className="inline-flex items-center px-3 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] sm:text-xs font-mono font-semibold tracking-widest text-slate-600 uppercase mb-1 sm:mb-2">
                 03 / OUR SERVICES
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950">
+              <h2 className="text-xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950">
                 Architecting High-Impact Systems
               </h2>
             </div>
@@ -560,33 +477,34 @@ export default function HomePage({ onNavigate }) {
                 onClick={() => {
                   if (onNavigate) onNavigate('Services');
                 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-xs font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer shrink-0"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-[11px] sm:text-xs font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer shrink-0"
               >
                 <span>View All Services</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               </button>
             </div>
           </div>
 
-          {/* Cards Deck with Reduced Width & Increased Height */}
-          <div className="relative w-full h-[460px] sm:h-[500px]">
+          {/* Cards Deck Container (Resized Smaller for Mobile Viewport) */}
+          <div className="relative w-full h-[350px] sm:h-[480px]">
             {SERVICES_DATA.map((service, index) => {
               let cardP = 1;
               if (index > 0) {
-                // Card 2: 0.10 -> 0.32, Card 3: 0.32 -> 0.54, Card 4: 0.54 -> 0.76
                 const cardStep = 0.22;
                 const startP = (index - 1) * cardStep + 0.10;
                 const endP = startP + cardStep;
                 const rawP = Math.min(1, Math.max(0, (deckProgress - startP) / (endP - startP)));
-                // Ultra-smooth cubic ease-out deceleration curve
                 cardP = 1 - Math.pow(1 - rawP, 3);
               }
 
-              const stackedTop = index * 24;
+              const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+              const stackedTop = index * (isMobile ? 22 : 24);
               const zIndex = 10 + index * 10;
-              const translateY = index === 0 ? 0 : (1 - cardP) * 700;
-              const scale = index === 0 ? 1 : 0.94 + cardP * 0.06;
+              const translateY = index === 0 ? 0 : (1 - cardP) * (isMobile ? 260 : 700);
+              const scale = index === 0 ? 1 : (isMobile ? 0.97 + cardP * 0.03 : 0.94 + cardP * 0.06);
               const opacity = index === 0 ? 1 : Math.min(1, cardP * 2.2);
+
+              const IconComponent = service.icon || Globe;
 
               return (
                 <div
@@ -598,40 +516,46 @@ export default function HomePage({ onNavigate }) {
                     zIndex: zIndex,
                     willChange: 'transform, opacity',
                   }}
-                  className={`absolute inset-x-0 rounded-[32px] ${service.bgClass} ${service.shadowStyle} text-white p-6 sm:p-9 md:p-10 border border-white/20 transition-transform duration-75`}
+                  className={`absolute inset-x-0 rounded-[20px] sm:rounded-[32px] ${service.bgClass} ${service.shadowStyle} text-white p-3.5 sm:p-9 md:p-10 border border-white/20 transition-transform duration-75 max-h-[220px] sm:max-h-none flex flex-col justify-between overflow-hidden`}
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6 items-center">
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-6 items-center h-full">
                     
                     {/* Left Text Column */}
-                    <div className="md:col-span-7 flex flex-col justify-center space-y-3 sm:space-y-4">
-                      <h3 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight">
+                    <div className="sm:col-span-8 flex flex-col justify-between h-full space-y-1.5 sm:space-y-4">
+                      <div className="flex items-center justify-between sm:justify-start gap-2">
+                        <span className="px-2 py-0.5 rounded-full bg-white/20 border border-white/30 text-[9px] sm:text-[10px] font-mono font-bold tracking-wider uppercase text-white">
+                          {service.tag}
+                        </span>
+                        <span className="sm:hidden text-[10px] font-mono font-bold text-white/80">
+                          0{index + 1} / 04
+                        </span>
+                      </div>
+
+                      <h3 className="text-sm sm:text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight">
                         {service.title}
                       </h3>
-                      <p className="text-white/90 text-xs sm:text-sm leading-relaxed font-normal max-w-xs sm:max-w-sm">
+
+                      <p className="text-white/90 text-[11px] sm:text-sm leading-snug font-normal line-clamp-2 sm:line-clamp-none">
                         {service.description}
                       </p>
-                      <div className="pt-2">
+
+                      <div className="pt-0.5 sm:pt-2">
                         <button
                           onClick={() => handleProposalClick(service.title)}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/20 hover:bg-white/30 text-white font-semibold text-xs transition-all backdrop-blur-md border border-white/30 cursor-pointer active:scale-95"
+                          className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl bg-white/20 hover:bg-white/30 text-white font-semibold text-[10px] sm:text-xs transition-all backdrop-blur-md border border-white/30 cursor-pointer active:scale-95"
                         >
                           <span>Request Proposal</span>
-                          <ArrowUpRight className="w-3.5 h-3.5" />
+                          <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                         </button>
                       </div>
                     </div>
 
                     {/* Right Vector Icon Frame */}
-                    {(() => {
-                      const IconComponent = service.icon || Globe;
-                      return (
-                        <div className="md:col-span-5 flex items-center justify-center p-5 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-xl aspect-square max-h-[170px] sm:max-h-[200px] mx-auto shadow-inner group-hover:scale-105 transition-transform">
-                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white text-slate-950 flex items-center justify-center shadow-2xl ring-4 ring-white/30 group-hover:rotate-3 transition-transform">
-                            <IconComponent className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={1.75} />
-                          </div>
-                        </div>
-                      );
-                    })()}
+                    <div className="hidden sm:flex sm:col-span-4 items-center justify-center p-4 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-xl aspect-square max-h-[170px] mx-auto shadow-inner">
+                      <div className="w-14 h-14 sm:w-18 sm:h-18 rounded-2xl bg-white text-slate-950 flex items-center justify-center shadow-2xl ring-4 ring-white/30">
+                        <IconComponent className="w-7 h-7 sm:w-9 sm:h-9" strokeWidth={1.75} />
+                      </div>
+                    </div>
 
                   </div>
                 </div>
@@ -642,9 +566,8 @@ export default function HomePage({ onNavigate }) {
         </div>
       </div>
 
-
       {/* ================================================================== */}
-      {/* PHASE 4: FEATURED CLIENT WORKS SECTION (FULL SCREEN SPINNING WHEEL) */}
+      {/* PHASE 4: FEATURED CLIENT WORKS SECTION                             */}
       {/* ================================================================== */}
       <div
         style={{
@@ -654,8 +577,8 @@ export default function HomePage({ onNavigate }) {
         }}
         className="absolute inset-0 w-full h-full bg-[#f4f7fa] text-slate-950 shadow-[0_-30px_80px_rgba(0,0,0,0.3)] flex flex-col justify-between p-4 sm:p-8 z-30 pointer-events-auto overflow-visible"
       >
-        {/* Static Fixed Canvas Header Text */}
-        <div className="w-full max-w-5xl mx-auto pt-12 sm:pt-14 shrink-0 z-40 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        {/* Header */}
+        <div className="w-full max-w-5xl mx-auto pt-10 sm:pt-14 shrink-0 z-40 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <div className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.25em] text-slate-500 uppercase mb-1.5">
               FEATURED WORK
@@ -665,7 +588,7 @@ export default function HomePage({ onNavigate }) {
               the needle.
             </h2>
             <p className="text-slate-600 text-xs sm:text-sm font-medium tracking-normal max-w-md font-sans leading-relaxed">
-              Long-term engagements where design, engineering and automation shipped together. Scroll to rotate through portfolio highlights.
+              Long-term engagements where design, engineering and automation shipped together.
             </p>
           </div>
 
@@ -683,7 +606,7 @@ export default function HomePage({ onNavigate }) {
         </div>
 
         {/* MOBILE VIEW: SIDE-BY-SIDE HORIZONTAL CARDS TRACK (sm:hidden) */}
-        <div className="w-full flex sm:hidden overflow-x-auto gap-4 px-4 py-4 snap-x snap-mandatory no-scrollbar my-auto">
+        <div className="w-full flex sm:hidden overflow-x-auto gap-4 px-4 py-4 snap-x snap-mandatory no-scrollbar touch-pan-x my-auto">
           {WORKS_DATA.map((work) => (
             <div
               key={work.id}
@@ -694,7 +617,7 @@ export default function HomePage({ onNavigate }) {
                   alert(`Exploring case study for "${work.title}".`);
                 }
               }}
-              className="shrink-0 snap-center w-[250px] h-[330px] relative overflow-hidden rounded-2xl bg-slate-900 border border-slate-700/50 shadow-xl active:scale-95 transition-transform"
+              className="shrink-0 snap-center w-[250px] h-[330px] relative overflow-hidden rounded-2xl bg-slate-900 border border-slate-700/50 shadow-xl active:scale-95 transition-transform cursor-pointer"
             >
               <div className="absolute inset-0 overflow-hidden">
                 <img
@@ -769,7 +692,6 @@ export default function HomePage({ onNavigate }) {
                     </div>
 
                     <div className="absolute inset-0 flex flex-col justify-between p-3.5 sm:p-4.5">
-                      {/* Top Row: Category Badge + Top Right Arrow Circle */}
                       <div className="flex justify-between items-start gap-2">
                         <span className="px-2.5 py-1 rounded-full bg-white/90 backdrop-blur text-slate-950 font-bold text-[9px] sm:text-[11px] tracking-tight shadow-md font-sans">
                           {work.cat}
@@ -779,7 +701,6 @@ export default function HomePage({ onNavigate }) {
                         </div>
                       </div>
 
-                      {/* Bottom Row: Large Title + Detailed Case Study Pill */}
                       <div className="space-y-1">
                         <h3 className="text-sm sm:text-lg md:text-xl font-extrabold leading-tight text-white font-sans drop-shadow-md">
                           {work.title}
@@ -800,13 +721,8 @@ export default function HomePage({ onNavigate }) {
         </div>
       </div>
 
-
       {/* ================================================================== */}
-      {/* ================================================================== */}
-      {/* ================================================================== */}
-      {/* ================================================================== */}
-      {/* ================================================================== */}
-      {/* PHASE 5: OUR PROCESS SECTION                                      */}
+      {/* PHASE 5: OUR PROCESS SECTION                                       */}
       {/* ================================================================== */}
       <div
         style={{
@@ -817,7 +733,7 @@ export default function HomePage({ onNavigate }) {
         className="absolute inset-0 w-full h-full bg-[#f5f3ec] text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center p-4 sm:p-8 z-40 pointer-events-auto overflow-hidden select-none"
       >
         <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center min-h-full py-8 sm:py-12 my-auto">
-          {/* Header - Centered with balanced top clearance below Navbar */}
+          {/* Header */}
           <div className="w-full max-w-5xl mx-auto text-center shrink-0 mb-6 sm:mb-8">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-300/80 text-slate-700 text-[11px] font-mono font-semibold tracking-widest uppercase mb-3 shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-slate-900 animate-pulse" />
@@ -831,8 +747,8 @@ export default function HomePage({ onNavigate }) {
             </p>
           </div>
 
-          {/* MOBILE VIEW: SIDE-BY-SIDE HORIZONTAL SWIPEABLE TRACK (sm:hidden) */}
-          <div className="w-full flex sm:hidden overflow-x-auto gap-4 px-4 py-2 snap-x snap-mandatory no-scrollbar my-auto">
+          {/* MOBILE VIEW: SIDE-BY-SIDE HORIZONTAL SWIPE TRACK (sm:hidden) */}
+          <div className="w-full flex sm:hidden overflow-x-auto gap-4 px-4 py-2 snap-x snap-mandatory no-scrollbar touch-pan-x my-auto">
             {PROCESS_STAGES_DATA.map((stage, idx) => (
               <div key={stage.id} className="shrink-0 snap-center w-[250px]">
                 <ProcessStageCard
@@ -881,7 +797,7 @@ export default function HomePage({ onNavigate }) {
             <StackedTestimonials />
           </div>
 
-          {/* 2. MARQUEE BANNER & FOOTER (CONNECTED FLUSH AT BOTTOM WITH ZERO GAP) */}
+          {/* 2. MARQUEE BANNER & FOOTER */}
           <div className="w-full shrink-0 bg-white text-slate-900">
             <CompanyMarqueeBanner />
             <Footer onNavigate={onNavigate} />

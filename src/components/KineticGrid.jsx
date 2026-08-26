@@ -88,7 +88,8 @@ export default function KineticGrid({
     const initGrid = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      const dpr = window.devicePixelRatio || 1;
+      const isMobile = width < 640;
+      const dpr = isMobile ? 1 : (window.devicePixelRatio || 1);
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -97,7 +98,8 @@ export default function KineticGrid({
 
       ctx.scale(dpr, dpr);
 
-      const effectiveSpacing = Math.max(25, spacing);
+      // On mobile, use wider spacing to reduce canvas nodes and draw calls for 60fps performance
+      const effectiveSpacing = isMobile ? Math.max(100, spacing * 1.6) : Math.max(25, spacing);
       const cols = Math.ceil(width / effectiveSpacing) + 3;
       const rows = Math.ceil(height / effectiveSpacing) + 3;
 
@@ -192,6 +194,7 @@ export default function KineticGrid({
 
       const width = window.innerWidth;
       const height = window.innerHeight;
+      const isMobile = width < 640;
       const { nodes, cols, rows, mouse, smoothMouse, laserPoints, pulses } = stateRef.current;
 
       const LASER_LIFESPAN = 380;
@@ -216,8 +219,8 @@ export default function KineticGrid({
         }
       }
 
-      // Physics integration pass
-      const subSteps = 2;
+      // Physics integration pass (1 step on mobile for 60fps performance)
+      const subSteps = isMobile ? 1 : 2;
       const subDt = dt / subSteps;
 
       for (let s = 0; s < subSteps; s++) {

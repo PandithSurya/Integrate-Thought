@@ -122,6 +122,8 @@ export const TESTIMONIALS_DATA = [
 export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 640);
@@ -138,8 +140,28 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
     setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
   };
 
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX === null || touchEndX === null) return;
+    const distance = touchStartX - touchEndX;
+    if (distance > 35) {
+      handleNext();
+    } else if (distance < -35) {
+      handlePrev();
+    }
+    setTouchStartX(null);
+    setTouchEndX(null);
+  };
+
   return (
-    <div className="w-full max-w-5xl mx-auto py-2 sm:py-4 px-3 sm:px-4 flex flex-col items-center overflow-hidden font-sans select-none">
+    <div className="w-full max-w-5xl mx-auto py-4 sm:py-6 px-3 sm:px-4 flex flex-col items-center overflow-hidden font-sans select-none">
       
       {/* Header Title Section (Clean Light Theme) */}
       <div className="text-center mb-4 sm:mb-6 max-w-2xl mx-auto">
@@ -156,7 +178,12 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
       </div>
 
       {/* Overlapping Stacked Cards Container */}
-      <div className="relative w-full h-[320px] sm:h-[360px] flex items-center justify-center overflow-visible">
+      <div 
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className="relative w-full h-[300px] sm:h-[360px] flex items-center justify-center overflow-visible touch-pan-y"
+      >
         {items.map((item, index) => {
           let offset = index - activeIndex;
 
@@ -172,8 +199,8 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
           let translateX = 0;
           let opacity = 0;
 
-          const sideOffset = isMobile ? 40 : 190;
-          const farOffset = isMobile ? 75 : 340;
+          const sideOffset = isMobile ? 22 : 180;
+          const farOffset = isMobile ? 44 : 340;
 
           if (offset === 0) {
             zIndex = 30;
@@ -183,28 +210,28 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
             opacity = 1;
           } else if (offset === 1) {
             zIndex = 20;
-            scale = isMobile ? 0.92 : 0.9;
-            rotate = isMobile ? 3 : 5;
+            scale = isMobile ? 0.88 : 0.9;
+            rotate = isMobile ? 2 : 5;
             translateX = sideOffset;
-            opacity = isMobile ? 0.45 : 0.75;
+            opacity = isMobile ? 0.35 : 0.75;
           } else if (offset === -1) {
             zIndex = 20;
-            scale = isMobile ? 0.92 : 0.9;
-            rotate = isMobile ? -3 : -5;
+            scale = isMobile ? 0.88 : 0.9;
+            rotate = isMobile ? -2 : -5;
             translateX = -sideOffset;
-            opacity = isMobile ? 0.45 : 0.75;
+            opacity = isMobile ? 0.35 : 0.75;
           } else if (offset >= 2) {
             zIndex = 10;
             scale = 0.8;
-            rotate = isMobile ? 6 : 10;
+            rotate = isMobile ? 4 : 10;
             translateX = farOffset;
-            opacity = 0.2;
+            opacity = isMobile ? 0 : 0.2;
           } else {
             zIndex = 10;
             scale = 0.8;
-            rotate = isMobile ? -6 : -10;
+            rotate = isMobile ? -4 : -10;
             translateX = -farOffset;
-            opacity = 0.2;
+            opacity = isMobile ? 0 : 0.2;
           }
 
           const isActive = offset === 0;
@@ -227,17 +254,17 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
                 mass: 0.8
               }}
               onClick={() => setActiveIndex(index)}
-              className={`absolute top-0 w-[90vw] max-w-[440px] p-5 sm:p-8 rounded-2xl cursor-pointer transition-all duration-300 ${item.theme.bg} ${
+              className={`absolute top-0 w-[88vw] max-w-[440px] p-5 sm:p-8 rounded-2xl cursor-pointer transition-all duration-300 ${item.theme.bg} ${
                 isActive
                   ? `border-2 ${item.theme.activeBorder} shadow-2xl text-white`
                   : `border ${item.theme.border} text-slate-300 shadow-lg`
               }`}
             >
-              <div className="space-y-4 sm:space-y-6 flex flex-col justify-between h-full">
-                <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-3 sm:space-y-6 flex flex-col justify-between h-full">
+                <div className="space-y-2 sm:space-y-4">
                   <div className="flex items-center justify-between">
                     {/* Initials Badge Circle */}
-                    <div className={`size-11 sm:size-12 rounded-full ${item.theme.badgeBg} border ${item.theme.badgeBorder} ${item.theme.badgeText} font-mono font-bold text-sm sm:text-base flex items-center justify-center shadow-md shrink-0`}>
+                    <div className={`size-10 sm:size-12 rounded-full ${item.theme.badgeBg} border ${item.theme.badgeBorder} ${item.theme.badgeText} font-mono font-bold text-xs sm:text-base flex items-center justify-center shadow-md shrink-0`}>
                       {item.initials}
                     </div>
 
@@ -259,12 +286,12 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
                     </div>
                   </div>
 
-                  <p className="text-xs sm:text-sm font-light italic leading-relaxed text-slate-100">
+                  <p className="text-xs sm:text-sm font-light italic leading-relaxed text-slate-100 line-clamp-4 sm:line-clamp-none">
                     "{item.quote}"
                   </p>
                 </div>
 
-                <div className="pt-3 sm:pt-4 border-t border-white/10 font-mono text-[11px] sm:text-xs">
+                <div className="pt-2 sm:pt-4 border-t border-white/10 font-mono text-[11px] sm:text-xs">
                   <span className={`${item.theme.accentText} font-bold block`}>– {item.name}</span>
                   <span className={`${item.theme.subText} text-[10px] sm:text-[11px] block mt-0.5`}>{item.role}, {item.location}</span>
                 </div>
@@ -301,3 +328,4 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
     </div>
   );
 }
+
