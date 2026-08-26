@@ -291,22 +291,22 @@ export default function ServicesPage({ onNavigate }) {
         dotColor="#94a3b8"
       />
 
-      {/* HERO BANNER TOP HEADER (COMPACT & SEPARATED FROM CARDS) */}
-      <div className="absolute top-16 sm:top-20 inset-x-0 pt-2 sm:pt-4 px-4 text-center max-w-5xl mx-auto z-10 pointer-events-none">
-        <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-slate-200/80 border border-slate-300 text-slate-700 text-[10px] font-mono font-semibold tracking-widest uppercase mb-1.5 shadow-sm">
-          <Sparkles className="w-3 h-3 text-slate-900" />
-          <span>OUR SERVICES CATALOG</span>
-        </div>
-        <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 leading-tight font-sans">
-          Comprehensive Digital &amp; AI Engineering Solutions
-        </h1>
-      </div>
-
       {/* ==================================================================== */}
-      {/* 4 HARDWARE-ACCELERATED VIBRANT CARD SETS (POSITIONED BELOW HEADER)   */}
+      {/* CENTERED VIEWPORT: HEADER & CARDS STACKED PERFECTLY TOGETHER         */}
       {/* ==================================================================== */}
-      <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center pt-28 sm:pt-36 z-20 px-3 sm:px-8">
+      <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center pt-16 sm:pt-20 pb-6 px-3 sm:px-8 z-20">
         
+        {/* HERO TITLE HEADER POSITIONED DIRECTLY ABOVE THE CARDS */}
+        <div className="text-center max-w-4xl mx-auto mb-4 sm:mb-6 pointer-events-none z-10 shrink-0">
+          <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-slate-200/80 border border-slate-300 text-slate-700 text-[10px] sm:text-[11px] font-mono font-semibold tracking-widest uppercase mb-1.5 shadow-sm">
+            <Sparkles className="w-3 h-3 text-slate-900" />
+            <span>OUR SERVICES CATALOG</span>
+          </div>
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 leading-tight font-sans">
+            Comprehensive Digital &amp; AI Engineering Solutions
+          </h1>
+        </div>
+
         {/* CENTERED STACK VIEWPORT */}
         <div className="relative w-full max-w-7xl h-[340px] sm:h-[480px] flex items-center justify-center">
           {SERVICES_CATALOG.map((cardSet, setIdx) => {

@@ -341,6 +341,13 @@ export default function HomePage({ onNavigate }) {
     mobilePurposeTranslateY = -(mobileScrollY - 1050) * 0.3;
   }
 
+  // Mobile Services Track Fixed Viewport Scroll Range (350px -> 1450px)
+  const isServicesActive = mobileScrollY >= 350 && mobileScrollY < 1450;
+  const isServicesPast = mobileScrollY >= 1450;
+
+  const servicesP = Math.min(1, Math.max(0, (mobileScrollY - 350) / 1100));
+  const mobileServicesTranslateX = servicesP * 920;
+
   // ==========================================================================
   // MOBILE VIEW: 100% SEAMLESS CONTINUOUS DOCUMENT FLOW (OUR PURPOSE HERO)
   // ==========================================================================
@@ -413,29 +420,45 @@ export default function HomePage({ onNavigate }) {
           </div>
         </section>
 
-        {/* 3. SERVICES SECTION (FREE FLOW VERTICAL CARDS LIST - NO STACKING ANIMATION) */}
-        <section className="relative z-20 w-full py-12 px-4 bg-white text-slate-950 shadow-2xl">
-          <div className="max-w-xl mx-auto">
-            <div className="flex flex-col gap-2 mb-6">
-              <div className="inline-flex items-center px-3 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] font-mono font-semibold tracking-widest text-slate-600 uppercase self-start">
+        {/* 3. SERVICES SECTION (100% PINNED FIXED VIEWPORT UNTIL ALL 4 CARDS ARE SCROLLED) */}
+        <div className="relative w-full h-[1100px] z-20">
+          <div
+            className={
+              isServicesActive
+                ? "fixed inset-0 w-full h-screen bg-white text-slate-950 flex flex-col justify-center px-4 overflow-hidden z-20 shadow-2xl"
+                : isServicesPast
+                ? "absolute bottom-0 w-full h-screen bg-white text-slate-950 flex flex-col justify-center px-4 overflow-hidden z-20 shadow-2xl"
+                : "absolute top-0 w-full h-screen bg-white text-slate-950 flex flex-col justify-center px-4 overflow-hidden z-20 shadow-2xl"
+            }
+          >
+            <div className="max-w-xl mx-auto w-full mb-6">
+              <div className="inline-flex items-center px-3 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] font-mono font-semibold tracking-widest text-slate-600 uppercase self-start mb-2">
                 03 / OUR SERVICES
               </div>
               <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">
                 Architecting High-Impact Systems
               </h2>
+              <p className="text-xs text-slate-500 font-medium mt-1">
+                Scroll down to explore all services &rarr;
+              </p>
             </div>
 
-            {/* Natural Vertical List of 4 Services Cards (Zero Card Stacking Lock) */}
-            <div className="grid grid-cols-1 gap-4">
-              {SERVICES_DATA.map((service, index) => {
-                const IconComponent = service.icon || Globe;
-                return (
+            {/* Horizontal Track driven by scroll towards left */}
+            <div className="w-full overflow-hidden">
+              <div
+                style={{
+                  transform: `translate3d(-${mobileServicesTranslateX}px, 0, 0)`,
+                  willChange: 'transform',
+                }}
+                className="flex items-center gap-4 transition-transform duration-75 ease-out"
+              >
+                {SERVICES_DATA.map((service, index) => (
                   <div
                     key={service.id}
-                    className={`rounded-2xl ${service.bgClass} text-white p-5 shadow-lg border border-white/20 flex flex-col justify-between space-y-3`}
+                    className={`shrink-0 w-[280px] sm:w-[320px] h-[330px] rounded-3xl ${service.bgClass} text-white p-6 shadow-xl border border-white/20 flex flex-col justify-between`}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className="px-2.5 py-0.5 rounded-full bg-white/20 border border-white/30 text-[10px] font-mono font-bold uppercase">
+                      <span className="px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-mono font-bold uppercase">
                         {service.tag}
                       </span>
                       <span className="text-xs font-mono font-bold text-white/80">
@@ -443,29 +466,30 @@ export default function HomePage({ onNavigate }) {
                       </span>
                     </div>
 
-                    <h3 className="text-lg font-bold text-white leading-snug">
-                      {service.title}
-                    </h3>
+                    <div className="space-y-2 mt-auto">
+                      <h3 className="text-lg font-extrabold text-white leading-snug font-sans">
+                        {service.title}
+                      </h3>
+                      <p className="text-white/90 text-xs leading-relaxed font-normal font-sans line-clamp-3">
+                        {service.description}
+                      </p>
+                    </div>
 
-                    <p className="text-white/90 text-xs leading-relaxed font-normal">
-                      {service.description}
-                    </p>
-
-                    <div className="pt-2">
+                    <div className="pt-3 border-t border-white/20 flex items-center justify-between">
                       <button
                         onClick={() => handleProposalClick(service.title)}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-semibold text-xs border border-white/30 cursor-pointer active:scale-95"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-white font-semibold text-xs border border-white/30 cursor-pointer active:scale-95 transition-all"
                       >
                         <span>Request Proposal</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
           </div>
-        </section>
+        </div>
 
         {/* 4. FEATURED WORKS SECTION (FREE FLOW - ZERO FULLSCREEN LOCKING) */}
         <section id="works-section-mobile" className="relative z-30 w-full py-12 px-4 bg-[#f4f7fa] text-slate-950 shadow-2xl">
