@@ -161,17 +161,17 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto py-4 sm:py-6 px-3 sm:px-4 flex flex-col items-center overflow-hidden font-sans select-none">
+    <div className="w-full max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-4 sm:py-6 flex flex-col items-start overflow-hidden font-sans select-none">
       
-      {/* Header Title Section (Clean Light Theme) */}
-      <div className="text-center mb-5 sm:mb-7 max-w-2xl mx-auto">
-        <div className="section-badge-light mb-2.5">
+      {/* Header Title Section (Standardized Left Alignment) */}
+      <div className="w-full text-left items-start mb-6 sm:mb-8">
+        <div className="section-badge-light mb-2.5 self-start">
           <span>05 / VERIFIED FEEDBACK</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-2 font-sans leading-tight">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-2 font-sans leading-tight text-left">
           Client Perspectives
         </h2>
-        <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal max-w-lg mx-auto font-sans leading-relaxed">
+        <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal max-w-lg font-sans leading-relaxed text-left">
           What our students, clients, and partners say about Integrate Thought.
         </p>
       </div>
@@ -181,7 +181,7 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className="relative w-full h-[300px] sm:h-[360px] flex items-center justify-center overflow-visible touch-pan-y"
+        className="relative w-full max-w-4xl mx-auto h-[300px] sm:h-[360px] flex items-center justify-center overflow-visible touch-pan-y"
       >
         {items.map((item, index) => {
           let offset = index - activeIndex;

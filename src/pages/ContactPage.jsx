@@ -166,6 +166,7 @@ export default function ContactPage({ onNavigate }) {
         backgroundColor="#eef4fa"
         lineColor="#cbd5e1"
         dotColor="#94a3b8"
+        hoverColor="#ec4899"
       />
 
       <div className="relative z-10 font-sans flex-1 flex flex-col">

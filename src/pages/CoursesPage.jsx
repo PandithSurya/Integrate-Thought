@@ -199,6 +199,7 @@ export default function CoursesPage({ onNavigate }) {
         backgroundColor="#eef4fa"
         lineColor="#cbd5e1"
         dotColor="#94a3b8"
+        hoverColor="#f59e0b"
       />
 
       <div className="relative z-10 font-sans flex-1 flex flex-col">

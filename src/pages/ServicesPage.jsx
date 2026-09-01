@@ -303,6 +303,7 @@ export default function ServicesPage({ onNavigate, initialStep = 0, initialServi
         backgroundColor="#f8fafc"
         lineColor="#cbd5e1"
         dotColor="#94a3b8"
+        hoverColor="#6366f1"
       />
 
       {/* ==================================================================== */}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
 import WorksPage from './pages/WorksPage';
@@ -14,6 +15,7 @@ export default function App() {
   const [isInitialReady, setIsInitialReady] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
   const [navigationKey, setNavigationKey] = useState(0);
+  const [isPageRevealed, setIsPageRevealed] = useState(false);
 
   // Establish initial application readiness without exceeding sensible limits
   useEffect(() => {
@@ -27,9 +29,10 @@ export default function App() {
     if (!page) return;
     const target = page.toLowerCase();
 
-    // Trigger the 3-5 second brand transition when switching tabs
+    // Trigger the brand transition when switching tabs
     setNavigationKey(Date.now());
     setIsNavigating(true);
+    setIsPageRevealed(false);
     setPageParams(params);
     setCurrentPage(target);
     window.scrollTo(0, 0);
@@ -64,22 +67,38 @@ export default function App() {
         <IntegrateThoughtLoader
           mode="initial"
           isReady={isInitialReady}
-          onComplete={() => setShowInitialLoader(false)}
+          onExiting={() => setIsPageRevealed(true)}
+          onComplete={() => {
+            setShowInitialLoader(false);
+            setIsPageRevealed(true);
+          }}
         />
       )}
 
-      {/* 2. 3-5 SECOND BRAND NAVIGATION TRANSITION ON TAB SWITCH */}
+      {/* 2. BRAND NAVIGATION TRANSITION ON TAB SWITCH */}
       {isNavigating && (
         <IntegrateThoughtLoader
           key={navigationKey}
           mode="navigation"
           isReady={true}
-          onComplete={() => setIsNavigating(false)}
+          onExiting={() => setIsPageRevealed(true)}
+          onComplete={() => {
+            setIsNavigating(false);
+            setIsPageRevealed(true);
+          }}
         />
       )}
 
-      {/* 3. ACTIVE APPLICATION PAGE */}
-      {renderPage()}
+      {/* 3. ACTIVE APPLICATION PAGE WITH CLEAN OPACITY TRANSITION */}
+      <motion.div
+        key={`page-wrapper-${currentPage}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isPageRevealed ? 1 : 0 }}
+        transition={{ duration: 0.4 }}
+        className="w-full min-h-screen"
+      >
+        {renderPage()}
+      </motion.div>
     </>
   );
 }

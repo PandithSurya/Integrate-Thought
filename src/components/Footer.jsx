@@ -28,8 +28,8 @@ export function Footer({ onNavigate }) {
   };
 
   return (
-    <footer className="w-full bg-white text-slate-900 pt-6 sm:pt-8 pb-6 px-4 sm:px-12 md:px-16 font-sans select-none">
-      <div className="max-w-7xl mx-auto">
+    <footer className="w-full bg-white text-slate-900 pt-6 sm:pt-8 pb-16 sm:pb-20 font-sans select-none">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* TOP 3-COLUMN LAYOUT */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 pb-12 items-start">

@@ -74,9 +74,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     color-scheme: dark;
-    overflow-x: hidden;
-    overflow-y: auto;
-    scroll-behavior: smooth;
+    overflow-x: clip;
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
@@ -91,8 +89,6 @@
     width: 100%;
     min-height: 100vh;
     position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
     font-family: 'Manrope', 'Avenir Next', 'Trebuchet MS', sans-serif !important;

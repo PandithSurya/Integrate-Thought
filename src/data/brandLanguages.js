@@ -3,7 +3,8 @@
  * "ONE BRAND. MANY LANGUAGES. ONE IDENTITY."
  * 
  * Linguistically accurate transliterations preserving the exact brand identity
- * across India's principal scripts, paired with bespoke optical tracking and font stacks.
+ * across India's principal scripts, paired with bespoke optical tracking, font stacks,
+ * and curated jewel-tone colors sampled directly from the Integrate Thought logo facets.
  */
 
 export const INITIAL_BRAND_SEQUENCE = [
@@ -13,6 +14,7 @@ export const INITIAL_BRAND_SEQUENCE = [
     language: 'English',
     font: "'Manrope', 'Avenir Next', sans-serif",
     tracking: 'tracking-[0.2em] sm:tracking-[0.24em]',
+    color: '#0a0a0a', // Deep solid black
     duration: 550,
   },
   {
@@ -21,7 +23,8 @@ export const INITIAL_BRAND_SEQUENCE = [
     language: 'Telugu',
     font: "'Noto Sans Telugu', 'Manrope', sans-serif",
     tracking: 'tracking-normal',
-    duration: 420,
+    color: '#0284c7', // Vibrant Sky / Cyan facet
+    duration: 440,
   },
   {
     id: 'hi',
@@ -29,7 +32,8 @@ export const INITIAL_BRAND_SEQUENCE = [
     language: 'Hindi',
     font: "'Noto Sans Devanagari', 'Manrope', sans-serif",
     tracking: 'tracking-normal',
-    duration: 420,
+    color: '#7c3aed', // Royal Violet / Purple facet
+    duration: 440,
   },
   {
     id: 'ur',
@@ -37,7 +41,8 @@ export const INITIAL_BRAND_SEQUENCE = [
     language: 'Urdu',
     font: "'Noto Sans Arabic', 'Manrope', sans-serif",
     tracking: 'tracking-normal',
-    duration: 420,
+    color: '#059669', // Emerald / Forest Green facet
+    duration: 440,
   },
   {
     id: 'ta',
@@ -45,7 +50,8 @@ export const INITIAL_BRAND_SEQUENCE = [
     language: 'Tamil',
     font: "'Noto Sans Tamil', 'Manrope', sans-serif",
     tracking: 'tracking-normal',
-    duration: 420,
+    color: '#e11d48', // Ruby Crimson / Rose facet
+    duration: 440,
   },
   {
     id: 'kn',
@@ -53,7 +59,8 @@ export const INITIAL_BRAND_SEQUENCE = [
     language: 'Kannada',
     font: "'Noto Sans Kannada', 'Manrope', sans-serif",
     tracking: 'tracking-normal',
-    duration: 420,
+    color: '#d97706', // Radiant Amber / Warm Gold facet
+    duration: 440,
   },
   {
     id: 'bn',
@@ -61,7 +68,8 @@ export const INITIAL_BRAND_SEQUENCE = [
     language: 'Bengali',
     font: "'Noto Sans Bengali', 'Manrope', sans-serif",
     tracking: 'tracking-normal',
-    duration: 420,
+    color: '#c026d3', // Electric Magenta / Fuchsia facet
+    duration: 440,
   },
   {
     id: 'ml',
@@ -69,7 +77,8 @@ export const INITIAL_BRAND_SEQUENCE = [
     language: 'Malayalam',
     font: "'Noto Sans Malayalam', 'Manrope', sans-serif",
     tracking: 'tracking-normal',
-    duration: 420,
+    color: '#2563eb', // Sapphire Blue facet
+    duration: 440,
   },
   {
     id: 'gu',
@@ -77,7 +86,8 @@ export const INITIAL_BRAND_SEQUENCE = [
     language: 'Gujarati',
     font: "'Noto Sans Gujarati', 'Manrope', sans-serif",
     tracking: 'tracking-normal',
-    duration: 420,
+    color: '#ea580c', // Tangerine / Coral Orange facet
+    duration: 440,
   },
   {
     id: 'en-final',
@@ -85,14 +95,14 @@ export const INITIAL_BRAND_SEQUENCE = [
     language: 'English',
     font: "'Manrope', 'Avenir Next', sans-serif",
     tracking: 'tracking-[0.2em] sm:tracking-[0.24em]',
+    color: '#0a0a0a', // Deep solid black
     duration: 600,
   },
 ];
 
 /**
  * Snappy, refined tab navigation sequence (~2.8 - 3.0 seconds total)
- * Allows the user to appreciate the multilingual brand transformation
- * without feeling sluggish or prolonged when switching tabs.
+ * Features distinct logo facet colors for each regional script.
  */
 export const NAVIGATION_BRAND_SEQUENCE = [
   {
@@ -101,6 +111,7 @@ export const NAVIGATION_BRAND_SEQUENCE = [
     language: 'English',
     font: "'Manrope', 'Avenir Next', sans-serif",
     tracking: 'tracking-[0.2em] sm:tracking-[0.24em]',
+    color: '#0a0a0a', // Deep solid black
     duration: 520,
   },
   {
@@ -109,6 +120,7 @@ export const NAVIGATION_BRAND_SEQUENCE = [
     language: 'Telugu',
     font: "'Noto Sans Telugu', 'Manrope', sans-serif",
     tracking: 'tracking-normal',
+    color: '#0284c7', // Vibrant Sky / Cyan facet
     duration: 460,
   },
   {
@@ -117,6 +129,7 @@ export const NAVIGATION_BRAND_SEQUENCE = [
     language: 'Hindi',
     font: "'Noto Sans Devanagari', 'Manrope', sans-serif",
     tracking: 'tracking-normal',
+    color: '#7c3aed', // Royal Violet / Purple facet
     duration: 460,
   },
   {
@@ -125,6 +138,7 @@ export const NAVIGATION_BRAND_SEQUENCE = [
     language: 'Tamil',
     font: "'Noto Sans Tamil', 'Manrope', sans-serif",
     tracking: 'tracking-normal',
+    color: '#e11d48', // Ruby Crimson / Rose facet
     duration: 460,
   },
   {
@@ -133,6 +147,7 @@ export const NAVIGATION_BRAND_SEQUENCE = [
     language: 'English',
     font: "'Manrope', 'Avenir Next', sans-serif",
     tracking: 'tracking-[0.2em] sm:tracking-[0.24em]',
+    color: '#0a0a0a', // Deep solid black
     duration: 550,
   },
 ];

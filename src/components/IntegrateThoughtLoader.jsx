@@ -11,11 +11,13 @@ import { INITIAL_BRAND_SEQUENCE, NAVIGATION_BRAND_SEQUENCE } from '../data/brand
  * Features:
  *  - Commanding hero brand mark
  *  - Multilingual brand name representations across Indian scripts
- *  - Cinematic Focal Lift & Atmospheric Dissolve out-animation
+ *  - Logo facet-matched jewel tones
+ *  - Signature Zoom-Out exit choreography paired with landing page Gaussian blur resolution
  */
 export default function IntegrateThoughtLoader({
   isReady = true,
   onComplete,
+  onExiting,
   mode = 'initial', // 'initial' | 'navigation'
 }) {
   const sequence = mode === 'navigation' ? NAVIGATION_BRAND_SEQUENCE : INITIAL_BRAND_SEQUENCE;
@@ -42,12 +44,19 @@ export default function IntegrateThoughtLoader({
     isFirstRender.current = false;
   }, []);
 
+  const handleTriggerExit = () => {
+    setIsExiting(true);
+    if (onExiting) {
+      onExiting();
+    }
+  };
+
   // Sequencer loop
   useEffect(() => {
     if (prefersReducedMotion) {
       if (isReady) {
         timerRef.current = setTimeout(() => {
-          setIsExiting(true);
+          handleTriggerExit();
         }, 2200);
       }
       return () => clearTimeout(timerRef.current);
@@ -60,7 +69,7 @@ export default function IntegrateThoughtLoader({
       // Reached the final English hold
       if (isReady) {
         timerRef.current = setTimeout(() => {
-          setIsExiting(true);
+          handleTriggerExit();
         }, currentItem.duration);
       } else {
         // App still loading, loop through regional languages again
@@ -90,7 +99,7 @@ export default function IntegrateThoughtLoader({
           exit={{
             opacity: 0,
             transition: {
-              duration: 0.55,
+              duration: 0.65,
               ease: [0.16, 1, 0.3, 1], // Buttery smooth luxury dissolve
             },
           }}
@@ -99,19 +108,18 @@ export default function IntegrateThoughtLoader({
           aria-live="polite"
           aria-label="Loading Integrate Thought"
         >
-          {/* OPTICALLY CENTERED UNIFIED BRAND LOCKUP */}
+          {/* OPTICALLY CENTERED UNIFIED BRAND LOCKUP (ZOOMS OUT ON EXIT) */}
           <motion.div
             exit={{
               opacity: 0,
-              scale: 1.06,
-              y: -10,
-              filter: 'blur(10px)',
+              scale: 0.78, // Smooth cinematic zoom out
+              filter: 'blur(6px)',
               transition: {
-                duration: 0.45,
-                ease: [0.22, 1, 0.36, 1], // Cinematic focal lift & defocus
+                duration: 0.48,
+                ease: [0.22, 1, 0.36, 1], // Elegant deceleration
               },
             }}
-            className="relative z-20 flex flex-col items-center justify-center text-center px-4 pointer-events-none -translate-y-2 sm:-translate-y-3"
+            className="relative z-20 flex flex-col items-center justify-center text-center px-4 pointer-events-none -translate-y-2 sm:-translate-y-3 will-change-[transform,opacity,filter]"
           >
             {/* HERO BRAND LOGO MARK (NATURAL 1.5:1 PROPORTION, ZERO LETTERBOX DEAD SPACE) */}
             <motion.div
@@ -154,8 +162,9 @@ export default function IntegrateThoughtLoader({
                   }}
                   style={{
                     '--loader-font': currentVariant.font,
+                    color: currentVariant.color || '#0a0a0a',
                   }}
-                  className={`brand-loader-text block text-center font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-slate-950 leading-none whitespace-nowrap ${currentVariant.tracking}`}
+                  className={`brand-loader-text block text-center font-bold text-base sm:text-lg md:text-xl lg:text-2xl leading-none whitespace-nowrap transition-colors duration-200 ${currentVariant.tracking}`}
                 >
                   {currentVariant.text}
                 </motion.span>

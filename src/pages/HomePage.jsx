@@ -7,6 +7,7 @@ import { Footer } from '../components/Footer';
 import Navbar from '../components/Navbar';
 import CompanyMarqueeBanner from '../components/CompanyMarqueeBanner';
 import { StackedTestimonials } from '../components/StackedTestimonials';
+import PhoneReelPlayer from '../components/PhoneReelPlayer';
 
 const SERVICES_DATA = [
   {
@@ -15,8 +16,10 @@ const SERVICES_DATA = [
     title: 'Web Design & Development',
     serviceTitle: 'WEBSITE DESIGN & DEVELOPMENT',
     description: 'High-performance, responsive websites and web applications custom-built to elevate your brand, engage users, and drive measurable business growth.',
-    bgClass: 'bg-[#c73827]',
-    shadowStyle: 'shadow-[0_25px_60px_rgba(199,56,39,0.35)]',
+    bgClass: 'bg-[#059669]',
+    shadowStyle: 'shadow-[0_25px_60px_rgba(5,150,105,0.35)]',
+    image: '/services/service_web_dev.jpg',
+    accentColor: '#10b981',
   },
   {
     id: '02',
@@ -24,8 +27,10 @@ const SERVICES_DATA = [
     title: 'AI Automation & Workflows',
     serviceTitle: 'AI AUTOMATION & INTEGRATION',
     description: 'Streamline complex business processes, eliminate manual data entry, and integrate intelligent AI models directly into your enterprise software stack.',
-    bgClass: 'bg-[#1351d8]',
-    shadowStyle: 'shadow-[0_25px_60px_rgba(19,81,216,0.35)]',
+    bgClass: 'bg-[#2563eb]',
+    shadowStyle: 'shadow-[0_25px_60px_rgba(37,99,235,0.35)]',
+    image: '/services/service_ai_auto.jpg',
+    accentColor: '#3b82f6',
   },
   {
     id: '03',
@@ -33,8 +38,10 @@ const SERVICES_DATA = [
     title: 'RAG Knowledge Systems',
     serviceTitle: 'RAG SYSTEMS FOR BUSINESS',
     description: 'Connect AI models securely to your private company data, documents, and internal databases for fast, accurate, context-aware intelligence.',
-    bgClass: 'bg-[#0e593c]',
-    shadowStyle: 'shadow-[0_25px_60px_rgba(14,89,60,0.35)]',
+    bgClass: 'bg-[#d97706]',
+    shadowStyle: 'shadow-[0_25px_60px_rgba(217,119,6,0.35)]',
+    image: '/services/service_rag_sys.jpg',
+    accentColor: '#f59e0b',
   },
   {
     id: '04',
@@ -42,10 +49,35 @@ const SERVICES_DATA = [
     title: 'Custom Autonomous AI Agents',
     serviceTitle: 'CUSTOM AI AGENTS & CHATBOTS',
     description: 'Deploy 24/7 intelligent AI agents capable of handling customer support, qualifying leads, booking appointments, and triggering backend actions.',
-    bgClass: 'bg-[#a82828]',
-    shadowStyle: 'shadow-[0_25px_60px_rgba(168,40,40,0.35)]',
+    bgClass: 'bg-[#e11d48]',
+    shadowStyle: 'shadow-[0_25px_60px_rgba(225,29,72,0.35)]',
+    image: '/services/service_ai_agents.jpg',
+    accentColor: '#f43f5e',
   },
 ];
+
+const getServiceTextAnimation = (index, deckProgress) => {
+  const centers = [0.06, 0.28, 0.50, 0.74];
+  const center = centers[index];
+  const dist = Math.abs(deckProgress - center);
+  const windowRadius = 0.14;
+
+  if (dist > windowRadius) {
+    return {
+      opacity: 0,
+      translateY: deckProgress > center ? -24 : 24,
+    };
+  }
+
+  const rawP = 1 - dist / windowRadius;
+  const easeP = Math.sin((rawP * Math.PI) / 2);
+  const translateY = (1 - easeP) * (deckProgress > center ? -20 : 20);
+
+  return {
+    opacity: Math.max(0, Math.min(1, easeP * 1.25)),
+    translateY,
+  };
+};
 
 const WORKS_DATA = [
   {
@@ -56,7 +88,7 @@ const WORKS_DATA = [
     tagline: "Mastering Traditional Craft & Modern Grooming Artistry",
     img: "/Hero-Images/wnbturkish-hero.png",
     url: "https://wnbturkishbarber.netlify.app/",
-    description: "A luxury digital experience designed for WNB Turkish Barber, offering seamless service selection, instant appointment bookings, and an interactive grooming portfolio showcasing traditional and modern hair artistry.",
+    description: "A luxury digital experience designed for WNB Turkish Barber, offering seamless service selection, instant appointment bookings, and an interactive grooming portfolio.",
   },
   {
     id: 2,
@@ -66,40 +98,30 @@ const WORKS_DATA = [
     tagline: "Multi-Location Franchise Platform & Gourmet Menu Engine",
     img: "/Hero-Images/brim-tawny-hero.png",
     url: "https://brim-tawny.vercel.app/franchise",
-    description: "An immersive digital franchise hub and interactive menu engine built for BRIM Burgers, highlighting gourmet halal burgers, franchise inquiry pipelines, and location finders.",
+    description: "An immersive digital franchise hub and interactive menu engine built for BRIM Burgers, highlighting gourmet halal burgers and franchise inquiry pipelines.",
   },
   {
     id: 3,
-    title: "Sai Dental Clinic",
-    client: "SAI DENTAL CLINIC",
-    cat: "Clinical Healthcare",
-    tagline: "High-Trust Clinical Healthcare & Patient Intake System",
-    img: "/Hero-Images/dr-rathod-hero.png",
-    url: "https://gorgeous-daffodil-31a9c9.netlify.app/",
-    description: "A modern, empathetic healthcare web platform designed for Sai Dental Clinic to facilitate patient onboarding, virtual consultations, dental procedure breakdowns, and appointment scheduling.",
-  },
-  {
-    id: 4,
-    title: "Usy'z Blizers",
-    client: "USY'Z BLIZERS",
-    cat: "Apparel & Fashion",
-    tagline: "Next-Gen Urban Streetwear E-Commerce & Lookbook",
-    img: "/Hero-Images/usy'z-blizers-hero.png",
-    url: "https://jazzy-pastelito-855f86.netlify.app/",
-    description: "A visually striking streetwear e-commerce platform featuring dynamic product interaction, collection drop countdowns, and fluid micro-animations.",
-  },
-  {
-    id: 5,
     title: "Mayavi Media",
     client: "MAYAVI MEDIA CREATIONS",
     cat: "Cinematic Media",
-    tagline: "Where Vertical Video Meets Cinematic Production",
+    tagline: "Next-Gen Vertical Video & Cinematic Storytelling Agency",
     img: "/Hero-Images/mayavi-mc-hero.png",
-    url: "https://fancy-lokum-dfbfba.netlify.app/",
-    description: "Next-gen creative media house producing high-impact vertical video campaigns, cinematic brand films, and viral storytelling content.",
+    url: "https://mayavi-mc.vercel.app/",
+    description: "Next-gen creative media agency producing viral short-form video campaigns, cinematic brand commercials, and high-retention social content.",
   },
   {
-    id: 6,
+    id: 4,
+    title: "AP Mohan Sai Dental",
+    client: "AP MOHAN CLINIC",
+    cat: "Clinical Architecture",
+    tagline: "Scroll-Driven Architectural Precision & Clinical Excellence",
+    img: "/Hero-Images/ap-mohan-hero.png",
+    url: "https://ap-mohan.vercel.app/",
+    description: "An interactive scroll-driven digital architectural showcase celebrating contemporary design, structural precision, and modern healthcare environments.",
+  },
+  {
+    id: 5,
     title: "Old Glen Landscapes",
     client: "OLD GLEN LANDSCAPES",
     cat: "Exterior Studio",
@@ -109,35 +131,45 @@ const WORKS_DATA = [
     description: "An elegant digital portfolio showcasing luxury residential landscaping, garden designs, stone masonry, and exterior living architectural projects.",
   },
   {
+    id: 6,
+    title: "AVS Hospitals",
+    client: "AVS HOSPITALS HMSS",
+    cat: "Enterprise Healthcare",
+    tagline: "Hospital Management & Integrated Patient Record System",
+    img: "/Hero-Images/avs-hospitals-hero.png",
+    url: "https://avs-hospitals-hmss.vercel.app/",
+    description: "An enterprise-grade Healthcare Management System Interface for hospital networks, simplifying doctor scheduling, bed tracking, and online diagnostic booking.",
+  },
+  {
     id: 7,
     title: "VAMP Roofing",
-    client: "VAMP ROOFING",
-    cat: "Estate Roofing",
+    client: "VAMP ROOFING & SYSTEMS",
+    cat: "Commercial Roofing",
     tagline: "Industrial & Residential Commercial Roofing Engine",
     img: "/Hero-Images/roof-nu-hero.png",
     url: "https://roof-nu.vercel.app/",
-    description: "A high-converting roofing contractor platform engineered for instant quote estimates, storm damage inspection booking, and structural warranty management.",
+    description: "A high-converting roofing contractor platform engineered for instant quote estimates, storm damage inspection booking, and warranty tracking.",
   },
   {
     id: 8,
-    title: "AVS Hospitals",
-    client: "AVS HOSPITALS HMSS",
-    cat: "Enterprise HMSS",
-    tagline: "Hospital Management & Patient Record System",
-    img: "/Hero-Images/avs-hospitals-hero.png",
-    url: "https://avs-hospitals-hmss.vercel.app/",
-    description: "An enterprise-grade Healthcare Management System Interface for hospital networks, simplifying doctor scheduling, bed availability tracking, and online diagnostic booking.",
+    title: "Dr. Rathod Dental",
+    client: "DR. RATHOD DENTAL",
+    cat: "Aesthetic Dental",
+    tagline: "Swiss-Grade Implantology, Aesthetic Dentistry & Patient Care",
+    img: "/Hero-Images/dr-rathod-hero.png",
+    url: "https://jazzy-pastelito-855f86.netlify.app/",
+    description: "A modern, empathetic dental platform facilitating patient onboarding, Swiss-grade surgical implantology, and virtual appointment scheduling.",
   },
   {
     id: 9,
-    title: "BRIM Demo",
-    client: "BRIM BURGERS DEMO",
-    cat: "Canvas Scroll & Halal F&B",
-    tagline: "Interactive 3D Canvas Scroll & Culinary Experience",
-    img: "/Hero-Images/brim-burgers-hero.png",
-    url: "https://jay0073.github.io/brim-demo/",
-    description: "An experimental web experience utilizing canvas frame sequence scroll, interactive product exploded views, and micro-interactions for culinary branding.",
-  }
+    title: "Usy'z Blizers",
+    client: "USY'Z BLIZERS",
+    cat: "Streetwear & Luxury",
+    tagline: "Urban Streetwear Flagship, Apparel Drops & Shettleston Vault",
+    img: "/Hero-Images/usy'z-blizers-hero.png",
+    url: "https://fancy-lokum-dfbfba.netlify.app/",
+    description: "A visually striking streetwear and luxury essentials platform featuring dynamic product interaction, collection drops, and Glasgow flagship showcase.",
+  },
 ];
 
 const PROCESS_STAGES_DATA = [
@@ -174,11 +206,9 @@ export default function HomePage({ onNavigate }) {
   const [selectedStageModal, setSelectedStageModal] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  const heroText = "Integrate Thought";
-
   useEffect(() => {
     const checkMobile = () => {
-      const mobile = window.innerWidth < 640;
+      const mobile = window.innerWidth < 1024;
       setIsMobile(mobile);
       if (mobile) {
         document.body.style.overflow = 'auto';
@@ -202,22 +232,7 @@ export default function HomePage({ onNavigate }) {
     };
   }, []);
 
-  const [mobileScrollY, setMobileScrollY] = useState(0);
 
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const handleMobileScroll = () => {
-      setMobileScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleMobileScroll, { passive: true });
-    handleMobileScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleMobileScroll);
-    };
-  }, [isMobile]);
 
   const updateTargetProgress = (delta) => {
     targetProgressRef.current = Math.min(1, Math.max(0, targetProgressRef.current + delta));
@@ -293,120 +308,81 @@ export default function HomePage({ onNavigate }) {
   // --------------------------------------------------------------------------
   // DESKTOP OVERLAPPING TIMELINE MATH (0.00 -> 1.00)
   // --------------------------------------------------------------------------
-  const heroOpacity = Math.max(0, 1 - progress / 0.14);
-  const heroScale = 1 - progress * 0.15;
-  const heroTranslateY = -progress * 90;
+  // Starts directly with Core Mission text section at progress 0.00
+  const purposeOpacity = Math.max(0, 1 - progress / 0.16);
+  const purposeScale = 1 - progress * 0.08;
+  const purposeTranslateY = -progress * 80;
 
-  let purposeOpacity = 0;
-  if (progress >= 0.10 && progress <= 0.18) {
-    purposeOpacity = Math.min(1, (progress - 0.10) / 0.08);
-  } else if (progress > 0.18 && progress <= 0.28) {
-    purposeOpacity = Math.max(0, 1 - (progress - 0.18) / 0.10);
-  }
-  const purposeTranslateY = progress < 0.18 ? Math.max(0, (0.18 - progress) * 120) : 0;
+  const whiteSheetP = Math.min(1, Math.max(0, (progress - 0.06) / 0.12));
+  const deckProgress = Math.min(1, Math.max(0, (progress - 0.18) / 0.26));
 
-  const whiteSheetP = Math.min(1, Math.max(0, (progress - 0.20) / 0.08));
-  const deckProgress = Math.min(1, Math.max(0, (progress - 0.26) / 0.24));
-
-  const phase4TransitionP = Math.min(1, Math.max(0, (progress - 0.46) / 0.08));
-  const phase5TransitionP = Math.min(1, Math.max(0, (progress - 0.60) / 0.08));
-  const phase6TransitionP = Math.min(1, Math.max(0, (progress - 0.72) / 0.10));
-  const tailProgress = Math.min(1, Math.max(0, (progress - 0.82) / 0.18));
+  const phase4TransitionP = Math.min(1, Math.max(0, (progress - 0.40) / 0.10));
+  const phase5TransitionP = Math.min(1, Math.max(0, (progress - 0.52) / 0.10));
+  const phase6TransitionP = Math.min(1, Math.max(0, (progress - 0.64) / 0.10));
+  const tailProgress = Math.min(1, Math.max(0, (progress - 0.74) / 0.26));
 
   const whiteSheetTranslateY = (1 - whiteSheetP) * 100 - phase4TransitionP * 100;
   const worksSheetTranslateY = (1 - phase4TransitionP) * 100 - phase5TransitionP * 100;
   const processSheetTranslateY = (1 - phase5TransitionP) * 100 - phase6TransitionP * 100;
   const tailSheetTranslateY = (1 - phase6TransitionP) * 100;
-  const tailInnerTranslateY = -tailProgress * 16;
-  const phase4Progress = Math.min(1, Math.max(0, (progress - 0.46) / 0.20));
-
-  // --------------------------------------------------------------------------
-  // MOBILE SCROLL ANIMATIONS MATH FOR FIRST 2 SECTIONS (HERO & PURPOSE)
-  // --------------------------------------------------------------------------
-  // Driven by mobileScrollY over a 220vh scroll container (~1500px)
-  const heroFadeP = Math.min(1, Math.max(0, mobileScrollY / 500));
-  const mobileHeroOpacity = Math.max(0, 1 - heroFadeP * 1.3);
-  const mobileHeroScale = 1 - heroFadeP * 0.15;
-  const mobileHeroTranslateY = -heroFadeP * 90;
-
-  let mobilePurposeOpacity = 0;
-  let mobilePurposeTranslateY = 0;
-
-  if (mobileScrollY < 450) {
-    mobilePurposeOpacity = Math.min(1, Math.max(0, (mobileScrollY - 200) / 250));
-    mobilePurposeTranslateY = Math.max(0, (450 - mobileScrollY) * 0.4);
-  } else if (mobileScrollY >= 450 && mobileScrollY <= 1050) {
-    mobilePurposeOpacity = 1;
-    mobilePurposeTranslateY = 0;
-  } else {
-    mobilePurposeOpacity = Math.max(0, 1 - (mobileScrollY - 1050) / 300);
-    mobilePurposeTranslateY = -(mobileScrollY - 1050) * 0.3;
-  }
-
-  // Mobile Services Track Fixed Viewport Scroll Range (350px -> 1450px)
-  const isServicesActive = mobileScrollY >= 350 && mobileScrollY < 1450;
-  const isServicesPast = mobileScrollY >= 1450;
-
-  const servicesP = Math.min(1, Math.max(0, (mobileScrollY - 350) / 1100));
-  const mobileServicesTranslateX = servicesP * 920;
+  const tailInnerTranslateY = -tailProgress * 78;
+  const phase4Progress = Math.min(1, Math.max(0, (progress - 0.40) / 0.20));
 
   // ==========================================================================
-  // MOBILE VIEW: 100% SEAMLESS CONTINUOUS DOCUMENT FLOW (OUR PURPOSE HERO)
+  // MOBILE VIEW: 100% SEAMLESS CONTINUOUS DOCUMENT FLOW
   // ==========================================================================
   if (isMobile) {
     return (
-      <div className="relative w-full min-h-screen bg-[#050505] text-white font-sans selection:bg-[#00b4d8] selection:text-black">
+      <div className="relative w-full min-h-screen bg-[#f8fafc] text-slate-950 font-sans selection:bg-[#00b4d8] selection:text-black">
         {/* Universal Adaptive Navbar Header */}
         <Navbar progress={0.5} onNavigate={handleNavClick} activePage="Home" />
 
-        {/* Interactive Background Grid Canvas at z-0 */}
+        {/* Interactive Background Grid Canvas at z-0 (Light Theme) */}
         <div className="fixed inset-0 pointer-events-none z-0">
           <KineticGrid
             spacing={80}
             dotSize={2}
             gridStroke={1}
-            gridOpacity={0.15}
+            gridOpacity={0.35}
             repulsion={5}
             radius={60}
             stiffness={1.0}
             damping={0.09}
             clickIntensity={30}
             trailIntensity={0.15}
-            backgroundColor="#050505"
-            lineColor="#262626"
-            dotColor="#404040"
+            backgroundColor="#f8fafc"
+            lineColor="#cbd5e1"
+            dotColor="#94a3b8"
+            hoverColor="#00b4d8"
           />
         </div>
 
         {/* 1. MAIN HERO / PURPOSE SECTION FOR MOBILE */}
-        <section id="purpose-section-mobile" className="relative z-10 w-full pt-28 pb-16 px-6 max-w-5xl mx-auto flex flex-col items-start justify-center min-h-[75vh]">
-          <div className="mb-6">
-            <img
-              src="/logo.png"
-              alt="Integrate Thought Logo"
-              className="w-40 h-auto object-contain drop-shadow-2xl"
-            />
+        <section id="purpose-section-mobile" className="relative z-10 w-full pt-28 pb-12 px-6 sm:px-8 max-w-2xl mx-auto flex flex-col items-start text-left">
+          <div className="section-badge-light mb-3 self-start">
+            <span>01 / CORE MISSION</span>
           </div>
 
-          <div className="section-badge-dark mb-4">
-            <span>01 / DIGITAL ENGINEERING</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.1] text-white uppercase font-sans mb-4">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.15] text-slate-950 uppercase font-sans mb-3 text-left">
             Building Digital <br />
             Systems That <br />
             Move Businesses <br />
             <span className="text-[#00b4d8]">Forward.</span>
           </h1>
 
-          <p className="text-slate-300 text-sm leading-relaxed font-normal mb-8 font-sans max-w-xl">
+          <p className="text-slate-600 text-sm leading-relaxed font-normal mb-6 font-sans text-left">
             Digital experiences, AI engineering, and automation designed to help businesses attract customers, streamline operations, and scale.
           </p>
+
+          {/* Interactive Smartphone Instagram Reel Player for Mobile */}
+          <div className="w-full flex justify-center mb-6">
+            <PhoneReelPlayer />
+          </div>
 
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={() => handleProposalClick()}
-              className="px-5 py-2.5 rounded-full bg-[#00b4d8] hover:bg-[#0096c7] text-slate-950 font-bold text-xs tracking-wide shadow-md active:scale-95 transition-all font-sans cursor-pointer"
+              className="px-5 py-2.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs tracking-wide shadow-md active:scale-95 transition-all font-sans cursor-pointer"
             >
               Start a Project
             </button>
@@ -415,101 +391,111 @@ export default function HomePage({ onNavigate }) {
                 const worksEl = document.getElementById('works-section-mobile');
                 if (worksEl) worksEl.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-xs tracking-wide active:scale-95 transition-all font-sans cursor-pointer"
+              className="px-5 py-2.5 rounded-full bg-white hover:bg-slate-100 border border-slate-200 text-slate-800 font-semibold text-xs tracking-wide active:scale-95 transition-all font-sans cursor-pointer shadow-xs"
             >
               Explore Our Work
             </button>
           </div>
         </section>
 
-        {/* 3. SERVICES SECTION (100% PINNED FIXED VIEWPORT UNTIL ALL 4 CARDS ARE SCROLLED) */}
-        <div className="relative w-full h-[1100px] z-20">
-          <div
-            className={
-              isServicesActive
-                ? "fixed inset-0 w-full h-screen bg-white text-slate-950 flex flex-col justify-center px-4 overflow-hidden z-20 shadow-2xl"
-                : isServicesPast
-                ? "absolute bottom-0 w-full h-screen bg-white text-slate-950 flex flex-col justify-center px-4 overflow-hidden z-20 shadow-2xl"
-                : "absolute top-0 w-full h-screen bg-white text-slate-950 flex flex-col justify-center px-4 overflow-hidden z-20 shadow-2xl"
-            }
-          >
-            <div className="max-w-xl mx-auto w-full mb-6">
+        {/* 2. OUR SERVICES SECTION FOR MOBILE (CLEAN VERTICAL STACK WITH NATURAL SMOOTH SCROLL) */}
+        <section className="relative z-20 w-full py-12 px-6 sm:px-8 bg-white text-slate-950 border-t border-slate-100 shadow-sm">
+          <div className="max-w-2xl mx-auto w-full">
+            <div className="mb-6 text-left items-start">
               <div className="section-badge-light mb-2.5 self-start">
                 <span>02 / OUR SERVICES</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight text-left">
                 Architecting High-Impact Systems
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 font-normal mt-1 leading-relaxed">
-                Scroll horizontally to explore our specialized solutions &rarr;
+              <p className="text-xs sm:text-sm text-slate-600 font-normal mt-1 leading-relaxed text-left">
+                Tailored engineering, AI automation, and knowledge architectures built for enterprise scale.
               </p>
             </div>
 
-            {/* Horizontal Track driven by scroll towards left */}
-            <div className="w-full overflow-hidden">
-              <div
-                style={{
-                  transform: `translate3d(-${mobileServicesTranslateX}px, 0, 0)`,
-                  willChange: 'transform',
-                }}
-                className="flex items-center gap-4 transition-transform duration-75 ease-out"
-              >
-                {SERVICES_DATA.map((service, index) => (
+            {/* Services Cards: One after another as the user scrolls */}
+            <div className="w-full flex flex-col gap-8">
+              {SERVICES_DATA.map((service, index) => (
+                <div key={service.id} className="w-full flex flex-col gap-3">
+                  {/* Countdown Above Service */}
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="w-2 h-2 rounded-full shadow-xs"
+                      style={{ backgroundColor: service.accentColor }}
+                    />
+                    <span className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase">
+                      0{index + 1} / 04
+                    </span>
+                  </div>
+
+                  {/* Service Title */}
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-slate-950 tracking-tight leading-snug font-sans text-left">
+                    {service.title}
+                  </h3>
+
+                  {/* Card with Full-Bleed Image (No Borders, No Countdown) */}
                   <div
-                    key={service.id}
-                    className={`shrink-0 w-[280px] sm:w-[320px] h-[340px] rounded-3xl ${service.bgClass} text-white p-6 shadow-xl border border-white/20 flex flex-col justify-between items-center text-center`}
+                    className={`w-full rounded-3xl ${service.bgClass} ${service.shadowStyle} relative overflow-hidden h-[280px] sm:h-[340px] shadow-xl`}
                   >
-                    <div className="flex items-center justify-between w-full">
-                      <span className="px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-mono font-bold uppercase">
-                        {service.tag}
-                      </span>
-                      <span className="text-xs font-mono font-bold text-white/80">
-                        0{index + 1} / 04
-                      </span>
-                    </div>
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/20 pointer-events-none" />
 
-                    <div className="space-y-2.5 my-auto max-w-[260px] mx-auto flex flex-col items-center">
-                      <h3 className="text-lg sm:text-xl font-extrabold text-white leading-snug font-sans text-center">
-                        {service.title}
-                      </h3>
-                      <p className="text-white/90 text-xs leading-relaxed font-normal font-sans text-center line-clamp-3">
-                        {service.description}
-                      </p>
-                    </div>
-
-                    <div className="pt-3 border-t border-white/20 w-full flex justify-center">
+                    {/* Centered Request Proposal Button */}
+                    <div className="absolute bottom-5 inset-x-0 flex justify-center z-20">
                       <button
                         onClick={() => handleProposalClick(service.serviceTitle || service.title)}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-slate-950 hover:bg-slate-100 font-bold text-xs shadow-md cursor-pointer active:scale-95 transition-all font-sans"
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-slate-950 hover:bg-slate-100 font-bold text-xs sm:text-sm shadow-xl active:scale-95 transition-all font-sans cursor-pointer border border-black/10"
                       >
                         <span>Request Proposal</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
+                        <ArrowUpRight className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
-                ))}
-              </div>
+
+                  {/* Description without any box, in darker color with comfortable font */}
+                  <p className="text-slate-900 text-sm sm:text-base leading-relaxed font-medium font-sans text-left">
+                    {service.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Explore All Services Button (Same as PC View) */}
+            <div className="mt-8 flex justify-center w-full">
+              <button
+                onClick={() => {
+                  if (onNavigate) onNavigate('Services');
+                }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer font-sans"
+              >
+                <span>Explore All Services</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* 4. FEATURED WORKS SECTION (FREE FLOW - ZERO FULLSCREEN LOCKING) */}
-        <section id="works-section-mobile" className="relative z-30 w-full py-12 px-4 bg-[#f4f7fa] text-slate-950 shadow-2xl">
-          <div className="max-w-5xl mx-auto">
-            <div className="max-w-xl mx-auto w-full mb-6">
+        {/* 3. FEATURED SELECTED WORKS SECTION FOR MOBILE */}
+        <section id="works-section-mobile" className="relative z-30 w-full py-12 px-6 sm:px-8 bg-[#f4f7fa] text-slate-950 border-t border-slate-100 shadow-sm">
+          <div className="max-w-2xl mx-auto w-full">
+            <div className="mb-6 text-left items-start">
               <div className="section-badge-light mb-2.5 self-start">
                 <span>03 / SELECTED WORKS</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight text-left">
                 Work That Moves the Needle
               </h2>
-              <p className="text-slate-600 text-xs sm:text-sm font-normal mt-1 leading-relaxed">
-                Long-term engagements where design, engineering and automation shipped together.
+              <p className="text-slate-600 text-xs sm:text-sm font-normal mt-1 leading-relaxed text-left">
+                Long-term engagements where design, engineering and automation shipped together. Swipe to explore &rarr;
               </p>
             </div>
 
-            {/* Horizontal Touch Track */}
-            <div className="w-full flex overflow-x-auto gap-4 py-2 snap-x snap-mandatory no-scrollbar touch-pan-x">
+            {/* Native Touch-Friendly Horizontal Works Track */}
+            <div className="w-full overflow-x-auto pb-4 -mx-6 px-6 sm:mx-0 sm:px-0 flex gap-4 snap-x snap-mandatory no-scrollbar touch-pan-x">
               {WORKS_DATA.map((work) => (
                 <div
                   key={work.id}
@@ -520,7 +506,7 @@ export default function HomePage({ onNavigate }) {
                       alert(`Exploring case study for "${work.title}".`);
                     }
                   }}
-                  className="shrink-0 snap-center w-[250px] h-[330px] relative overflow-hidden rounded-2xl bg-slate-900 border border-slate-700/50 shadow-xl active:scale-95 transition-transform cursor-pointer"
+                  className="shrink-0 snap-center w-[260px] sm:w-[300px] h-[340px] relative overflow-hidden rounded-2xl bg-slate-900 border border-slate-700/50 shadow-xl active:scale-95 transition-transform cursor-pointer"
                 >
                   <div className="absolute inset-0 overflow-hidden">
                     <img
@@ -541,7 +527,7 @@ export default function HomePage({ onNavigate }) {
                       </div>
                     </div>
 
-                    <div className="space-y-1">
+                    <div className="space-y-1 text-left">
                       <h3 className="text-base font-extrabold leading-tight text-white font-sans drop-shadow-md">
                         {work.title}
                       </h3>
@@ -556,38 +542,53 @@ export default function HomePage({ onNavigate }) {
                 </div>
               ))}
             </div>
-          </div>
-        </section>
 
-        {/* 5. OUR PROCESS SECTION (2 ROWS x 2 COLUMNS MOBILE GRID) */}
-        <section className="relative z-40 w-full py-12 px-4 bg-[#f5f3ec] text-slate-900 shadow-2xl">
-          <div className="max-w-xl mx-auto text-center mb-6">
-            <div className="section-badge-light mb-2.5">
-              <span>04 / OPERATING STANDARDS</span>
+            {/* Explore All Works Button */}
+            <div className="mt-8 flex justify-center w-full">
+              <button
+                onClick={() => {
+                  if (onNavigate) onNavigate('Works');
+                }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer font-sans"
+              >
+                <span>Explore All Works</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 font-sans leading-tight mb-1.5">
-              Our Operating Standards
-            </h2>
-            <p className="text-slate-600 text-xs sm:text-sm font-normal max-w-sm mx-auto leading-relaxed">
-              Battle-tested frameworks designed to align operations, validate technical benchmarks, and drive measurable impact.
-            </p>
-          </div>
-
-          {/* 2 Rows x 2 Columns Grid Layout for Mobile Screens */}
-          <div className="w-full max-w-xl mx-auto grid grid-cols-2 gap-2.5 sm:gap-6 justify-items-center">
-            {PROCESS_STAGES_DATA.map((stage, idx) => (
-              <ProcessStageCard
-                key={stage.id}
-                stage={stage}
-                index={idx}
-                onSelect={(stg) => setSelectedStageModal(stg)}
-              />
-            ))}
           </div>
         </section>
 
-        {/* 6. TESTIMONIALS, MARQUEE & FOOTER SECTION */}
-        <section className="relative z-50 w-full bg-white text-slate-900 pt-10">
+        {/* 4. OPERATING STANDARDS SECTION FOR MOBILE */}
+        <section className="relative z-40 w-full py-12 px-6 sm:px-8 bg-[#f5f3ec] text-slate-900 border-t border-slate-200/60 shadow-sm">
+          <div className="max-w-2xl mx-auto w-full">
+            <div className="text-left items-start mb-6">
+              <div className="section-badge-light mb-2.5 self-start">
+                <span>04 / OPERATING STANDARDS</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 font-sans leading-tight mb-1.5 text-left">
+                Our Operating Standards
+              </h2>
+              <p className="text-slate-600 text-xs sm:text-sm font-normal max-w-md leading-relaxed text-left">
+                Battle-tested frameworks designed to align operations, validate technical benchmarks, and drive measurable impact.
+              </p>
+            </div>
+
+            {/* 2 Rows x 2 Columns Grid Layout for Mobile Screens */}
+            <div className="w-full grid grid-cols-2 gap-3 sm:gap-6 justify-items-center">
+              {PROCESS_STAGES_DATA.map((stage, idx) => (
+                <ProcessStageCard
+                  key={stage.id}
+                  stage={stage}
+                  index={idx}
+                  onSelect={(stg) => setSelectedStageModal(stg)}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 5. TESTIMONIALS, MARQUEE & FOOTER SECTION */}
+        <section className="relative z-50 w-full bg-white text-slate-900 pt-8 border-t border-slate-100">
           <StackedTestimonials />
           <CompanyMarqueeBanner />
           <Footer onNavigate={onNavigate} />
@@ -636,122 +637,100 @@ export default function HomePage({ onNavigate }) {
   // DESKTOP VIEW: INTERACTIVE OVERLAPPING SLIDE DECK & ROTATING WHEEL
   // ==========================================================================
   return (
-    <div className="fixed inset-0 w-full h-screen overflow-hidden z-10 bg-[#050505] text-white select-none font-sans">
+    <div className="fixed inset-0 w-full h-screen overflow-hidden z-10 bg-[#f8fafc] text-slate-950 select-none font-sans">
       
       {/* Universal Fixed Adaptive Navbar Header */}
       <Navbar progress={progress} onNavigate={handleNavClick} activePage="Home" />
 
-      {/* Interactive Kinetic Grid Canvas at z-0 */}
+      {/* Interactive Kinetic Grid Canvas at z-0 (Light Theme) */}
       <KineticGrid
         spacing={64}
         dotSize={2}
         gridStroke={1}
-        gridOpacity={0.20}
+        gridOpacity={0.4}
         repulsion={5}
         radius={60}
         stiffness={1.0}
         damping={0.09}
         clickIntensity={30}
         trailIntensity={0.15}
-        backgroundColor="#050505"
-        lineColor="#262626"
-        dotColor="#404040"
+        backgroundColor="#f8fafc"
+        lineColor="#cbd5e1"
+        dotColor="#94a3b8"
+        hoverColor="#00b4d8"
       />
 
-      {/* PHASE 1: HERO LOGO & TITLE */}
+      {/* PHASE 1: CORE MISSION (STARTS DIRECTLY WITH TEXT - ZERO PRE-LOGO PHASE) */}
       <div
         style={{
-          opacity: heroOpacity,
-          transform: `translate3d(0, ${heroTranslateY}px, 0) scale(${heroScale})`,
-          pointerEvents: heroOpacity < 0.05 ? 'none' : 'auto',
+          opacity: purposeOpacity,
+          transform: `translate3d(0, ${purposeTranslateY}px, 0) scale(${purposeScale})`,
+          pointerEvents: purposeOpacity < 0.05 ? 'none' : 'auto',
           willChange: 'transform, opacity',
         }}
-        className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center max-w-5xl mx-auto"
+        className="absolute inset-0 flex flex-col justify-center px-6 sm:px-8 lg:px-12 max-w-6xl mx-auto pointer-events-auto z-10 pt-20 sm:pt-24 pb-10"
       >
-        <div className="mb-6 sm:mb-8 pointer-events-none">
-          <img
-            src="/logo.png"
-            alt="Integrate Thought Logo"
-            className="w-40 sm:w-56 md:w-64 lg:w-[340px] h-auto object-contain drop-shadow-2xl"
-          />
+        {/* HERO CONTENT: TWO EQUAL PARTS (LEFT: TEXT BLOCK | RIGHT: MOBILE BLOCK) */}
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 items-center gap-8 lg:gap-12">
+          
+          {/* Part 1: Text Block */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left w-full">
+            <div className="section-badge-light mb-4 sm:mb-5 self-start">
+              <span>01 / CORE MISSION</span>
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[56px] xl:text-[62px] font-extrabold tracking-tight leading-[1.04] text-slate-950 uppercase font-sans text-left">
+              Building Digital <br />
+              Systems That <br />
+              Move Businesses <br />
+              <span className="text-[#00b4d8]">
+                Forward.
+              </span>
+            </h1>
+
+            <p className="mt-5 sm:mt-6 text-slate-600 text-sm sm:text-base md:text-lg font-normal leading-relaxed max-w-md font-sans text-left">
+              Digital experiences, AI and automation designed to help businesses attract customers, streamline operations and scale.
+            </p>
+
+            <div className="mt-7 sm:mt-8 flex items-center justify-start gap-3.5 w-full">
+              <button
+                onClick={() => handleProposalClick()}
+                className="px-6 py-3 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-lg active:scale-95 cursor-pointer font-sans"
+              >
+                Start a Project
+              </button>
+
+              <button
+                onClick={() => {
+                  targetProgressRef.current = 0.44;
+                }}
+                className="px-6 py-3 rounded-full bg-white hover:bg-slate-100 border border-slate-200 text-slate-800 font-semibold text-xs sm:text-sm tracking-wide transition-all shadow-xs active:scale-95 cursor-pointer font-sans"
+              >
+                Explore Our Work
+              </button>
+            </div>
+          </div>
+
+          {/* Part 2: Mobile Block */}
+          <div className="lg:col-span-5 flex items-center justify-center w-full">
+            <PhoneReelPlayer />
+          </div>
+
         </div>
 
-        <h1 className="group whitespace-nowrap text-[22px] sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter sm:tracking-tight text-white transition-all duration-300">
-          <span className="inline-flex justify-center">
-            {heroText.split("").map((char, index) => (
-              <span
-                key={index}
-                className="inline-block cursor-pointer transition-all duration-200 ease-out hover:scale-115 hover:-translate-y-2.5 hover:text-[#00b4d8]"
-                style={{
-                  animation: `fadeInUp 0.5s ease-out ${index * 0.03}s both`,
-                }}
-              >
-                {char === " " ? "\u00A0" : char}
-              </span>
-            ))}
-          </span>
-        </h1>
-
+        {/* Subtle Bottom Scroll Cue */}
         <button
-          onClick={handleScrollPrompt}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-white transition-opacity cursor-pointer z-20 pointer-events-auto active:scale-95"
-          title="Scroll to Our Purpose"
+          onClick={() => {
+            targetProgressRef.current = 0.18;
+          }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-slate-700 transition-colors cursor-pointer z-20 pointer-events-auto active:scale-95"
+          title="Scroll to Explore Services"
         >
-          <span className="text-[11px] font-mono tracking-widest uppercase">Scroll</span>
+          <span className="text-[11px] font-mono tracking-widest uppercase font-semibold">Scroll</span>
           <svg className="w-4 h-4 text-[#00b4d8] animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </button>
-      </div>
-
-      {/* PHASE 2: OUR PURPOSE */}
-      <div
-        style={{
-          opacity: purposeOpacity,
-          transform: `translate3d(0, ${purposeTranslateY}px, 0)`,
-          pointerEvents: purposeOpacity < 0.05 ? 'none' : 'auto',
-          willChange: 'transform, opacity',
-        }}
-        className="absolute inset-0 flex flex-col justify-center px-6 sm:px-16 md:px-24 max-w-7xl mx-auto pointer-events-auto z-10 pt-20 sm:pt-24 pb-10"
-      >
-        <div className="max-w-5xl">
-          <div className="section-badge-dark mb-4 sm:mb-6 self-start">
-            <span>01 / CORE MISSION</span>
-          </div>
-
-          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-extrabold tracking-tight leading-[1.02] text-white uppercase font-sans">
-            Building Digital <br />
-            Systems That <br />
-            Move Businesses <br />
-            <span className="text-[#00b4d8]">
-              Forward.
-            </span>
-          </h2>
-        </div>
-
-        <div className="mt-8 sm:mt-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
-          <p className="text-slate-300 text-sm sm:text-base md:text-lg font-normal leading-relaxed max-w-lg font-sans">
-            Digital experiences, AI and automation designed to help businesses attract customers, streamline operations and scale.
-          </p>
-
-          <div className="flex items-center gap-3.5 shrink-0">
-            <button
-              onClick={() => handleProposalClick()}
-              className="px-6 py-3 rounded-full bg-[#00b4d8] hover:bg-[#0096c7] text-slate-950 font-bold text-xs sm:text-sm tracking-wide transition-all shadow-lg active:scale-95 cursor-pointer font-sans"
-            >
-              Start a Project
-            </button>
-
-            <button
-              onClick={() => {
-                targetProgressRef.current = 0.54;
-              }}
-              className="px-6 py-3 rounded-md bg-white/5 hover:bg-white/10 border border-white/25 hover:border-white/50 text-white font-semibold text-xs sm:text-sm tracking-wide transition-all active:scale-95 cursor-pointer font-sans"
-            >
-              Explore Our Work
-            </button>
-          </div>
-        </div>
       </div>
 
       {/* PHASE 3: DESKTOP STACKED SERVICES CARDS DECK */}
@@ -761,120 +740,171 @@ export default function HomePage({ onNavigate }) {
           pointerEvents: whiteSheetP < 0.05 ? 'none' : 'auto',
           willChange: 'transform',
         }}
-        className="absolute inset-0 w-full h-full bg-white text-slate-950 shadow-[0_-30px_80px_rgba(0,0,0,0.5)] flex flex-col items-center justify-between z-20 pointer-events-auto overflow-hidden"
+        className="absolute inset-0 w-full h-full bg-white text-slate-950 shadow-[0_-30px_80px_rgba(0,0,0,0.5)] flex flex-col z-20 pointer-events-auto overflow-hidden"
       >
-        <div className="w-full max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto flex flex-col items-center pt-6 sm:pt-8 px-4 sm:px-8 my-auto">
+        <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-16 sm:pt-20 flex flex-col flex-1 pb-6 justify-between">
           
-          <div className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 sm:mb-8 shrink-0 text-center sm:text-left">
-            <div>
-              <div className="section-badge-light mb-2.5 self-start">
+          {/* Header Row */}
+          <div className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-4 shrink-0 text-left items-start">
+            <div className="text-left items-start">
+              <div className="section-badge-light mb-2 self-start">
                 <span>02 / OUR SERVICES</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight text-left">
                 Architecting High-Impact Systems
               </h2>
-              <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal leading-relaxed max-w-md mt-1.5 font-sans">
-                Tailored engineering, AI automation, and knowledge architectures built for enterprise scale.
-              </p>
             </div>
             <div>
               <button
                 onClick={() => {
                   if (onNavigate) onNavigate('Services');
                 }}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-xs font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer shrink-0 font-sans"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer shrink-0 font-sans"
               >
-                <span>View All Services</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                <span>Explore All Services</span>
+                <ArrowUpRight className="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          <div className="relative w-full h-[400px] sm:h-[460px]">
-            {SERVICES_DATA.map((service, index) => {
-              let cardP = 1;
-              if (index > 0) {
-                const cardStep = 0.22;
-                const startP = (index - 1) * cardStep + 0.10;
-                const endP = startP + cardStep;
-                const rawP = Math.min(1, Math.max(0, (deckProgress - startP) / (endP - startP)));
-                cardP = 1 - Math.pow(1 - rawP, 3);
-              }
+          {/* 3-COLUMN STAGE AS IN USER SKETCH */}
+          <div className="w-full grid grid-cols-1 lg:grid-cols-12 items-center gap-6 lg:gap-10 my-auto min-h-[420px] lg:min-h-[460px] relative">
+            
+            {/* LEFT COLUMN: ANIMATING SERVICE TITLE */}
+            <div className="lg:col-span-3 hidden lg:block relative h-[260px]">
+              {SERVICES_DATA.map((service, index) => {
+                const anim = getServiceTextAnimation(index, deckProgress);
+                return (
+                  <div
+                    key={`title-${service.id}`}
+                    style={{
+                      opacity: anim.opacity,
+                      transform: `translate3d(0, ${anim.translateY}px, 0)`,
+                      pointerEvents: anim.opacity > 0.5 ? 'auto' : 'none',
+                      willChange: 'transform, opacity',
+                    }}
+                    className="absolute inset-0 flex flex-col justify-center text-left pl-2"
+                  >
+                    {/* Countdown above service */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full shadow-xs"
+                        style={{ backgroundColor: service.accentColor }}
+                      />
+                      <span className="text-xs sm:text-sm font-mono font-bold tracking-widest text-slate-500 uppercase">
+                        0{index + 1} / 04
+                      </span>
+                    </div>
 
-              const stackedTop = index * 24;
-              const zIndex = 10 + index * 10;
-              const translateY = index === 0 ? 0 : (1 - cardP) * 700;
-              const scale = index === 0 ? 1 : 0.94 + cardP * 0.06;
-              const opacity = index === 0 ? 1 : Math.min(1, cardP * 2.2);
-
-              return (
-                <div
-                  key={service.id}
-                  style={{
-                    top: `${stackedTop}px`,
-                    transform: `translate3d(0, ${translateY}px, 0) scale(${scale})`,
-                    opacity: opacity,
-                    zIndex: zIndex,
-                    willChange: 'transform, opacity',
-                  }}
-                  className={`absolute inset-x-0 rounded-[32px] ${service.bgClass} ${service.shadowStyle} text-white p-7 sm:p-10 md:p-12 border border-white/20 transition-transform duration-75 flex flex-col justify-between items-center text-center`}
-                >
-                  {/* Top Row: Category Tag & Counter */}
-                  <div className="flex items-center justify-between w-full">
-                    <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-white">
-                      {service.tag}
-                    </span>
-                    <span className="text-xs font-mono font-bold text-white/80">
-                      0{index + 1} / 04
-                    </span>
-                  </div>
-
-                  {/* Centered Content: Title & Description */}
-                  <div className="my-auto py-3 sm:py-5 max-w-xl mx-auto flex flex-col items-center text-center space-y-3 sm:space-y-4">
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight font-sans">
+                    <h3 className="text-3xl sm:text-4xl xl:text-[40px] font-extrabold text-slate-950 tracking-tight leading-tight font-sans">
                       {service.title}
                     </h3>
-                    <p className="text-white/90 text-xs sm:text-sm md:text-base leading-relaxed font-normal font-sans max-w-md sm:max-w-lg mx-auto">
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* CENTER COLUMN: STACKED CARDS DECK WITH FULL-BLEED IMAGES & PROPOSAL BUTTON */}
+            <div className="lg:col-span-6 w-full max-w-md sm:max-w-lg mx-auto relative h-[380px] sm:h-[420px]">
+              {SERVICES_DATA.map((service, index) => {
+                let cardP = 1;
+                if (index > 0) {
+                  const cardStep = 0.22;
+                  const startP = (index - 1) * cardStep + 0.10;
+                  const endP = startP + cardStep;
+                  const rawP = Math.min(1, Math.max(0, (deckProgress - startP) / (endP - startP)));
+                  cardP = 1 - Math.pow(1 - rawP, 3);
+                }
+
+                const stackedTop = index * 20;
+                const zIndex = 10 + index * 10;
+                const translateY = index === 0 ? 0 : (1 - cardP) * 650;
+                const scale = index === 0 ? 1 : 0.95 + cardP * 0.05;
+                const opacity = index === 0 ? 1 : Math.min(1, cardP * 2.5);
+
+                return (
+                  <div
+                    key={service.id}
+                    style={{
+                      top: `${stackedTop}px`,
+                      transform: `translate3d(0, ${translateY}px, 0) scale(${scale})`,
+                      opacity: opacity,
+                      zIndex: zIndex,
+                      willChange: 'transform, opacity',
+                    }}
+                    className={`absolute inset-x-0 rounded-[28px] ${service.bgClass} ${service.shadowStyle} shadow-2xl overflow-hidden h-[330px] sm:h-[360px]`}
+                  >
+                    {/* Full-bleed edge-to-edge image without any borders */}
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+
+                    {/* Ambient gradient overlay for button prominence */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-black/20 pointer-events-none" />
+
+                    {/* Centered Request Proposal Button at bottom */}
+                    <div className="absolute bottom-6 inset-x-0 flex justify-center z-20 pointer-events-auto">
+                      <button
+                        onClick={() => handleProposalClick(service.serviceTitle || service.title)}
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-slate-950 hover:bg-slate-100 font-bold text-xs sm:text-sm transition-all shadow-xl active:scale-95 cursor-pointer font-sans group border border-black/10"
+                      >
+                        <span>Request Proposal</span>
+                        <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* RIGHT COLUMN: ANIMATING SERVICE DESCRIPTION (NO BOX, DARKER COLOR, LARGER FONT) */}
+            <div className="lg:col-span-3 hidden lg:block relative h-[260px]">
+              {SERVICES_DATA.map((service, index) => {
+                const anim = getServiceTextAnimation(index, deckProgress);
+                return (
+                  <div
+                    key={`desc-${service.id}`}
+                    style={{
+                      opacity: anim.opacity,
+                      transform: `translate3d(0, ${anim.translateY}px, 0)`,
+                      pointerEvents: anim.opacity > 0.5 ? 'auto' : 'none',
+                      willChange: 'transform, opacity',
+                    }}
+                    className="absolute inset-0 flex flex-col justify-center text-left pr-4"
+                  >
+                    <p className="text-slate-900 text-base sm:text-lg lg:text-xl leading-relaxed font-semibold font-sans">
                       {service.description}
                     </p>
                   </div>
+                );
+              })}
+            </div>
 
-                  {/* Centered Action: Request Proposal Button */}
-                  <div className="pt-2 w-full flex justify-center">
-                    <button
-                      onClick={() => handleProposalClick(service.serviceTitle || service.title)}
-                      className="inline-flex items-center gap-2 px-6 py-2.5 sm:py-3 rounded-full bg-white text-slate-950 hover:bg-slate-100 font-bold text-xs sm:text-sm transition-all shadow-lg active:scale-95 cursor-pointer font-sans group"
-                    >
-                      <span>Request Proposal</span>
-                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
           </div>
 
         </div>
       </div>
 
-      {/* PHASE 4: DESKTOP FEATURED CLIENT WORKS (RADIAL WHEEL) */}
+      {/* PHASE 4: DESKTOP WORKS */}
       <div
         style={{
           transform: `translate3d(0, ${worksSheetTranslateY}vh, 0)`,
           pointerEvents: phase4TransitionP < 0.05 ? 'none' : 'auto',
           willChange: 'transform',
         }}
-        className="absolute inset-0 w-full h-full bg-[#f4f7fa] text-slate-950 shadow-[0_-30px_80px_rgba(0,0,0,0.3)] flex flex-col justify-between p-4 sm:p-8 z-30 pointer-events-auto overflow-visible"
+        className="absolute inset-0 w-full h-full bg-[#f4f7fa] text-slate-950 shadow-[0_-30px_80px_rgba(0,0,0,0.3)] flex flex-col z-30 pointer-events-auto overflow-visible"
       >
-        <div className="w-full max-w-5xl mx-auto pt-12 sm:pt-14 shrink-0 z-40 flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
+        <div className="w-full max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 sm:pt-24 shrink-0 z-40 flex flex-col md:flex-row md:items-end justify-between gap-4 text-left items-start mb-4">
+          <div className="text-left items-start">
             <div className="section-badge-light mb-2.5 self-start">
               <span>03 / SELECTED WORKS</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 mb-2 font-sans leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 mb-2 font-sans leading-tight text-left">
               Work That Moves the Needle
             </h2>
-            <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal max-w-md font-sans leading-relaxed">
+            <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal max-w-lg font-sans leading-relaxed text-left">
               Long-term engagements where design, engineering and automation shipped together.
             </p>
           </div>
@@ -965,22 +995,22 @@ export default function HomePage({ onNavigate }) {
           pointerEvents: phase5TransitionP < 0.05 ? 'none' : 'auto',
           willChange: 'transform',
         }}
-        className="absolute inset-0 w-full h-full bg-[#f5f3ec] text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center p-4 sm:p-8 z-40 pointer-events-auto overflow-hidden select-none"
+        className="absolute inset-0 w-full h-full bg-[#f5f3ec] text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.3)] flex flex-col z-40 pointer-events-auto overflow-hidden select-none"
       >
-        <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center min-h-full py-8 sm:py-12 my-auto">
-          <div className="w-full max-w-5xl mx-auto text-center shrink-0 mb-6 sm:mb-8">
-            <div className="section-badge-light mb-2.5">
+        <div className="w-full max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 sm:pt-24 flex flex-col flex-1 pb-6">
+          <div className="w-full text-left items-start shrink-0 mb-6 sm:mb-8">
+            <div className="section-badge-light mb-2.5 self-start">
               <span>04 / OPERATING STANDARDS</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-2 font-sans leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-2 font-sans leading-tight text-left">
               Our Operating Standards
             </h2>
-            <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal max-w-lg mx-auto font-sans leading-relaxed">
+            <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal max-w-xl font-sans leading-relaxed text-left">
               Battle-tested frameworks designed to align operations, validate technical benchmarks, and drive measurable impact.
             </p>
           </div>
 
-          <div className="w-full max-w-6xl mx-auto py-2 sm:py-4 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 justify-items-center items-stretch">
+          <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 justify-items-center items-stretch my-auto">
             {PROCESS_STAGES_DATA.map((stage, idx) => (
               <ProcessStageCard
                 key={stage.id}
@@ -1000,16 +1030,18 @@ export default function HomePage({ onNavigate }) {
           pointerEvents: phase6TransitionP < 0.05 ? 'none' : 'auto',
           willChange: 'transform',
         }}
-        className="absolute inset-0 w-full h-full bg-white text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.15)] flex flex-col justify-between z-50 pointer-events-auto overflow-hidden select-none"
+        className={`absolute inset-0 w-full h-full bg-white text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.15)] flex flex-col justify-between z-50 pointer-events-auto select-none ${
+          phase6TransitionP >= 0.95 ? 'overflow-y-auto' : 'overflow-hidden'
+        }`}
       >
         <div
           style={{
             transform: `translate3d(0, ${tailInnerTranslateY}vh, 0)`,
             willChange: 'transform',
           }}
-          className="w-full flex flex-col justify-between min-h-full"
+          className="w-full flex flex-col justify-between min-h-full pb-10"
         >
-          <div className="w-full pt-4 sm:pt-8 pb-2">
+          <div className="w-full pt-16 sm:pt-20 pb-2">
             <StackedTestimonials />
           </div>
 

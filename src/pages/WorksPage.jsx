@@ -23,7 +23,7 @@ const WORKS_SHOWCASE = [
       { label: 'Mobile optimized experience', val: '100%' },
     ],
     tags: ['Web Platform', 'Barber Booking', 'Service Menu UX', 'Mobile Scheduling'],
-    challenge: 'The client needed a sophisticated booking portal that reflected traditional Turkish hospitality while enabling rapid mobile scheduling.',
+    challenge: 'The client needed a sophisticated booking portal that reflected traditional Turkish hospitality while enabling rapid mobile scheduling without double-bookings.',
     solution: 'Engineered an opulent, high-converting digital storefront with real-time barber availability, service selection, and instant appointment booking.',
   },
   {
@@ -34,7 +34,7 @@ const WORKS_SHOWCASE = [
     headline: 'High-Velocity Franchise Hub & Smashed Gourmet Burger Destination',
     img: '/Hero-Images/brim-tawny-hero.png',
     url: 'https://brim-tawny.vercel.app/franchise',
-    description: 'Immersive digital franchise hub and interactive menu engine built to streamline location discovery and application pipelines.',
+    description: 'Immersive digital franchise hub and interactive menu engine built to streamline location discovery and franchise application pipelines.',
     accentColor: '#d97706',
     tabBgClass: 'bg-[#d97706]',
     textColor: 'text-[#d97706]',
@@ -50,33 +50,55 @@ const WORKS_SHOWCASE = [
   },
   {
     id: 3,
-    title: 'Sai Dental Clinic',
-    client: 'SAI DENTAL CLINIC',
-    cat: 'Clinical Healthcare',
-    headline: 'Empathetic Healthcare Portal & Virtual Patient Scheduling',
-    img: '/Hero-Images/dr-rathod-hero.png',
-    url: 'https://gorgeous-daffodil-31a9c9.netlify.app/',
-    description: 'Empathetic healthcare web portal facilitating patient intake, virtual consultation bookings, and procedure breakdowns.',
-    accentColor: '#0284c7',
-    tabBgClass: 'bg-[#0284c7]',
-    textColor: 'text-[#0284c7]',
-    overview: 'Modern clinical web platform designed to facilitate patient intake, virtual consultation bookings, and procedure breakdowns.',
+    title: 'Mayavi Media Creations',
+    client: 'MAYAVI MEDIA CREATIONS',
+    cat: 'Cinematic Media',
+    headline: 'Next-Gen Vertical Video & Cinematic Storytelling Agency',
+    img: '/Hero-Images/mayavi-mc-hero.png',
+    url: 'https://mayavi-mc.vercel.app/',
+    description: 'A dynamic creative agency portfolio highlighting viral short-form video campaigns, commercial production, and brand elevation.',
+    accentColor: '#8b5cf6',
+    tabBgClass: 'bg-[#8b5cf6]',
+    textColor: 'text-[#8b5cf6]',
+    overview: 'Next-generation creative studio specializing in viral short-form video strategies, cinematic brand commercials, and high-retention social content.',
     metrics: [
-      { label: 'New patient intake boost', val: '3.5×' },
-      { label: 'Patient onboarding time', val: '-65%' },
-      { label: 'Patient trust & rating', val: '99%' },
+      { label: 'Client campaign reach', val: '12M+' },
+      { label: 'Average viewer retention', val: '84%' },
+      { label: 'Production speed factor', val: '3×' },
     ],
-    tags: ['Clinical Portal', 'Patient Intake', 'Procedure Breakdown', 'Telehealth Schedule'],
-    challenge: 'Patients needed a welcoming, informative portal to understand dental procedures, view before/after results, and schedule visits effortlessly.',
-    solution: 'Delivered a clean, patient-centric digital platform with interactive procedure guides, instant appointment requests, and mobile intake forms.',
+    tags: ['Cinematic Video', 'Portfolio Showcase', 'Short-Form Reel', 'Brand Films'],
+    challenge: 'Agency needed an immersive, fast-loading showcase to display high-resolution video reels without lag or playback buffering on mobile.',
+    solution: 'Built an optimized video showcase platform with lazy-loading previews, fluid custom video controls, and interactive client case studies.',
   },
   {
     id: 4,
+    title: 'AP Mohan Sai Dental',
+    client: 'AP MOHAN CLINIC',
+    cat: 'Clinical Architecture',
+    headline: 'Scroll-Driven Architectural Precision & Clinical Excellence',
+    img: '/Hero-Images/ap-mohan-hero.png',
+    url: 'https://ap-mohan.vercel.app/',
+    description: 'An interactive scroll-driven digital architectural showcase displaying master-crafted clinical facilities and structural engineering precision.',
+    accentColor: '#0284c7',
+    tabBgClass: 'bg-[#0284c7]',
+    textColor: 'text-[#0284c7]',
+    overview: 'State-of-the-art dental architecture and clinical facility celebrating contemporary design, structural precision, and modern healthcare environments.',
+    metrics: [
+      { label: 'High-value client inquiries', val: '+220%' },
+      { label: 'Session dwell duration', val: '4m 12s' },
+      { label: 'Scroll engagement rate', val: '92%' },
+    ],
+    tags: ['Canvas Scroll', 'Architecture UX', 'Clinical Facility', 'Interactive 3D'],
+    challenge: 'The clinic required a captivating digital experience that conveyed the physical scale, modern architectural model, and clinical sophistication of their 1966 facility.',
+    solution: 'Engineered a scroll-driven canvas sequence showcasing architectural transitions, spatial depth, and clinical capabilities.',
+  },
+  {
+    id: 5,
     title: 'Old Glen Landscapes',
     client: 'OLD GLEN LANDSCAPES',
     cat: 'Exterior Architecture',
     headline: "Glasgow's Premier Exterior Architecture & Master Landscaping Studio",
-    img: '/Hero-Images/wnbturkish-hero.png',
+    img: '/Hero-Images/old-glen-hero.png',
     url: 'https://old-glen-landscapes.vercel.app/',
     description: 'Bespoke outdoor living spaces, luxury paving, architectural garden design, and Scottish hardscaping master craftsmanship.',
     accentColor: '#0e593c',
@@ -93,48 +115,92 @@ const WORKS_SHOWCASE = [
     solution: 'Architected an elegant portfolio gallery highlighting project transformations with an automated quote request pipeline.',
   },
   {
-    id: 5,
-    title: 'Integrate AI Systems',
-    client: 'INTEGRATE THOUGHT',
-    cat: 'Enterprise AI & RAG',
-    headline: 'Autonomous AI Workflows & Private Enterprise RAG Architecture',
-    img: '/Hero-Images/brim-tawny-hero.png',
-    url: '#',
-    description: 'Custom enterprise AI agent orchestration and secure internal RAG knowledge architectures connected to private company databases.',
-    accentColor: '#7c3aed',
-    tabBgClass: 'bg-[#7c3aed]',
-    textColor: 'text-[#7c3aed]',
-    overview: 'Custom enterprise AI agent orchestration and secure internal RAG knowledge architectures connected to private company databases.',
+    id: 6,
+    title: 'AVS Hospitals',
+    client: 'AVS HOSPITALS HMSS',
+    cat: 'Enterprise Healthcare',
+    headline: 'Hospital Management & Integrated Patient Record System',
+    img: '/Hero-Images/avs-hospitals-hero.png',
+    url: 'https://avs-hospitals-hmss.vercel.app/',
+    description: 'An enterprise-grade Healthcare Management System Interface for hospital networks, simplifying doctor scheduling, bed tracking, and online intake.',
+    accentColor: '#059669',
+    tabBgClass: 'bg-[#059669]',
+    textColor: 'text-[#059669]',
+    overview: 'Integrated hospital administration platform streamlining inpatient and outpatient workflows, bed occupancy analytics, and electronic medical records.',
     metrics: [
-      { label: 'Engineering hours saved', val: '1,200+' },
-      { label: 'Query retrieval accuracy', val: '99.4%' },
-      { label: 'Workflow automation speed', val: '10×' },
+      { label: 'Patient wait time reduction', val: '-48%' },
+      { label: 'Bed allocation efficiency', val: '99.2%' },
+      { label: 'Daily active clinical staff', val: '1,500+' },
     ],
-    tags: ['Private RAG', 'Vector Embeddings', 'AI Autonomous Agents', 'Data Security'],
-    challenge: 'Enterprise client required a secure knowledge retrieval engine to query thousands of private internal technical documents securely.',
-    solution: 'Deployed a local RAG vector database and custom AI agent pipeline that answers complex engineering queries in seconds with citation accuracy.',
+    tags: ['Enterprise HMSS', 'Doctor Scheduling', 'EMR Integration', 'Bed Management'],
+    challenge: 'Large multi-specialty hospital required a unified portal to coordinate doctor appointments, room allotments, and fast patient admissions.',
+    solution: 'Delivered an intuitive hospital operating dashboard with live department synchronization, online doctor booking, and secure medical history lookups.',
   },
   {
-    id: 6,
-    title: 'Nexus Engine',
-    client: 'NEXUS SYSTEMS',
-    cat: 'Cloud & Automation',
-    headline: 'High-Speed Cloud Deployment & Real-Time Analytics Architecture',
-    img: '/Hero-Images/dr-rathod-hero.png',
-    url: '#',
-    description: 'Automated cloud deployment pipelines, container orchestration, and high-speed data analytics architectures.',
-    accentColor: '#1351d8',
-    tabBgClass: 'bg-[#1351d8]',
-    textColor: 'text-[#1351d8]',
-    overview: 'Automated cloud deployment pipelines, container orchestration, and high-speed data analytics architectures.',
+    id: 7,
+    title: 'VAMP Roofing',
+    client: 'VAMP ROOFING & SYSTEMS',
+    cat: 'Commercial Roofing',
+    headline: 'Industrial & Residential Precision Roofing Estimate Engine',
+    img: '/Hero-Images/roof-nu-hero.png',
+    url: 'https://roof-nu.vercel.app/',
+    description: 'A high-converting roofing contractor platform engineered for instant quote estimates, storm damage inspection booking, and warranty tracking.',
+    accentColor: '#dc2626',
+    tabBgClass: 'bg-[#dc2626]',
+    textColor: 'text-[#dc2626]',
+    overview: 'Comprehensive roofing services platform connecting property owners with certified roof inspection, emergency leak repairs, and warranty-backed installations.',
     metrics: [
-      { label: 'Cloud infra cost reduction', val: '35%' },
-      { label: 'Uptime reliability score', val: '99.99%' },
-      { label: 'Deployment speedup factor', val: '8.5×' },
+      { label: 'Instant quote submissions', val: '+240%' },
+      { label: 'Inspection turnaround', val: '< 24 hrs' },
+      { label: 'Customer trust index', val: '99.5%' },
     ],
-    tags: ['Cloud Orchestration', 'DevOps Pipeline', 'Real-Time Analytics', 'Serverless'],
-    challenge: 'Needed high-speed automated cloud provisioning to handle traffic spikes during product launches without over-budget infrastructure.',
-    solution: 'Engineered auto-scaling serverless containers with automated CI/CD deployment hooks and real-time telemetry monitoring.',
+    tags: ['Roofing Estimator', 'Storm Damage Inspection', 'Emergency Booking', 'Warranty Hub'],
+    challenge: 'Property owners facing storm emergencies needed instant roof replacement estimates and quick scheduling without tedious phone tag.',
+    solution: 'Built an interactive roof cost calculator and inspection booking engine that immediately captures roof dimensions and schedules field assessors.',
+  },
+  {
+    id: 8,
+    title: 'Dr. Rathod Dental Clinic',
+    client: 'DR. RATHOD DENTAL',
+    cat: 'Aesthetic & Clinical Dental',
+    headline: 'Swiss-Grade Implantology, Aesthetic Dentistry & Patient Care',
+    img: '/Hero-Images/dr-rathod-hero.png',
+    url: 'https://jazzy-pastelito-855f86.netlify.app/',
+    description: 'A modern, empathetic dental platform facilitating patient onboarding, Swiss-grade surgical implantology, and virtual appointment scheduling.',
+    accentColor: '#0891b2',
+    tabBgClass: 'bg-[#0891b2]',
+    textColor: 'text-[#0891b2]',
+    overview: 'State-of-the-art dental clinic delivering computer-guided surgical implantology, full mouth rehabilitations, smile design, and gentle family dentistry.',
+    metrics: [
+      { label: 'Patient onboarding time', val: '-65%' },
+      { label: 'New consultation growth', val: '3.8×' },
+      { label: 'Patient satisfaction rate', val: '99.4%' },
+    ],
+    tags: ['Surgical Implantology', 'Patient Intake', 'Digital Smile Design', 'Online Booking'],
+    challenge: 'Clinic needed an approachable yet sophisticated digital portal where patients could learn about complex implant procedures and book consults with confidence.',
+    solution: 'Engineered an empathetic patient experience with transparent procedure breakdowns, doctor credentials, guided treatment walkthroughs, and fast intake.',
+  },
+  {
+    id: 9,
+    title: "Usy'z Blizers",
+    client: "USY'Z BLIZERS",
+    cat: 'Streetwear & Luxury Vault',
+    headline: 'Urban Streetwear Flagship, Apparel Drops & Shettleston Vault',
+    img: "/Hero-Images/usy'z-blizers-hero.png",
+    url: 'https://fancy-lokum-dfbfba.netlify.app/',
+    description: 'A visually striking streetwear and luxury essentials platform featuring dynamic product interaction, collection drops, and Glasgow flagship showcase.',
+    accentColor: '#d97706',
+    tabBgClass: 'bg-[#d97706]',
+    textColor: 'text-[#d97706]',
+    overview: 'Glasgow flagship and urban streetwear studio delivering limited-edition apparel, luxury Speyside single malts, and curated seasonal style lookbooks.',
+    metrics: [
+      { label: 'Collection drop sellout time', val: '18 mins' },
+      { label: 'Mobile checkout conversion', val: '4.8%' },
+      { label: 'VIP vault reservations', val: '450+' },
+    ],
+    tags: ['Streetwear E-Commerce', 'Flagship Showcase', 'Luxury Essentials', 'Micro-Animations'],
+    challenge: 'Brand required high-energy streetwear aesthetics with fast mobile ordering and private vault reserve capabilities for high-demand drops.',
+    solution: 'Created an urban, high-contrast digital flagship with fluid animations, interactive collection browsing, and secure dispatch reservation.',
   },
 ];
 
@@ -183,6 +249,7 @@ export default function WorksPage({ onNavigate }) {
         backgroundColor="#eef4fa"
         lineColor="#cbd5e1"
         dotColor="#94a3b8"
+        hoverColor="#10b981"
       />
 
       <div className="relative z-10">
@@ -282,59 +349,59 @@ export default function WorksPage({ onNavigate }) {
         </section>
       </div>
 
-      {/* ULTRA-PREMIUM ANIMATED POPUP MODAL DIALOG */}
+      {/* ULTRA-PREMIUM ANIMATED POPUP MODAL DIALOG (COMPACT & PERFECTLY CENTERED) */}
       {selectedWork && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-md transition-opacity duration-300 ease-out ${
+          className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-md transition-opacity duration-300 ease-out ${
             isClosing ? 'opacity-0' : 'opacity-100'
           }`}
           onClick={handleCloseModal}
         >
           <div
-            className={`relative w-full max-w-3xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto text-slate-900 border border-slate-200/90 font-sans transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] transform ${
+            className={`relative w-full max-w-4xl bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl overflow-hidden max-h-[88vh] overflow-y-auto text-slate-900 border border-slate-200/90 font-sans transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] transform ${
               isClosing
-                ? 'scale-95 translate-y-4 opacity-0'
+                ? 'scale-95 translate-y-3 opacity-0'
                 : 'scale-100 translate-y-0 opacity-100'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Brand Color Accent Bar */}
             <div
-              className="absolute top-0 inset-x-0 h-2"
+              className="absolute top-0 inset-x-0 h-1.5"
               style={{ backgroundColor: selectedWork.accentColor }}
             />
 
             {/* Close Button (X) */}
             <button
               onClick={handleCloseModal}
-              className="absolute top-6 right-6 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-950 flex items-center justify-center transition-all cursor-pointer font-bold text-sm"
+              className="absolute top-4 right-4 sm:top-5 sm:right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-950 flex items-center justify-center transition-all cursor-pointer font-bold text-xs shadow-xs"
             >
               ✕
             </button>
 
             {/* Header Info */}
-            <div className="mb-6 pr-10">
-              <div className="flex items-center gap-2 mb-2">
+            <div className="mb-3.5 pr-8">
+              <div className="flex items-center gap-2 mb-1.5">
                 <span
-                  className="text-xs font-mono font-bold uppercase tracking-wider"
+                  className="text-[11px] font-mono font-bold uppercase tracking-wider"
                   style={{ color: selectedWork.accentColor }}
                 >
                   {selectedWork.client}
                 </span>
                 <span className="text-slate-300">•</span>
-                <span className="text-xs font-mono font-medium text-slate-600 bg-slate-100 border border-slate-200/80 px-3 py-0.5 rounded-full">
+                <span className="text-[10px] font-mono font-medium text-slate-600 bg-slate-100 border border-slate-200/80 px-2.5 py-0.5 rounded-full">
                   {selectedWork.cat}
                 </span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 leading-tight font-sans">
+              <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-950 leading-snug font-sans">
                 {selectedWork.headline}
               </h2>
             </div>
 
             {/* Main Image + Overview & Metrics Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 items-start">
-              {/* Left Preview Image - Real Project Screenshot */}
-              <div className="w-full h-52 sm:h-64 rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-slate-950 relative">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-5 mb-4 items-center">
+              {/* Left Preview Image Frame (5 cols) */}
+              <div className="md:col-span-5 w-full h-36 sm:h-44 rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-slate-950 relative shrink-0">
                 <img
                   src={selectedWork.img}
                   alt={selectedWork.title}
@@ -342,23 +409,23 @@ export default function WorksPage({ onNavigate }) {
                 />
               </div>
 
-              {/* Right Overview & Metrics */}
-              <div className="space-y-4">
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal font-sans">
+              {/* Right Overview & Metrics (7 cols) */}
+              <div className="md:col-span-7 space-y-3">
+                <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal font-sans">
                   {selectedWork.overview}
                 </p>
 
                 {/* Metrics Row */}
-                <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-3 border-t border-slate-100">
+                <div className="grid grid-cols-3 gap-2 pt-2.5 border-t border-slate-100">
                   {selectedWork.metrics.map((m, idx) => (
                     <div key={idx} className="space-y-0.5">
                       <div
-                        className="text-xl sm:text-2xl font-black tracking-tight font-sans"
+                        className="text-base sm:text-lg font-black tracking-tight font-sans leading-none"
                         style={{ color: selectedWork.accentColor }}
                       >
                         {m.val}
                       </div>
-                      <div className="text-[10px] text-slate-500 font-medium leading-tight font-sans">
+                      <div className="text-[9.5px] sm:text-[10px] text-slate-500 font-medium leading-tight font-sans">
                         {m.label}
                       </div>
                     </div>
@@ -366,11 +433,11 @@ export default function WorksPage({ onNavigate }) {
                 </div>
 
                 {/* Tech & Feature Tags */}
-                <div className="flex flex-wrap gap-1.5 pt-2">
+                <div className="flex flex-wrap gap-1 pt-1">
                   {selectedWork.tags.map((tag, idx) => (
                     <span
                       key={idx}
-                      className="text-[10px] font-mono font-medium text-slate-600 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg"
+                      className="text-[9px] sm:text-[9.5px] font-mono font-medium text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md"
                     >
                       {tag}
                     </span>
@@ -380,34 +447,34 @@ export default function WorksPage({ onNavigate }) {
             </div>
 
             {/* Challenge & Solution Side-by-Side Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-              <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-1.5">
-                <h4 className="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+              <div className="bg-slate-50/90 border border-slate-200/80 rounded-xl p-3 sm:p-3.5 space-y-1">
+                <h4 className="text-[10px] font-bold text-slate-900 uppercase font-mono tracking-wider">
                   The Challenge
                 </h4>
-                <p className="text-xs text-slate-600 leading-relaxed font-normal font-sans">
+                <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed font-normal font-sans">
                   {selectedWork.challenge}
                 </p>
               </div>
 
-              <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-1.5">
-                <h4 className="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider">
+              <div className="bg-slate-50/90 border border-slate-200/80 rounded-xl p-3 sm:p-3.5 space-y-1">
+                <h4 className="text-[10px] font-bold text-slate-900 uppercase font-mono tracking-wider">
                   Our Solution
                 </h4>
-                <p className="text-xs text-slate-600 leading-relaxed font-normal font-sans">
+                <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed font-normal font-sans">
                   {selectedWork.solution}
                 </p>
               </div>
             </div>
 
             {/* Bottom Action Footer */}
-            <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+            <div className="flex items-center justify-between pt-3 border-t border-slate-100">
               {selectedWork.url && selectedWork.url !== '#' ? (
                 <a
                   href={selectedWork.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-bold text-xs tracking-wide transition-all shadow-md hover:opacity-90 active:scale-95 cursor-pointer font-sans"
+                  className="inline-flex items-center gap-1.5 px-5 py-2 rounded-xl text-white font-bold text-xs tracking-wide transition-all shadow-sm hover:opacity-90 active:scale-95 cursor-pointer font-sans"
                   style={{ backgroundColor: selectedWork.accentColor }}
                 >
                   <span>Explore Website</span>
@@ -421,7 +488,7 @@ export default function WorksPage({ onNavigate }) {
 
               <button
                 onClick={handleCloseModal}
-                className="px-6 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs tracking-wide transition-colors cursor-pointer font-sans"
+                className="px-5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs tracking-wide transition-colors cursor-pointer font-sans"
               >
                 Close
               </button>

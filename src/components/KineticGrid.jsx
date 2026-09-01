@@ -20,11 +20,12 @@ export default function KineticGrid({
   backgroundColor = '#050505',
   lineColor = '#262626',
   dotColor = '#404040',
+  hoverColor = null,
   className = '',
 }) {
   const canvasRef = useRef(null);
 
-  // Section-specific solid logo colors
+  // Section-specific solid logo colors (fallback for Home page)
   const SECTION_COLORS = {
     section1: [0, 180, 216],   // Solid Cyan (#00b4d8)
     section2: [236, 72, 153],  // Solid Logo Magenta (#ec4899)
@@ -84,6 +85,7 @@ export default function KineticGrid({
 
     const parsedLine = parseColor(lineColor);
     const parsedDot = parseColor(dotColor);
+    const parsedHover = hoverColor ? parseColor(hoverColor) : null;
 
     const initGrid = () => {
       const width = window.innerWidth;
@@ -177,18 +179,23 @@ export default function KineticGrid({
       const dt = Math.min(rawDt, 0.033);
       lastTime = now;
 
-      // Determine active section color based on scroll position
-      const scrollY = window.scrollY;
-      const scrollProgress = Math.min(1, Math.max(0, scrollY / (window.innerHeight * 1.2)));
+      // Determine active section color (use page-specific hoverColor if provided, otherwise scroll transition)
+      let activeColor;
+      if (parsedHover) {
+        activeColor = [parsedHover[0], parsedHover[1], parsedHover[2]];
+      } else {
+        const scrollY = window.scrollY;
+        const scrollProgress = Math.min(1, Math.max(0, scrollY / (window.innerHeight * 1.2)));
 
-      const color1 = SECTION_COLORS.section1;
-      const color2 = SECTION_COLORS.section2;
+        const color1 = SECTION_COLORS.section1;
+        const color2 = SECTION_COLORS.section2;
 
-      const activeColor = [
-        Math.round(color1[0] + (color2[0] - color1[0]) * scrollProgress),
-        Math.round(color1[1] + (color2[1] - color1[1]) * scrollProgress),
-        Math.round(color1[2] + (color2[2] - color1[2]) * scrollProgress),
-      ];
+        activeColor = [
+          Math.round(color1[0] + (color2[0] - color1[0]) * scrollProgress),
+          Math.round(color1[1] + (color2[1] - color1[1]) * scrollProgress),
+          Math.round(color1[2] + (color2[2] - color1[2]) * scrollProgress),
+        ];
+      }
 
       stateRef.current.activeSectionColor = activeColor;
 
@@ -431,6 +438,7 @@ export default function KineticGrid({
     backgroundColor,
     lineColor,
     dotColor,
+    hoverColor,
   ]);
 
   return (
