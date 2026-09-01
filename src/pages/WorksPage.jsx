@@ -191,15 +191,15 @@ export default function WorksPage({ onNavigate }) {
 
         {/* Hero Section */}
         <section className="pt-40 sm:pt-44 pb-12 px-6 max-w-6xl mx-auto text-center">
-          <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-blue-100/80 border border-blue-200/80 text-blue-900 text-[11px] font-mono font-semibold tracking-widest uppercase mb-4 shadow-sm">
-            02 / CLIENT SHOWCASE &amp; PORTFOLIO
+          <div className="section-badge-light mb-4">
+            <span>01 / CLIENT SHOWCASE &amp; PORTFOLIO</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight max-w-3xl mx-auto mb-4 font-sans">
-            Work that moves the needle.
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.08] max-w-4xl mx-auto mb-4 font-sans">
+            Work That Moves the Needle.
           </h1>
-          <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto leading-relaxed font-normal font-sans">
-            Long-term engagements where design, engineering and automation shipped together. Hover over any booklet card to preview, and click to view full details.
+          <p className="text-slate-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-normal font-sans">
+            Long-term engagements where design, engineering, and automation shipped together. Click any project booklet for in-depth technical case studies.
           </p>
         </section>
 

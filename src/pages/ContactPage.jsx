@@ -176,21 +176,19 @@ export default function ContactPage({ onNavigate }) {
         <section className="pt-36 sm:pt-44 pb-12 px-6 max-w-5xl mx-auto text-center font-sans">
           
           {/* Live Availability Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/90 text-slate-800 text-xs font-semibold tracking-wide mb-6 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span className="text-slate-600 font-medium">Available for Client Projects &amp; Training Inquiries</span>
-            <span className="text-slate-300">•</span>
-            <span className="text-emerald-700 font-bold">2026</span>
+          <div className="section-badge-light mb-6">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+            <span>01 / CLIENT INQUIRIES &bull; OPEN FOR 2026</span>
           </div>
 
-          <h1 className="text-3xl sm:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.15] max-w-4xl mx-auto mb-6 font-sans">
-            Let's build something{' '}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.08] max-w-4xl mx-auto mb-6 font-sans">
+            Let's Build Something{' '}
             <span className="text-blue-700">
-              extraordinary together.
+              Extraordinary Together.
             </span>
           </h1>
 
-          <p className="text-slate-600 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal font-sans">
+          <p className="text-slate-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-normal font-sans">
             Reach out for custom software engineering projects, AI automation, or inquire about our specialized training skill programs.
           </p>
         </section>
@@ -731,13 +729,13 @@ export default function ContactPage({ onNavigate }) {
 
         {/* FAQ ACCORDION SECTION */}
         <section className="max-w-4xl mx-auto px-6 pb-20 border-t border-slate-200/80 pt-16 font-sans w-full">
-          <div className="text-center mb-10 space-y-2">
-            <span className="text-xs font-sans font-bold tracking-widest text-slate-500 uppercase">
-              TRANSPARENT PROCESS
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight font-sans">
+          <div className="text-center mb-10">
+            <div className="section-badge-light mb-3">
+              <span>02 / TRANSPARENT PROCESS</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight font-sans leading-tight">
               Frequently Asked Questions
-            </h3>
+            </h2>
           </div>
 
           <div className="space-y-3 font-sans">

@@ -265,12 +265,12 @@ export default function AboutPage({ onNavigate }) {
 
         {/* HERO SECTION */}
         <section className="pt-40 sm:pt-48 pb-16 px-6 max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-blue-100/80 border border-blue-200/80 text-blue-900 text-[11px] font-mono font-semibold tracking-widest uppercase mb-6 shadow-sm">
-            <span>ABOUT US</span>
+          <div className="section-badge-light mb-6">
+            <span>01 / ABOUT INTEGRATE THOUGHT</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-950 tracking-tight leading-tight max-w-4xl mx-auto mb-6 font-sans">
-            WE BUILD DIGITAL SYSTEMS THAT MOVE BUSINESSES FORWARD.
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.08] max-w-4xl mx-auto mb-6 font-sans">
+            We Build Digital Systems That Move Businesses Forward.
           </h1>
 
           <p className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal font-sans">
@@ -280,11 +280,11 @@ export default function AboutPage({ onNavigate }) {
 
         {/* COMPANY INTRODUCTION SECTION */}
         <section className="py-16 px-6 max-w-4xl mx-auto text-center border-t border-slate-200/80">
-          <span className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase block mb-2">
-            OUR PHILOSOPHY
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-950 tracking-tight mb-4 font-sans">
-            NOT JUST DIGITAL. BUILT FOR RESULTS.
+          <div className="section-badge-light mb-3">
+            <span>02 / OUR PHILOSOPHY</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight mb-4 font-sans">
+            Not Just Digital. Built for Results.
           </h2>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-normal font-sans mb-6">
             We don't build technology for the sake of technology. We build websites, AI systems, automations, digital products, and data-driven solutions designed around how a business actually operates.
@@ -306,10 +306,10 @@ export default function AboutPage({ onNavigate }) {
         {/* 3D STACKED STORY EXPERIENCE CENTERPIECE */}
         <section className="py-20 px-6 sm:px-10 lg:px-12 max-w-6xl mx-auto border-t border-slate-200/80">
           <div className="text-center mb-12">
-            <span className="inline-block px-3.5 py-1 rounded-full bg-blue-100/80 border border-blue-200 text-blue-900 font-mono text-[11px] font-semibold tracking-widest uppercase mb-3">
-              03 / FROM IDEAS → SYSTEMS → GROWTH
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-950 tracking-tight font-sans">
+            <div className="section-badge-light mb-3">
+              <span>03 / STORY EXPERIENCE</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight font-sans">
               Our 5-Stage Story Experience
             </h2>
           </div>
@@ -439,12 +439,12 @@ export default function AboutPage({ onNavigate }) {
 
         {/* WHAT WE BELIEVE SECTION */}
         <section className="py-24 px-6 sm:px-10 lg:px-12 max-w-6xl mx-auto border-t border-slate-200/80">
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-            <span className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase">
-              PRINCIPLES &amp; CORE VALUES
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-950 tracking-tight font-sans">
-              WHAT WE BELIEVE
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <div className="section-badge-light mb-3">
+              <span>04 / CORE BELIEFS</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight font-sans">
+              Principles &amp; Core Values
             </h2>
           </div>
 
@@ -473,12 +473,12 @@ export default function AboutPage({ onNavigate }) {
 
         {/* HOW WE WORK SECTION */}
         <section className="py-24 px-6 sm:px-10 lg:px-12 max-w-6xl mx-auto border-t border-slate-200/80">
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-            <span className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase">
-              METHODOLOGY
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-950 tracking-tight font-sans">
-              HOW WE WORK
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <div className="section-badge-light mb-3">
+              <span>05 / METHODOLOGY</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight font-sans">
+              How We Work
             </h2>
           </div>
 
@@ -509,12 +509,12 @@ export default function AboutPage({ onNavigate }) {
 
         {/* TECHNOLOGY / CAPABILITIES SECTION */}
         <section className="py-24 px-6 sm:px-10 lg:px-12 max-w-6xl mx-auto border-t border-slate-200/80">
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-            <span className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase">
-              ENGINEERING DISCIPLINES
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-950 tracking-tight font-sans">
-              TECHNOLOGY &amp; CAPABILITIES
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <div className="section-badge-light mb-3">
+              <span>06 / CAPABILITIES</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight font-sans">
+              Technology &amp; Capabilities
             </h2>
           </div>
 
@@ -546,12 +546,12 @@ export default function AboutPage({ onNavigate }) {
         {/* FINAL CTA SECTION */}
         <section className="py-24 px-6 max-w-5xl mx-auto mb-20 text-center">
           <div className="bg-slate-950 text-white rounded-3xl p-10 sm:p-16 shadow-2xl space-y-6">
-            <span className="inline-block px-3.5 py-1 rounded-full bg-white/10 text-slate-300 text-[11px] font-mono font-semibold tracking-widest uppercase">
-              LET'S TALK
-            </span>
+            <div className="section-badge-dark mb-4">
+              <span>07 / GET IN TOUCH</span>
+            </div>
 
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-sans leading-tight">
-              LET'S BUILD SOMETHING THAT MATTERS.
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight font-sans leading-tight">
+              Let's Build Something That Matters.
             </h2>
 
             <p className="text-slate-300 text-sm sm:text-base max-w-xl mx-auto font-normal font-sans leading-relaxed">

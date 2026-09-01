@@ -164,14 +164,14 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
     <div className="w-full max-w-5xl mx-auto py-4 sm:py-6 px-3 sm:px-4 flex flex-col items-center overflow-hidden font-sans select-none">
       
       {/* Header Title Section (Clean Light Theme) */}
-      <div className="text-center mb-4 sm:mb-6 max-w-2xl mx-auto">
-        <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-slate-100 border border-slate-300 text-slate-700 text-[11px] font-mono font-bold tracking-widest uppercase mb-2 shadow-sm">
-          <span>VERIFIED FEEDBACK</span>
+      <div className="text-center mb-5 sm:mb-7 max-w-2xl mx-auto">
+        <div className="section-badge-light mb-2.5">
+          <span>05 / VERIFIED FEEDBACK</span>
         </div>
-        <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 mb-1.5 font-sans uppercase">
-          CLIENT PERSPECTIVE
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-2 font-sans leading-tight">
+          Client Perspectives
         </h2>
-        <p className="text-slate-600 text-xs sm:text-sm font-medium max-w-lg mx-auto font-sans leading-relaxed">
+        <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal max-w-lg mx-auto font-sans leading-relaxed">
           What our students, clients, and partners say about Integrate Thought.
         </p>
       </div>

@@ -312,12 +312,15 @@ export default function ServicesPage({ onNavigate, initialStep = 0, initialServi
         
         {/* HERO TITLE HEADER POSITIONED DIRECTLY ABOVE THE CARDS */}
         <div className="text-center max-w-4xl mx-auto mb-4 sm:mb-6 pointer-events-none z-10 shrink-0">
-          <div className="inline-flex items-center px-3 py-0.5 rounded-full bg-slate-200/80 border border-slate-300 text-slate-700 text-[10px] sm:text-[11px] font-mono font-semibold tracking-widest uppercase mb-1.5 shadow-sm">
-            <span>OUR SERVICES CATALOG</span>
+          <div className="section-badge-light mb-2.5">
+            <span>01 / OUR SERVICES CATALOG</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 leading-tight font-sans">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 leading-tight font-sans">
             Comprehensive Digital &amp; AI Engineering Solutions
           </h1>
+          <p className="text-slate-600 text-xs sm:text-sm font-normal mt-1.5 leading-relaxed max-w-lg mx-auto font-sans">
+            Four specialized disciplines designed to build, scale, and automate modern enterprise operations.
+          </p>
         </div>
 
         {/* CENTERED STACK VIEWPORT */}
@@ -391,13 +394,13 @@ export default function ServicesPage({ onNavigate, initialStep = 0, initialServi
           
           {/* Section Badge & Title */}
           <div className="text-center mb-5 sm:mb-6">
-            <span className="inline-block px-3.5 py-1 rounded-full bg-slate-200/80 border border-slate-300 text-slate-700 font-mono text-[10px] sm:text-[11px] font-semibold tracking-widest uppercase mb-2">
-              05 / GET A CUSTOM QUOTE
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-950 tracking-tight font-sans">
+            <div className="section-badge-light mb-2.5">
+              <span>02 / GET A CUSTOM QUOTE</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight font-sans leading-tight">
               Request a Service Quote
             </h2>
-            <p className="text-slate-600 text-xs sm:text-sm max-w-md mx-auto mt-1 font-normal font-sans">
+            <p className="text-slate-600 text-xs sm:text-sm max-w-md mx-auto mt-1.5 font-normal font-sans leading-relaxed">
               Select your required service and enter basic details for a tailored project estimate.
             </p>
           </div>

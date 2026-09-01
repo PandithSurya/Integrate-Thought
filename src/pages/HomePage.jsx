@@ -388,25 +388,25 @@ export default function HomePage({ onNavigate }) {
             />
           </div>
 
-          <div className="text-[10px] font-mono font-semibold tracking-widest text-slate-400 uppercase mb-3">
-            DIGITAL EXPERIENCE &bull; GROWTH &bull; AI & AUTOMATION
+          <div className="section-badge-dark mb-4">
+            <span>01 / DIGITAL ENGINEERING</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-white uppercase font-sans mb-4">
-            BUILDING DIGITAL <br />
-            SYSTEMS THAT <br />
-            MOVE BUSINESSES <br />
-            <span className="text-[#00b4d8]">FORWARD.</span>
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.1] text-white uppercase font-sans mb-4">
+            Building Digital <br />
+            Systems That <br />
+            Move Businesses <br />
+            <span className="text-[#00b4d8]">Forward.</span>
           </h1>
 
-          <p className="text-slate-300 text-xs sm:text-sm leading-relaxed font-normal mb-8 font-sans max-w-xl">
-            Digital experiences, AI and automation designed to help businesses attract customers, streamline operations and scale.
+          <p className="text-slate-300 text-sm leading-relaxed font-normal mb-8 font-sans max-w-xl">
+            Digital experiences, AI engineering, and automation designed to help businesses attract customers, streamline operations, and scale.
           </p>
 
           <div className="flex flex-wrap items-center gap-3">
             <button
-              onClick={() => alert("Initiating project consultation with Integrate Thought.")}
-              className="px-5 py-2.5 rounded-md bg-[#48a9dc] text-white font-bold text-xs tracking-wide shadow-md active:scale-95 font-sans"
+              onClick={() => handleProposalClick()}
+              className="px-5 py-2.5 rounded-full bg-[#00b4d8] hover:bg-[#0096c7] text-slate-950 font-bold text-xs tracking-wide shadow-md active:scale-95 transition-all font-sans cursor-pointer"
             >
               Start a Project
             </button>
@@ -415,7 +415,7 @@ export default function HomePage({ onNavigate }) {
                 const worksEl = document.getElementById('works-section-mobile');
                 if (worksEl) worksEl.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="px-5 py-2.5 rounded-md bg-white/10 border border-white/20 text-white font-semibold text-xs tracking-wide active:scale-95 font-sans"
+              className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-xs tracking-wide active:scale-95 transition-all font-sans cursor-pointer"
             >
               Explore Our Work
             </button>
@@ -434,14 +434,14 @@ export default function HomePage({ onNavigate }) {
             }
           >
             <div className="max-w-xl mx-auto w-full mb-6">
-              <div className="inline-flex items-center px-3 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] font-mono font-semibold tracking-widest text-slate-600 uppercase self-start mb-2">
-                03 / OUR SERVICES
+              <div className="section-badge-light mb-2.5 self-start">
+                <span>02 / OUR SERVICES</span>
               </div>
-              <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight">
                 Architecting High-Impact Systems
               </h2>
-              <p className="text-xs text-slate-500 font-medium mt-1">
-                Scroll down to explore all services &rarr;
+              <p className="text-xs sm:text-sm text-slate-600 font-normal mt-1 leading-relaxed">
+                Scroll horizontally to explore our specialized solutions &rarr;
               </p>
             </div>
 
@@ -496,14 +496,14 @@ export default function HomePage({ onNavigate }) {
         {/* 4. FEATURED WORKS SECTION (FREE FLOW - ZERO FULLSCREEN LOCKING) */}
         <section id="works-section-mobile" className="relative z-30 w-full py-12 px-4 bg-[#f4f7fa] text-slate-950 shadow-2xl">
           <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col gap-2 mb-6">
-              <div className="text-[11px] font-mono font-bold tracking-widest text-slate-500 uppercase">
-                FEATURED WORK
+            <div className="max-w-xl mx-auto w-full mb-6">
+              <div className="section-badge-light mb-2.5 self-start">
+                <span>03 / SELECTED WORKS</span>
               </div>
-              <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">
-                Work that moves the needle.
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight">
+                Work That Moves the Needle
               </h2>
-              <p className="text-slate-600 text-xs font-medium">
+              <p className="text-slate-600 text-xs sm:text-sm font-normal mt-1 leading-relaxed">
                 Long-term engagements where design, engineering and automation shipped together.
               </p>
             </div>
@@ -561,15 +561,15 @@ export default function HomePage({ onNavigate }) {
 
         {/* 5. OUR PROCESS SECTION (2 ROWS x 2 COLUMNS MOBILE GRID) */}
         <section className="relative z-40 w-full py-12 px-4 bg-[#f5f3ec] text-slate-900 shadow-2xl">
-          <div className="max-w-6xl mx-auto text-center mb-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-300 text-slate-700 text-[10px] font-mono font-semibold uppercase mb-2">
-              05 / OUR PROCESS
+          <div className="max-w-xl mx-auto text-center mb-6">
+            <div className="section-badge-light mb-2.5">
+              <span>04 / OPERATING STANDARDS</span>
             </div>
-            <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 mb-1">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 font-sans leading-tight mb-1.5">
               Our Operating Standards
             </h2>
-            <p className="text-slate-600 text-xs font-medium max-w-sm mx-auto">
-              Frameworks designed to align operations and validate benchmarks.
+            <p className="text-slate-600 text-xs sm:text-sm font-normal max-w-sm mx-auto leading-relaxed">
+              Battle-tested frameworks designed to align operations, validate technical benchmarks, and drive measurable impact.
             </p>
           </div>
 
@@ -715,29 +715,29 @@ export default function HomePage({ onNavigate }) {
         className="absolute inset-0 flex flex-col justify-center px-6 sm:px-16 md:px-24 max-w-7xl mx-auto pointer-events-auto z-10 pt-20 sm:pt-24 pb-10"
       >
         <div className="max-w-5xl">
-          <div className="text-[11px] sm:text-xs font-mono font-semibold tracking-[0.25em] text-slate-400 uppercase mb-4 sm:mb-6">
-            DIGITAL EXPERIENCE &bull; GROWTH &bull; AI & AUTOMATION &bull; TECHNOLOGY &bull; DATA
+          <div className="section-badge-dark mb-4 sm:mb-6 self-start">
+            <span>01 / CORE MISSION</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-[84px] font-extrabold tracking-tight leading-[0.98] text-white uppercase font-sans">
-            BUILDING DIGITAL <br />
-            SYSTEMS THAT <br />
-            MOVE BUSINESSES <br />
+          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-extrabold tracking-tight leading-[1.02] text-white uppercase font-sans">
+            Building Digital <br />
+            Systems That <br />
+            Move Businesses <br />
             <span className="text-[#00b4d8]">
-              FORWARD.
+              Forward.
             </span>
           </h2>
         </div>
 
         <div className="mt-8 sm:mt-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
-          <p className="text-slate-300 text-xs sm:text-sm md:text-base font-normal leading-relaxed max-w-md font-sans">
+          <p className="text-slate-300 text-sm sm:text-base md:text-lg font-normal leading-relaxed max-w-lg font-sans">
             Digital experiences, AI and automation designed to help businesses attract customers, streamline operations and scale.
           </p>
 
           <div className="flex items-center gap-3.5 shrink-0">
             <button
               onClick={() => handleProposalClick()}
-              className="px-6 py-3 rounded-md bg-[#48a9dc] hover:bg-[#3898cb] text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-lg active:scale-95 cursor-pointer font-sans"
+              className="px-6 py-3 rounded-full bg-[#00b4d8] hover:bg-[#0096c7] text-slate-950 font-bold text-xs sm:text-sm tracking-wide transition-all shadow-lg active:scale-95 cursor-pointer font-sans"
             >
               Start a Project
             </button>
@@ -767,19 +767,22 @@ export default function HomePage({ onNavigate }) {
           
           <div className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 sm:mb-8 shrink-0 text-center sm:text-left">
             <div>
-              <div className="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-[10px] sm:text-xs font-mono font-semibold tracking-widest text-slate-600 uppercase mb-2">
-                03 / OUR SERVICES
+              <div className="section-badge-light mb-2.5 self-start">
+                <span>02 / OUR SERVICES</span>
               </div>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight">
                 Architecting High-Impact Systems
               </h2>
+              <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal leading-relaxed max-w-md mt-1.5 font-sans">
+                Tailored engineering, AI automation, and knowledge architectures built for enterprise scale.
+              </p>
             </div>
             <div>
               <button
                 onClick={() => {
                   if (onNavigate) onNavigate('Services');
                 }}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-xs font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer shrink-0"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-xs font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer shrink-0 font-sans"
               >
                 <span>View All Services</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -865,14 +868,13 @@ export default function HomePage({ onNavigate }) {
       >
         <div className="w-full max-w-5xl mx-auto pt-12 sm:pt-14 shrink-0 z-40 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <div className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.25em] text-slate-500 uppercase mb-1.5">
-              FEATURED WORK
+            <div className="section-badge-light mb-2.5 self-start">
+              <span>03 / SELECTED WORKS</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 mb-2 font-sans">
-              Work that moves <br className="hidden sm:inline" />
-              the needle.
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 mb-2 font-sans leading-tight">
+              Work That Moves the Needle
             </h2>
-            <p className="text-slate-600 text-xs sm:text-sm font-medium tracking-normal max-w-md font-sans leading-relaxed">
+            <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal max-w-md font-sans leading-relaxed">
               Long-term engagements where design, engineering and automation shipped together.
             </p>
           </div>
@@ -882,7 +884,7 @@ export default function HomePage({ onNavigate }) {
               onClick={() => {
                 if (onNavigate) onNavigate('Works');
               }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-xs font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer shrink-0"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-xs font-semibold tracking-wide transition-all shadow-md active:scale-95 cursor-pointer shrink-0 font-sans"
             >
               <span>View All Works</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -967,13 +969,13 @@ export default function HomePage({ onNavigate }) {
       >
         <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center min-h-full py-8 sm:py-12 my-auto">
           <div className="w-full max-w-5xl mx-auto text-center shrink-0 mb-6 sm:mb-8">
-            <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-white border border-slate-300/80 text-slate-700 text-[11px] font-mono font-semibold tracking-widest uppercase mb-3 shadow-sm">
-              <span>05 / OUR PROCESS</span>
+            <div className="section-badge-light mb-2.5">
+              <span>04 / OPERATING STANDARDS</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 mb-2 font-sans">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-2 font-sans leading-tight">
               Our Operating Standards
             </h2>
-            <p className="text-slate-600 text-xs sm:text-sm font-medium tracking-normal max-w-lg mx-auto font-sans leading-relaxed">
+            <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal max-w-lg mx-auto font-sans leading-relaxed">
               Battle-tested frameworks designed to align operations, validate technical benchmarks, and drive measurable impact.
             </p>
           </div>

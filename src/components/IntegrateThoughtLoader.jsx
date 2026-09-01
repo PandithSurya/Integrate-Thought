@@ -94,7 +94,7 @@ export default function IntegrateThoughtLoader({
               ease: [0.16, 1, 0.3, 1], // Buttery smooth luxury dissolve
             },
           }}
-          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#050505] text-[#f8f9fa] select-none pointer-events-auto overflow-hidden"
+          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-white text-slate-950 select-none pointer-events-auto overflow-hidden"
           role="status"
           aria-live="polite"
           aria-label="Loading Integrate Thought"
@@ -123,7 +123,7 @@ export default function IntegrateThoughtLoader({
               <img
                 src="/logo.png"
                 alt="Integrate Thought"
-                className="h-28 sm:h-36 md:h-44 lg:h-48 w-auto aspect-[1536/1024] object-contain filter drop-shadow-[0_10px_36px_rgba(0,0,0,0.85)]"
+                className="h-28 sm:h-36 md:h-44 lg:h-48 w-auto aspect-[1536/1024] object-contain filter drop-shadow-[0_12px_32px_rgba(0,0,0,0.08)]"
                 draggable={false}
               />
             </motion.div>
@@ -155,7 +155,7 @@ export default function IntegrateThoughtLoader({
                   style={{
                     '--loader-font': currentVariant.font,
                   }}
-                  className={`brand-loader-text block text-center font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-white leading-none whitespace-nowrap ${currentVariant.tracking}`}
+                  className={`brand-loader-text block text-center font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-slate-950 leading-none whitespace-nowrap ${currentVariant.tracking}`}
                 >
                   {currentVariant.text}
                 </motion.span>

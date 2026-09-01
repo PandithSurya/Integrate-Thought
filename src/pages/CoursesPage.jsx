@@ -209,15 +209,13 @@ export default function CoursesPage({ onNavigate }) {
         <section className="pt-36 sm:pt-44 pb-12 px-6 max-w-5xl mx-auto text-center font-sans">
           
           {/* Status Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/90 text-slate-800 text-xs font-semibold tracking-wide mb-6 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-blue-600"></span>
-            <span className="text-slate-600 font-medium">Integrate Thought IT School</span>
-            <span className="text-slate-300">•</span>
-            <span className="text-blue-700 font-bold">New Batches Open</span>
+          <div className="section-badge-light mb-6">
+            <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0"></span>
+            <span>01 / IT SCHOOL &bull; NEW BATCHES OPEN</span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.15] max-w-4xl mx-auto mb-6 font-sans">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.08] max-w-4xl mx-auto mb-6 font-sans">
             Industry-Oriented Skill Programs for{' '}
             <span className="text-blue-700">
               Future Engineers &amp; Professionals
@@ -225,7 +223,7 @@ export default function CoursesPage({ onNavigate }) {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal font-sans">
+          <p className="text-slate-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-normal font-sans">
             Practical, hands-on training programs designed to accelerate careers across software engineering, AI, finance, digital marketing, and core computing.
           </p>
 
