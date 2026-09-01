@@ -165,8 +165,7 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
       
       {/* Header Title Section (Clean Light Theme) */}
       <div className="text-center mb-4 sm:mb-6 max-w-2xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 border border-slate-300 text-slate-700 text-[11px] font-mono font-bold tracking-widest uppercase mb-2 shadow-sm">
-          <span className="w-1.5 h-1.5 rounded-full bg-slate-900 animate-pulse" />
+        <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-slate-100 border border-slate-300 text-slate-700 text-[11px] font-mono font-bold tracking-widest uppercase mb-2 shadow-sm">
           <span>VERIFIED FEEDBACK</span>
         </div>
         <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 mb-1.5 font-sans uppercase">

@@ -9,7 +9,6 @@ import {
   EyeOff, 
   ChevronRight, 
   ChevronLeft,
-  Sparkles,
   Layers,
   Circle,
   Activity
@@ -438,9 +437,8 @@ export default function ControlsPanel({
                     <button
                       key={presetKey}
                       onClick={() => onApplyPreset(presetKey)}
-                      className="flex items-center gap-1.5 p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs text-slate-300 transition-all hover:scale-[1.02]"
+                      className="flex items-center justify-center p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs text-slate-300 transition-all hover:scale-[1.02]"
                     >
-                      <Sparkles className="w-3 h-3 text-blue-400 shrink-0" />
                       <span className="capitalize text-[11px] font-medium">{presetKey.replace(/([A-Z])/g, ' $1')}</span>
                     </button>
                   ))}

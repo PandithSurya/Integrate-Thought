@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Sparkles, ArrowRight, Grid, ArrowUpRight, Globe, Cpu, Database, Bot } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import KineticGrid from '../components/KineticGrid';
 import { RadialScrollGallery } from '../components/ui/portfolio-and-image-gallery';
 import { ProcessStageCard } from '../components/ui/process-stage-card';
@@ -13,37 +13,37 @@ const SERVICES_DATA = [
     id: '01',
     tag: 'POPULAR',
     title: 'Web Design & Development',
+    serviceTitle: 'WEBSITE DESIGN & DEVELOPMENT',
     description: 'High-performance, responsive websites and web applications custom-built to elevate your brand, engage users, and drive measurable business growth.',
     bgClass: 'bg-[#c73827]',
     shadowStyle: 'shadow-[0_25px_60px_rgba(199,56,39,0.35)]',
-    icon: Globe,
   },
   {
     id: '02',
     tag: 'ENTERPRISE AI',
     title: 'AI Automation & Workflows',
+    serviceTitle: 'AI AUTOMATION & INTEGRATION',
     description: 'Streamline complex business processes, eliminate manual data entry, and integrate intelligent AI models directly into your enterprise software stack.',
     bgClass: 'bg-[#1351d8]',
     shadowStyle: 'shadow-[0_25px_60px_rgba(19,81,216,0.35)]',
-    icon: Cpu,
   },
   {
     id: '03',
     tag: 'ADVANCED AI',
     title: 'RAG Knowledge Systems',
+    serviceTitle: 'RAG SYSTEMS FOR BUSINESS',
     description: 'Connect AI models securely to your private company data, documents, and internal databases for fast, accurate, context-aware intelligence.',
     bgClass: 'bg-[#0e593c]',
     shadowStyle: 'shadow-[0_25px_60px_rgba(14,89,60,0.35)]',
-    icon: Database,
   },
   {
     id: '04',
     tag: '24/7 SUPPORT',
     title: 'Custom Autonomous AI Agents',
+    serviceTitle: 'CUSTOM AI AGENTS & CHATBOTS',
     description: 'Deploy 24/7 intelligent AI agents capable of handling customer support, qualifying leads, booking appointments, and triggering backend actions.',
     bgClass: 'bg-[#a82828]',
     shadowStyle: 'shadow-[0_25px_60px_rgba(168,40,40,0.35)]',
-    icon: Bot,
   },
 ];
 
@@ -285,7 +285,9 @@ export default function HomePage({ onNavigate }) {
   };
 
   const handleProposalClick = (title) => {
-    alert(`Initiated project proposal request for "${title}".`);
+    if (onNavigate) {
+      onNavigate('services', { initialStep: 4, initialService: title });
+    }
   };
 
   // --------------------------------------------------------------------------
@@ -455,9 +457,9 @@ export default function HomePage({ onNavigate }) {
                 {SERVICES_DATA.map((service, index) => (
                   <div
                     key={service.id}
-                    className={`shrink-0 w-[280px] sm:w-[320px] h-[330px] rounded-3xl ${service.bgClass} text-white p-6 shadow-xl border border-white/20 flex flex-col justify-between`}
+                    className={`shrink-0 w-[280px] sm:w-[320px] h-[340px] rounded-3xl ${service.bgClass} text-white p-6 shadow-xl border border-white/20 flex flex-col justify-between items-center text-center`}
                   >
-                    <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center justify-between w-full">
                       <span className="px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-mono font-bold uppercase">
                         {service.tag}
                       </span>
@@ -466,19 +468,19 @@ export default function HomePage({ onNavigate }) {
                       </span>
                     </div>
 
-                    <div className="space-y-2 mt-auto">
-                      <h3 className="text-lg font-extrabold text-white leading-snug font-sans">
+                    <div className="space-y-2.5 my-auto max-w-[260px] mx-auto flex flex-col items-center">
+                      <h3 className="text-lg sm:text-xl font-extrabold text-white leading-snug font-sans text-center">
                         {service.title}
                       </h3>
-                      <p className="text-white/90 text-xs leading-relaxed font-normal font-sans line-clamp-3">
+                      <p className="text-white/90 text-xs leading-relaxed font-normal font-sans text-center line-clamp-3">
                         {service.description}
                       </p>
                     </div>
 
-                    <div className="pt-3 border-t border-white/20 flex items-center justify-between">
+                    <div className="pt-3 border-t border-white/20 w-full flex justify-center">
                       <button
-                        onClick={() => handleProposalClick(service.title)}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-white font-semibold text-xs border border-white/30 cursor-pointer active:scale-95 transition-all"
+                        onClick={() => handleProposalClick(service.serviceTitle || service.title)}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-slate-950 hover:bg-slate-100 font-bold text-xs shadow-md cursor-pointer active:scale-95 transition-all font-sans"
                       >
                         <span>Request Proposal</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
@@ -734,7 +736,7 @@ export default function HomePage({ onNavigate }) {
 
           <div className="flex items-center gap-3.5 shrink-0">
             <button
-              onClick={() => alert("Initiating project consultation with Integrate Thought.")}
+              onClick={() => handleProposalClick()}
               className="px-6 py-3 rounded-md bg-[#48a9dc] hover:bg-[#3898cb] text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-lg active:scale-95 cursor-pointer font-sans"
             >
               Start a Project
@@ -761,7 +763,7 @@ export default function HomePage({ onNavigate }) {
         }}
         className="absolute inset-0 w-full h-full bg-white text-slate-950 shadow-[0_-30px_80px_rgba(0,0,0,0.5)] flex flex-col items-center justify-between z-20 pointer-events-auto overflow-hidden"
       >
-        <div className="w-full max-w-lg sm:max-w-xl mx-auto flex flex-col items-center pt-6 sm:pt-8 px-4 sm:px-8 my-auto">
+        <div className="w-full max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto flex flex-col items-center pt-6 sm:pt-8 px-4 sm:px-8 my-auto">
           
           <div className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 sm:mb-8 shrink-0 text-center sm:text-left">
             <div>
@@ -785,7 +787,7 @@ export default function HomePage({ onNavigate }) {
             </div>
           </div>
 
-          <div className="relative w-full h-[400px] sm:h-[480px]">
+          <div className="relative w-full h-[400px] sm:h-[460px]">
             {SERVICES_DATA.map((service, index) => {
               let cardP = 1;
               if (index > 0) {
@@ -802,8 +804,6 @@ export default function HomePage({ onNavigate }) {
               const scale = index === 0 ? 1 : 0.94 + cardP * 0.06;
               const opacity = index === 0 ? 1 : Math.min(1, cardP * 2.2);
 
-              const IconComponent = service.icon || Globe;
-
               return (
                 <div
                   key={service.id}
@@ -814,34 +814,37 @@ export default function HomePage({ onNavigate }) {
                     zIndex: zIndex,
                     willChange: 'transform, opacity',
                   }}
-                  className={`absolute inset-x-0 rounded-[32px] ${service.bgClass} ${service.shadowStyle} text-white p-6 sm:p-9 md:p-10 border border-white/20 transition-transform duration-75`}
+                  className={`absolute inset-x-0 rounded-[32px] ${service.bgClass} ${service.shadowStyle} text-white p-7 sm:p-10 md:p-12 border border-white/20 transition-transform duration-75 flex flex-col justify-between items-center text-center`}
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6 items-center">
-                    
-                    <div className="md:col-span-7 flex flex-col justify-center space-y-3 sm:space-y-4">
-                      <h3 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight">
-                        {service.title}
-                      </h3>
-                      <p className="text-white/90 text-xs sm:text-sm leading-relaxed font-normal max-w-xs sm:max-w-sm">
-                        {service.description}
-                      </p>
-                      <div className="pt-2">
-                        <button
-                          onClick={() => handleProposalClick(service.title)}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/20 hover:bg-white/30 text-white font-semibold text-xs transition-all backdrop-blur-md border border-white/30 cursor-pointer active:scale-95"
-                        >
-                          <span>Request Proposal</span>
-                          <ArrowUpRight className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
+                  {/* Top Row: Category Tag & Counter */}
+                  <div className="flex items-center justify-between w-full">
+                    <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-white">
+                      {service.tag}
+                    </span>
+                    <span className="text-xs font-mono font-bold text-white/80">
+                      0{index + 1} / 04
+                    </span>
+                  </div>
 
-                    <div className="md:col-span-5 flex items-center justify-center p-5 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-xl aspect-square max-h-[170px] sm:max-h-[200px] mx-auto shadow-inner">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white text-slate-950 flex items-center justify-center shadow-2xl ring-4 ring-white/30">
-                        <IconComponent className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={1.75} />
-                      </div>
-                    </div>
+                  {/* Centered Content: Title & Description */}
+                  <div className="my-auto py-3 sm:py-5 max-w-xl mx-auto flex flex-col items-center text-center space-y-3 sm:space-y-4">
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight font-sans">
+                      {service.title}
+                    </h3>
+                    <p className="text-white/90 text-xs sm:text-sm md:text-base leading-relaxed font-normal font-sans max-w-md sm:max-w-lg mx-auto">
+                      {service.description}
+                    </p>
+                  </div>
 
+                  {/* Centered Action: Request Proposal Button */}
+                  <div className="pt-2 w-full flex justify-center">
+                    <button
+                      onClick={() => handleProposalClick(service.serviceTitle || service.title)}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 sm:py-3 rounded-full bg-white text-slate-950 hover:bg-slate-100 font-bold text-xs sm:text-sm transition-all shadow-lg active:scale-95 cursor-pointer font-sans group"
+                    >
+                      <span>Request Proposal</span>
+                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </button>
                   </div>
                 </div>
               );
@@ -964,8 +967,7 @@ export default function HomePage({ onNavigate }) {
       >
         <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center min-h-full py-8 sm:py-12 my-auto">
           <div className="w-full max-w-5xl mx-auto text-center shrink-0 mb-6 sm:mb-8">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-300/80 text-slate-700 text-[11px] font-mono font-semibold tracking-widest uppercase mb-3 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-900 animate-pulse" />
+            <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-white border border-slate-300/80 text-slate-700 text-[11px] font-mono font-semibold tracking-widest uppercase mb-3 shadow-sm">
               <span>05 / OUR PROCESS</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 mb-2 font-sans">

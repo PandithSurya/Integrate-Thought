@@ -109,7 +109,7 @@ export function CoursesModal({ isOpen, onClose, onSelectCourse }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/85 backdrop-blur-2xl animate-fadeIn font-poppins select-none">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/85 backdrop-blur-2xl animate-fadeIn font-sans select-none">
       <div className="relative w-full max-w-6xl max-h-[90vh] bg-[#070a14] border border-white/10 rounded-3xl shadow-[0_30px_90px_rgba(0,0,0,0.9)] flex flex-col overflow-hidden text-white">
         
         {/* MODAL HEADER */}
@@ -118,10 +118,10 @@ export function CoursesModal({ isOpen, onClose, onSelectCourse }) {
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[11px] font-semibold tracking-widest uppercase mb-2">
               <span>INTEGRATE THOUGHT TRAINING ACADEMY</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white font-poppins">
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white font-sans">
               Practical Skill Programs &amp; Training
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl font-normal font-poppins">
+            <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl font-normal font-sans">
               Industry-aligned training programs led by expert practitioners. Inquire about batch schedules, syllabus, or online/offline modes.
             </p>
           </div>
@@ -169,7 +169,7 @@ export function CoursesModal({ isOpen, onClose, onSelectCourse }) {
           {filteredCourses.map((course) => (
             <div
               key={course.id}
-              className="bg-[#0b1226]/80 border border-white/10 rounded-2xl p-6 flex flex-col justify-between hover:border-blue-500/40 transition-all font-poppins"
+              className="bg-[#0b1226]/80 border border-white/10 rounded-2xl p-6 flex flex-col justify-between hover:border-blue-500/40 transition-all font-sans"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
@@ -181,11 +181,11 @@ export function CoursesModal({ isOpen, onClose, onSelectCourse }) {
                   </span>
                 </div>
 
-                <h3 className="text-lg font-bold text-white tracking-tight font-poppins">
+                <h3 className="text-lg font-bold text-white tracking-tight font-sans">
                   {course.title}
                 </h3>
 
-                <div className="flex items-center gap-3 text-xs text-slate-400 mt-2 font-poppins">
+                <div className="flex items-center gap-3 text-xs text-slate-400 mt-2 font-sans">
                   <div className="flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5 text-blue-400" />
                     <span>{course.duration}</span>
@@ -197,7 +197,7 @@ export function CoursesModal({ isOpen, onClose, onSelectCourse }) {
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-300 leading-relaxed mt-3 font-normal font-poppins">
+                <p className="text-xs text-slate-300 leading-relaxed mt-3 font-normal font-sans">
                   {course.description}
                 </p>
 
@@ -224,7 +224,7 @@ export function CoursesModal({ isOpen, onClose, onSelectCourse }) {
                     setIsSubmitted(false);
                     onSelectCourse?.(course);
                   }}
-                  className="px-4 py-2 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer font-poppins"
+                  className="px-4 py-2 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer font-sans"
                 >
                   <span>Inquire / Enroll</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -235,7 +235,7 @@ export function CoursesModal({ isOpen, onClose, onSelectCourse }) {
         </div>
 
         {/* MODAL FOOTER SLA */}
-        <div className="p-4 sm:p-5 border-t border-white/10 bg-[#090e1c] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 font-poppins shrink-0">
+        <div className="p-4 sm:p-5 border-t border-white/10 bg-[#090e1c] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 font-sans shrink-0">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>Direct Training Hotline: +91 6303148269 / +91 9010221396</span>
@@ -250,7 +250,7 @@ export function CoursesModal({ isOpen, onClose, onSelectCourse }) {
       {/* INNER INQUIRY POPUP */}
       {enrolledCourse && (
         <div className="fixed inset-0 z-[110] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative max-w-md w-full bg-[#0b1226] border border-white/15 rounded-3xl p-6 shadow-2xl text-white font-poppins">
+          <div className="relative max-w-md w-full bg-[#0b1226] border border-white/15 rounded-3xl p-6 shadow-2xl text-white font-sans">
             <button
               onClick={() => setEnrolledCourse(null)}
               className="absolute top-4 right-4 text-slate-400 hover:text-white"

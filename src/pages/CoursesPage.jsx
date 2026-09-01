@@ -11,14 +11,9 @@ import {
   Users,
   Award,
   Send,
-  User,
-  Mail,
   Phone,
   Check,
-  MessageSquare,
-  HelpCircle,
-  Clock,
-  Sparkles
+  Clock
 } from 'lucide-react';
 
 const COURSES_DATA = [
@@ -187,7 +182,7 @@ export default function CoursesPage({ onNavigate }) {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-[#eef4fa] text-slate-900 font-poppins flex flex-col justify-between select-none overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-[#eef4fa] text-slate-900 font-sans flex flex-col justify-between select-none overflow-x-hidden">
       
       {/* Interactive KineticGrid Background */}
       <KineticGrid
@@ -206,26 +201,23 @@ export default function CoursesPage({ onNavigate }) {
         dotColor="#94a3b8"
       />
 
-      <div className="relative z-10 font-poppins flex-1 flex flex-col">
+      <div className="relative z-10 font-sans flex-1 flex flex-col">
         {/* Navigation Header */}
         <Navbar progress={0.32} onNavigate={onNavigate} activePage="IT School" />
 
         {/* HERO SECTION */}
-        <section className="pt-36 sm:pt-44 pb-12 px-6 max-w-5xl mx-auto text-center font-poppins">
+        <section className="pt-36 sm:pt-44 pb-12 px-6 max-w-5xl mx-auto text-center font-sans">
           
           {/* Status Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/90 text-slate-800 text-xs font-semibold tracking-wide mb-6 shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
-            </span>
+            <span className="w-2 h-2 rounded-full bg-blue-600"></span>
             <span className="text-slate-600 font-medium">Integrate Thought IT School</span>
             <span className="text-slate-300">•</span>
             <span className="text-blue-700 font-bold">New Batches Open</span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.15] max-w-4xl mx-auto mb-6 font-poppins">
+          <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.15] max-w-4xl mx-auto mb-6 font-sans">
             Industry-Oriented Skill Programs for{' '}
             <span className="text-blue-700">
               Future Engineers &amp; Professionals
@@ -233,12 +225,12 @@ export default function CoursesPage({ onNavigate }) {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal font-poppins">
+          <p className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal font-sans">
             Practical, hands-on training programs designed to accelerate careers across software engineering, AI, finance, digital marketing, and core computing.
           </p>
 
           {/* Stats Highlights Bar */}
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto text-left font-poppins">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto text-left font-sans">
             <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-sm">
               <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
                 <Code2 className="w-4 h-4" />
@@ -271,7 +263,7 @@ export default function CoursesPage({ onNavigate }) {
           </div>
 
           {/* Category Filter Tabs */}
-          <div className="mt-10 flex justify-center font-poppins">
+          <div className="mt-10 flex justify-center font-sans">
             <div className="p-1.5 rounded-2xl sm:rounded-full bg-white/80 backdrop-blur-md border border-slate-200/90 shadow-sm flex flex-wrap items-center justify-center gap-1.5 max-w-4xl">
               {categories.map((cat) => {
                 const count = cat === 'ALL'
@@ -282,7 +274,7 @@ export default function CoursesPage({ onNavigate }) {
                   <button
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
-                    className={`px-4 py-2 rounded-xl sm:rounded-full text-xs font-poppins font-semibold transition-all cursor-pointer ${
+                    className={`px-4 py-2 rounded-xl sm:rounded-full text-xs font-sans font-semibold transition-all cursor-pointer ${
                       isSelected
                         ? 'bg-slate-950 text-white shadow-md'
                         : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100'
@@ -303,7 +295,7 @@ export default function CoursesPage({ onNavigate }) {
         </section>
 
         {/* COURSES CATALOG GRID */}
-        <section className="pb-20 px-6 max-w-6xl mx-auto w-full font-poppins">
+        <section className="pb-20 px-6 max-w-6xl mx-auto w-full font-sans">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {filteredCourses.map((course) => (
               <LiquidHoverCard
@@ -316,19 +308,18 @@ export default function CoursesPage({ onNavigate }) {
         </section>
 
         {/* DEDICATED TRAINING & ADMISSION CONTACT FORM SECTION */}
-        <section ref={formSectionRef} className="pb-24 px-6 max-w-5xl mx-auto w-full font-poppins">
-          <div className="bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-6 sm:p-10 shadow-xl space-y-7 font-poppins">
+        <section ref={formSectionRef} className="pb-24 px-6 max-w-5xl mx-auto w-full font-sans">
+          <div className="bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-6 sm:p-10 shadow-xl space-y-7 font-sans">
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
               <div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold mb-2">
-                  <HelpCircle className="w-3.5 h-3.5" />
+                <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold mb-2">
                   <span>TRAINING ADMISSIONS &amp; QUERIES</span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight font-poppins">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight font-sans">
                   Have Questions About IT School Programs?
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-500 font-poppins mt-1">
+                <p className="text-xs sm:text-sm text-slate-500 font-sans mt-1">
                   Inquire about upcoming batch schedules, syllabus details, training mode (online/offline), or fees.
                 </p>
               </div>
@@ -345,12 +336,12 @@ export default function CoursesPage({ onNavigate }) {
             </div>
 
             {isTrainingFormSubmitted ? (
-              <div className="p-8 sm:p-10 rounded-2xl bg-emerald-50/90 border border-emerald-200 text-center space-y-4 font-poppins animate-fadeIn">
+              <div className="p-8 sm:p-10 rounded-2xl bg-emerald-50/90 border border-emerald-200 text-center space-y-4 font-sans animate-fadeIn">
                 <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center shadow-inner">
                   <CheckCircle2 className="w-7 h-7" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-xl font-extrabold text-emerald-950 font-poppins">
+                  <h3 className="text-xl font-extrabold text-emerald-950 font-sans">
                     Training Query Submitted!
                   </h3>
                   <p className="text-xs text-emerald-800 font-semibold">
@@ -358,7 +349,7 @@ export default function CoursesPage({ onNavigate }) {
                   </p>
                 </div>
                 
-                <p className="text-xs text-slate-600 leading-relaxed max-w-md mx-auto font-poppins">
+                <p className="text-xs text-slate-600 leading-relaxed max-w-md mx-auto font-sans">
                   Thank you, <strong>{trainingFormData.name}</strong>! Our training coordinator will contact you via email at <strong>{trainingFormData.email}</strong> or WhatsApp/Call within <strong>2 business hours</strong> to assist with your batch schedule &amp; enrollment.
                 </p>
 
@@ -380,7 +371,7 @@ export default function CoursesPage({ onNavigate }) {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleTrainingFormSubmit} className="space-y-6 font-poppins">
+              <form onSubmit={handleTrainingFormSubmit} className="space-y-6 font-sans">
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Select Course Dropdown */}
@@ -407,17 +398,14 @@ export default function CoursesPage({ onNavigate }) {
                     <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">
                       YOUR FULL NAME *
                     </label>
-                    <div className="relative">
-                      <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                      <input
-                        type="text"
-                        required
-                        value={trainingFormData.name}
-                        onChange={(e) => setTrainingFormData({ ...trainingFormData, name: e.target.value })}
-                        placeholder="John Doe"
-                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white"
-                      />
-                    </div>
+                    <input
+                      type="text"
+                      required
+                      value={trainingFormData.name}
+                      onChange={(e) => setTrainingFormData({ ...trainingFormData, name: e.target.value })}
+                      placeholder="John Doe"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white"
+                    />
                   </div>
 
                   {/* Student Email */}
@@ -425,17 +413,14 @@ export default function CoursesPage({ onNavigate }) {
                     <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">
                       EMAIL ADDRESS *
                     </label>
-                    <div className="relative">
-                      <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                      <input
-                        type="email"
-                        required
-                        value={trainingFormData.email}
-                        onChange={(e) => setTrainingFormData({ ...trainingFormData, email: e.target.value })}
-                        placeholder="student@company.com"
-                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white"
-                      />
-                    </div>
+                    <input
+                      type="email"
+                      required
+                      value={trainingFormData.email}
+                      onChange={(e) => setTrainingFormData({ ...trainingFormData, email: e.target.value })}
+                      placeholder="student@company.com"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white"
+                    />
                   </div>
 
                   {/* Student Phone */}
@@ -443,17 +428,14 @@ export default function CoursesPage({ onNavigate }) {
                     <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">
                       PHONE / WHATSAPP NUMBER *
                     </label>
-                    <div className="relative">
-                      <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                      <input
-                        type="tel"
-                        required
-                        value={trainingFormData.phone}
-                        onChange={(e) => setTrainingFormData({ ...trainingFormData, phone: e.target.value })}
-                        placeholder="+91 6303148269"
-                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white"
-                      />
-                    </div>
+                    <input
+                      type="tel"
+                      required
+                      value={trainingFormData.phone}
+                      onChange={(e) => setTrainingFormData({ ...trainingFormData, phone: e.target.value })}
+                      placeholder="+91 6303148269"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white"
+                    />
                   </div>
 
                   {/* Preferred Mode */}
@@ -482,17 +464,14 @@ export default function CoursesPage({ onNavigate }) {
                     <span className="text-[10px] text-slate-400">Click chip to add suggestion</span>
                   </div>
 
-                  <div className="relative">
-                    <MessageSquare className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                    <textarea
-                      required
-                      rows={3}
-                      value={trainingFormData.message}
-                      onChange={(e) => setTrainingFormData({ ...trainingFormData, message: e.target.value })}
-                      placeholder="Ask about batch timings, curriculum details, prerequisites, or corporate group training..."
-                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white resize-none"
-                    />
-                  </div>
+                  <textarea
+                    required
+                    rows={3}
+                    value={trainingFormData.message}
+                    onChange={(e) => setTrainingFormData({ ...trainingFormData, message: e.target.value })}
+                    placeholder="Ask about batch timings, curriculum details, prerequisites, or corporate group training..."
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white resize-none"
+                  />
 
                   {/* Quick Helper Chips */}
                   <div className="flex flex-wrap gap-1.5 pt-1">
@@ -536,8 +515,8 @@ export default function CoursesPage({ onNavigate }) {
 
         {/* COURSE DETAILS & INQUIRY MODAL */}
         {reservedCourse && (
-          <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fadeIn font-poppins">
-            <div className="relative max-w-lg w-full bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col text-slate-950 font-poppins">
+          <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fadeIn font-sans">
+            <div className="relative max-w-lg w-full bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col text-slate-950 font-sans">
               
               {/* Close Button */}
               <button
@@ -548,38 +527,38 @@ export default function CoursesPage({ onNavigate }) {
               </button>
 
               {isReservedSubmitted ? (
-                <div className="text-center py-6 space-y-4 font-poppins">
+                <div className="text-center py-6 space-y-4 font-sans">
                   <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center shadow-inner">
                     <CheckCircle2 className="w-7 h-7" />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="text-xl font-extrabold text-slate-950 font-poppins">
+                    <h3 className="text-xl font-extrabold text-slate-950 font-sans">
                       Course Inquiry Submitted!
                     </h3>
                     <p className="text-xs text-emerald-800 font-bold">
                       Reference: #{Math.floor(100000 + Math.random() * 900000)}
                     </p>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed font-poppins max-w-sm mx-auto">
+                  <p className="text-xs text-slate-600 leading-relaxed font-sans max-w-sm mx-auto">
                     Thank you, <strong>{studentInfo.name || 'Student'}</strong>! We have received your query for <strong>{reservedCourse.title}</strong>. Our admissions team will email curriculum details to <strong>{studentInfo.email}</strong>.
                   </p>
                   <button
                     onClick={() => setReservedCourse(null)}
-                    className="w-full py-3 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs tracking-wide transition-all shadow-md cursor-pointer font-poppins mt-2"
+                    className="w-full py-3 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs tracking-wide transition-all shadow-md cursor-pointer font-sans mt-2"
                   >
                     Close Window
                   </button>
                 </div>
               ) : (
-                <div className="space-y-5 font-poppins">
+                <div className="space-y-5 font-sans">
                   <div>
                     <span className="px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider">
                       {reservedCourse.category}
                     </span>
-                    <h3 className="text-xl font-extrabold text-slate-950 tracking-tight leading-snug mt-2 font-poppins">
+                    <h3 className="text-xl font-extrabold text-slate-950 tracking-tight leading-snug mt-2 font-sans">
                       {reservedCourse.title}
                     </h3>
-                    <div className="flex items-center gap-3 text-xs text-slate-500 font-medium mt-1 font-poppins">
+                    <div className="flex items-center gap-3 text-xs text-slate-500 font-medium mt-1 font-sans">
                       <span className="flex items-center gap-1 font-bold text-slate-900">
                         <Clock className="w-3.5 h-3.5 text-blue-600" />
                         {reservedCourse.duration}
@@ -589,7 +568,7 @@ export default function CoursesPage({ onNavigate }) {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2 font-poppins">
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2 font-sans">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
                       CURRICULUM HIGHLIGHTS:
                     </span>
@@ -606,61 +585,52 @@ export default function CoursesPage({ onNavigate }) {
                   <form onSubmit={(e) => {
                     e.preventDefault();
                     setIsReservedSubmitted(true);
-                  }} className="space-y-3 font-poppins">
+                  }} className="space-y-3 font-sans">
                     <div className="space-y-1">
                       <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                         FULL NAME *
                       </label>
-                      <div className="relative">
-                        <User className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
-                        <input
-                          type="text"
-                          required
-                          value={studentInfo.name}
-                          onChange={(e) => setStudentInfo({ ...studentInfo, name: e.target.value })}
-                          placeholder="Your Name"
-                          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-xs text-slate-900 bg-white"
-                        />
-                      </div>
+                      <input
+                        type="text"
+                        required
+                        value={studentInfo.name}
+                        onChange={(e) => setStudentInfo({ ...studentInfo, name: e.target.value })}
+                        placeholder="Your Name"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-xs text-slate-900 bg-white"
+                      />
                     </div>
 
                     <div className="space-y-1">
                       <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                         EMAIL ADDRESS *
                       </label>
-                      <div className="relative">
-                        <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
-                        <input
-                          type="email"
-                          required
-                          value={studentInfo.email}
-                          onChange={(e) => setStudentInfo({ ...studentInfo, email: e.target.value })}
-                          placeholder="student@company.com"
-                          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-xs text-slate-900 bg-white"
-                        />
-                      </div>
+                      <input
+                        type="email"
+                        required
+                        value={studentInfo.email}
+                        onChange={(e) => setStudentInfo({ ...studentInfo, email: e.target.value })}
+                        placeholder="student@company.com"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-xs text-slate-900 bg-white"
+                      />
                     </div>
 
                     <div className="space-y-1">
                       <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                         PHONE / WHATSAPP NUMBER *
                       </label>
-                      <div className="relative">
-                        <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
-                        <input
-                          type="tel"
-                          required
-                          value={studentInfo.phone}
-                          onChange={(e) => setStudentInfo({ ...studentInfo, phone: e.target.value })}
-                          placeholder="+91 6303148269"
-                          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-xs text-slate-900 bg-white"
-                        />
-                      </div>
+                      <input
+                        type="tel"
+                        required
+                        value={studentInfo.phone}
+                        onChange={(e) => setStudentInfo({ ...studentInfo, phone: e.target.value })}
+                        placeholder="+91 6303148269"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-950 text-xs text-slate-900 bg-white"
+                      />
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs tracking-wide transition-all shadow-lg active:scale-98 cursor-pointer font-poppins flex items-center justify-center gap-2 mt-2"
+                      className="w-full py-3.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs tracking-wide transition-all shadow-lg active:scale-98 cursor-pointer font-sans flex items-center justify-center gap-2 mt-2"
                     >
                       <span>Submit Course Inquiry</span>
                       <Send className="w-3.5 h-3.5" />

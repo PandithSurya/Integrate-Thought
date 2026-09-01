@@ -1,0 +1,138 @@
+/**
+ * Integrate Thought — Multilingual Brand Identity Definitions
+ * "ONE BRAND. MANY LANGUAGES. ONE IDENTITY."
+ * 
+ * Linguistically accurate transliterations preserving the exact brand identity
+ * across India's principal scripts, paired with bespoke optical tracking and font stacks.
+ */
+
+export const INITIAL_BRAND_SEQUENCE = [
+  {
+    id: 'en-initial',
+    text: 'INTEGRATE THOUGHT',
+    language: 'English',
+    font: "'Manrope', 'Avenir Next', sans-serif",
+    tracking: 'tracking-[0.2em] sm:tracking-[0.24em]',
+    duration: 550,
+  },
+  {
+    id: 'te',
+    text: 'ఇంటిగ్రేట్ థాట్',
+    language: 'Telugu',
+    font: "'Noto Sans Telugu', 'Manrope', sans-serif",
+    tracking: 'tracking-normal',
+    duration: 420,
+  },
+  {
+    id: 'hi',
+    text: 'इंटीग्रेट थॉट',
+    language: 'Hindi',
+    font: "'Noto Sans Devanagari', 'Manrope', sans-serif",
+    tracking: 'tracking-normal',
+    duration: 420,
+  },
+  {
+    id: 'ur',
+    text: 'انٹیگریٹ تھاٹ',
+    language: 'Urdu',
+    font: "'Noto Sans Arabic', 'Manrope', sans-serif",
+    tracking: 'tracking-normal',
+    duration: 420,
+  },
+  {
+    id: 'ta',
+    text: 'இன்டிக்ரேட் தாட்',
+    language: 'Tamil',
+    font: "'Noto Sans Tamil', 'Manrope', sans-serif",
+    tracking: 'tracking-normal',
+    duration: 420,
+  },
+  {
+    id: 'kn',
+    text: 'ಇಂಟಿಗ್ರೇಟ್ ಥಾಟ್',
+    language: 'Kannada',
+    font: "'Noto Sans Kannada', 'Manrope', sans-serif",
+    tracking: 'tracking-normal',
+    duration: 420,
+  },
+  {
+    id: 'bn',
+    text: 'ইন্টিগ্রেট থট',
+    language: 'Bengali',
+    font: "'Noto Sans Bengali', 'Manrope', sans-serif",
+    tracking: 'tracking-normal',
+    duration: 420,
+  },
+  {
+    id: 'ml',
+    text: 'ഇന്റഗ്രേറ്റ് തോട്ട്',
+    language: 'Malayalam',
+    font: "'Noto Sans Malayalam', 'Manrope', sans-serif",
+    tracking: 'tracking-normal',
+    duration: 420,
+  },
+  {
+    id: 'gu',
+    text: 'ઇન્ટિગ્રેટ થોટ',
+    language: 'Gujarati',
+    font: "'Noto Sans Gujarati', 'Manrope', sans-serif",
+    tracking: 'tracking-normal',
+    duration: 420,
+  },
+  {
+    id: 'en-final',
+    text: 'INTEGRATE THOUGHT',
+    language: 'English',
+    font: "'Manrope', 'Avenir Next', sans-serif",
+    tracking: 'tracking-[0.2em] sm:tracking-[0.24em]',
+    duration: 600,
+  },
+];
+
+/**
+ * Snappy, refined tab navigation sequence (~2.8 - 3.0 seconds total)
+ * Allows the user to appreciate the multilingual brand transformation
+ * without feeling sluggish or prolonged when switching tabs.
+ */
+export const NAVIGATION_BRAND_SEQUENCE = [
+  {
+    id: 'nav-en-initial',
+    text: 'INTEGRATE THOUGHT',
+    language: 'English',
+    font: "'Manrope', 'Avenir Next', sans-serif",
+    tracking: 'tracking-[0.2em] sm:tracking-[0.24em]',
+    duration: 520,
+  },
+  {
+    id: 'nav-te',
+    text: 'ఇంటిగ్రేట్ థాట్',
+    language: 'Telugu',
+    font: "'Noto Sans Telugu', 'Manrope', sans-serif",
+    tracking: 'tracking-normal',
+    duration: 460,
+  },
+  {
+    id: 'nav-hi',
+    text: 'इंटीग्रेट थॉट',
+    language: 'Hindi',
+    font: "'Noto Sans Devanagari', 'Manrope', sans-serif",
+    tracking: 'tracking-normal',
+    duration: 460,
+  },
+  {
+    id: 'nav-ta',
+    text: 'இன்டிக்ரேட் தாட்',
+    language: 'Tamil',
+    font: "'Noto Sans Tamil', 'Manrope', sans-serif",
+    tracking: 'tracking-normal',
+    duration: 460,
+  },
+  {
+    id: 'nav-en-final',
+    text: 'INTEGRATE THOUGHT',
+    language: 'English',
+    font: "'Manrope', 'Avenir Next', sans-serif",
+    tracking: 'tracking-[0.2em] sm:tracking-[0.24em]',
+    duration: 550,
+  },
+];

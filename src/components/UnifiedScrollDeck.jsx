@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Sparkles, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 const SERVICES_DATA = [
   {
@@ -194,7 +194,7 @@ export default function UnifiedScrollDeck() {
       >
         {/* Section Tagline Badge with Solid Magenta Logo Accent (#ec4899) */}
         <div className="flex items-center gap-3 mb-6 sm:mb-8">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#ec4899] animate-pulse shadow-[0_0_12px_rgba(236,72,153,0.8)]" />
+          <span className="w-2 h-2 rounded-full bg-[#ec4899]" />
           <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-[#ec4899] uppercase">
             02 / OUR PURPOSE
           </span>
@@ -222,8 +222,7 @@ export default function UnifiedScrollDeck() {
       >
         {/* Section Header (Crisp Dark Typography) */}
         <div className="w-full max-w-4xl text-center mb-6 sm:mb-8 shrink-0">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-mono tracking-widest text-slate-600 uppercase mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-slate-900" />
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-mono tracking-widest text-slate-600 uppercase mb-2">
             <span>03 / OUR WORKS & SERVICES</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-950">

@@ -13,28 +13,17 @@ import {
   Send,
   ArrowUpRight,
   ChevronDown,
-  MessageSquare,
-  ShieldCheck,
-  User,
   ExternalLink,
-  Globe,
-  Cpu,
-  Database,
-  Bot,
-  Zap,
-  Check,
-  GraduationCap,
-  Layers,
-  BookOpen
+  Check
 } from 'lucide-react';
 import { submitInquiry } from '../utils/inquiryHandler';
 
 const SERVICE_OPTIONS = [
-  { id: 'web', label: 'Web Design & Development', icon: Globe },
-  { id: 'ai-auto', label: 'AI Automation & Workflows', icon: Cpu },
-  { id: 'rag', label: 'RAG Knowledge Systems', icon: Database },
-  { id: 'agents', label: 'Custom Autonomous AI Agents', icon: Bot },
-  { id: 'strategy', label: 'Consultation & Strategy', icon: Zap }
+  { id: 'web', label: 'Web Design & Development' },
+  { id: 'ai-auto', label: 'AI Automation & Workflows' },
+  { id: 'rag', label: 'RAG Knowledge Systems' },
+  { id: 'agents', label: 'Custom Autonomous AI Agents' },
+  { id: 'strategy', label: 'Consultation & Strategy' }
 ];
 
 const TRAINING_COURSES = [
@@ -160,7 +149,7 @@ export default function ContactPage({ onNavigate }) {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-[#eef4fa] text-slate-900 font-poppins flex flex-col justify-between select-none overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-[#eef4fa] text-slate-900 font-sans flex flex-col justify-between select-none overflow-x-hidden">
       
       {/* Interactive KineticGrid Background */}
       <KineticGrid
@@ -179,52 +168,49 @@ export default function ContactPage({ onNavigate }) {
         dotColor="#94a3b8"
       />
 
-      <div className="relative z-10 font-poppins flex-1 flex flex-col">
+      <div className="relative z-10 font-sans flex-1 flex flex-col">
         {/* Navigation Header */}
         <Navbar progress={0.32} onNavigate={onNavigate} activePage="Contact" />
 
         {/* HERO SECTION */}
-        <section className="pt-36 sm:pt-44 pb-12 px-6 max-w-5xl mx-auto text-center font-poppins">
+        <section className="pt-36 sm:pt-44 pb-12 px-6 max-w-5xl mx-auto text-center font-sans">
           
           {/* Live Availability Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/90 text-slate-800 text-xs font-semibold tracking-wide mb-6 shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
             <span className="text-slate-600 font-medium">Available for Client Projects &amp; Training Inquiries</span>
             <span className="text-slate-300">•</span>
             <span className="text-emerald-700 font-bold">2026</span>
           </div>
 
-          <h1 className="text-3xl sm:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.15] max-w-4xl mx-auto mb-6 font-poppins">
+          <h1 className="text-3xl sm:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.15] max-w-4xl mx-auto mb-6 font-sans">
             Let's build something{' '}
             <span className="text-blue-700">
               extraordinary together.
             </span>
           </h1>
 
-          <p className="text-slate-600 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal font-poppins">
+          <p className="text-slate-600 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal font-sans">
             Reach out for custom software engineering projects, AI automation, or inquire about our specialized training skill programs.
           </p>
         </section>
 
         {/* MAIN CONTACT LAYOUT */}
-        <section className="max-w-6xl mx-auto px-4 sm:px-10 lg:px-12 pb-24 font-poppins w-full">
+        <section className="max-w-6xl mx-auto px-4 sm:px-10 lg:px-12 pb-24 font-sans w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
             
             {/* LEFT COLUMN: DIRECT CONTACT CHANNELS & HQ */}
-            <div className="lg:col-span-5 space-y-5 font-poppins">
+            <div className="lg:col-span-5 space-y-5 font-sans">
               
               {/* Direct Email Card */}
-              <div className="group bg-white/90 backdrop-blur-md border border-slate-200/90 hover:border-blue-400/60 rounded-3xl p-5 sm:p-7 shadow-sm hover:shadow-md transition-all duration-300 font-poppins">
+              <div className="group bg-white/90 backdrop-blur-md border border-slate-200/90 hover:border-blue-400/60 rounded-3xl p-5 sm:p-7 shadow-sm hover:shadow-md transition-all duration-300 font-sans">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold transition-transform group-hover:scale-105">
                     <Mail className="w-5 h-5" />
                   </div>
                   <button
                     onClick={handleCopyEmail}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-poppins font-semibold transition-all active:scale-95 cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-sans font-semibold transition-all active:scale-95 cursor-pointer"
                     title="Copy Email Address"
                   >
                     {copiedEmail ? (
@@ -242,12 +228,12 @@ export default function ContactPage({ onNavigate }) {
                 </div>
 
                 <div>
-                  <span className="text-[11px] font-poppins font-bold text-slate-400 uppercase tracking-widest block mb-1">
+                  <span className="text-[11px] font-sans font-bold text-slate-400 uppercase tracking-widest block mb-1">
                     EMAIL INQUIRIES
                   </span>
                   <a
                     href="mailto:integratethought24@gmail.com"
-                    className="text-base sm:text-lg font-bold text-slate-950 hover:text-blue-600 transition-colors tracking-tight font-poppins block"
+                    className="text-base sm:text-lg font-bold text-slate-950 hover:text-blue-600 transition-colors tracking-tight font-sans block"
                   >
                     integratethought24@gmail.com
                   </a>
@@ -255,7 +241,7 @@ export default function ContactPage({ onNavigate }) {
               </div>
 
               {/* Direct Call & WhatsApp Card */}
-              <div className="group bg-white/90 backdrop-blur-md border border-slate-200/90 hover:border-emerald-400/60 rounded-3xl p-6 sm:p-7 shadow-sm hover:shadow-md transition-all duration-300 font-poppins">
+              <div className="group bg-white/90 backdrop-blur-md border border-slate-200/90 hover:border-emerald-400/60 rounded-3xl p-6 sm:p-7 shadow-sm hover:shadow-md transition-all duration-300 font-sans">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold transition-transform group-hover:scale-105">
                     <Phone className="w-5 h-5" />
@@ -265,21 +251,21 @@ export default function ContactPage({ onNavigate }) {
                       href="https://wa.me/916303148269"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-[11px] font-poppins font-semibold transition-all active:scale-95"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-[11px] font-sans font-semibold transition-all active:scale-95"
                     >
                       <span>WhatsApp</span>
                       <ArrowUpRight className="w-3 h-3" />
                     </a>
                     <a
                       href="tel:+916303148269"
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-poppins font-semibold transition-all active:scale-95"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-sans font-semibold transition-all active:scale-95"
                     >
                       <span>Call 1</span>
                       <ArrowUpRight className="w-3 h-3" />
                     </a>
                     <a
                       href="tel:+919010221396"
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-poppins font-semibold transition-all active:scale-95"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-sans font-semibold transition-all active:scale-95"
                     >
                       <span>Call 2</span>
                       <ArrowUpRight className="w-3 h-3" />
@@ -288,10 +274,10 @@ export default function ContactPage({ onNavigate }) {
                 </div>
 
                 <div>
-                  <span className="text-[11px] font-poppins font-bold text-slate-400 uppercase tracking-widest block mb-1">
+                  <span className="text-[11px] font-sans font-bold text-slate-400 uppercase tracking-widest block mb-1">
                     DIRECT CALL / WHATSAPP
                   </span>
-                  <div className="text-base sm:text-lg font-bold text-slate-950 tracking-tight font-poppins flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <div className="text-base sm:text-lg font-bold text-slate-950 tracking-tight font-sans flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                     <a href="tel:+916303148269" className="hover:text-emerald-700 transition-colors">
                       +91 6303148269
                     </a>
@@ -304,7 +290,7 @@ export default function ContactPage({ onNavigate }) {
               </div>
 
               {/* Location & Timezone Card */}
-              <div className="bg-white/90 backdrop-blur-md border border-slate-200/90 rounded-3xl p-6 sm:p-7 shadow-sm space-y-4 font-poppins">
+              <div className="bg-white/90 backdrop-blur-md border border-slate-200/90 rounded-3xl p-6 sm:p-7 shadow-sm space-y-4 font-sans">
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 font-bold mt-0.5">
@@ -312,21 +298,21 @@ export default function ContactPage({ onNavigate }) {
                     </div>
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-[11px] font-poppins font-bold text-slate-400 uppercase tracking-widest">
+                        <span className="text-[11px] font-sans font-bold text-slate-400 uppercase tracking-widest">
                           STUDIO LOCATION
                         </span>
                         <span className="px-2 py-0.5 rounded-md bg-amber-100/70 text-amber-900 text-[10px] font-bold">
                           IST (UTC+5:30)
                         </span>
                       </div>
-                      <p className="text-xs sm:text-sm font-semibold text-slate-900 leading-relaxed font-poppins">
+                      <p className="text-xs sm:text-sm font-semibold text-slate-900 leading-relaxed font-sans">
                         Vijaylakshmi complex, 4-105/11/C, Sriramnagar Colony, Turkayamjal, Hyderabad, Telangana 501510
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100/90 flex items-center justify-between text-xs text-slate-500 font-poppins">
+                <div className="pt-3 border-t border-slate-100/90 flex items-center justify-between text-xs text-slate-500 font-sans">
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-slate-400 shrink-0" />
                     <span>Guaranteed response &lt; 4 business hours</span>
@@ -344,9 +330,8 @@ export default function ContactPage({ onNavigate }) {
               </div>
 
               {/* SLA & Commitment Badge */}
-              <div className="p-5 rounded-3xl bg-slate-900 text-white shadow-md space-y-3 font-poppins">
-                <div className="flex items-center gap-2 text-xs font-bold text-blue-400 tracking-wider uppercase">
-                  <ShieldCheck className="w-4 h-4 text-blue-400" />
+              <div className="p-5 rounded-3xl bg-slate-900 text-white shadow-md space-y-3 font-sans">
+                <div className="text-xs font-bold text-blue-400 tracking-wider uppercase">
                   <span>Integrate Thought Commitment</span>
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed font-normal">
@@ -357,8 +342,8 @@ export default function ContactPage({ onNavigate }) {
             </div>
 
             {/* RIGHT COLUMN: DUAL-MODE INQUIRY FORM (SERVICES & TRAINING SWITCHER) */}
-            <div className="lg:col-span-7 font-poppins">
-              <div className="bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-6 sm:p-9 shadow-xl space-y-6 font-poppins">
+            <div className="lg:col-span-7 font-sans">
+              <div className="bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-6 sm:p-9 shadow-xl space-y-6 font-sans">
                 
                 {/* PRIMARY/SECONDARY CATEGORY SWITCHER TABS */}
                 <div className="p-1 rounded-2xl bg-slate-100/90 border border-slate-200/80 flex items-center gap-1">
@@ -368,13 +353,12 @@ export default function ContactPage({ onNavigate }) {
                       setFormType('services');
                       setIsSubmitted(false);
                     }}
-                    className={`flex-1 py-2.5 px-3 sm:px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                    className={`flex-1 py-2.5 px-3 sm:px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center cursor-pointer ${
                       formType === 'services'
                         ? 'bg-slate-950 text-white shadow-md'
                         : 'text-slate-600 hover:text-slate-950 hover:bg-slate-200/70'
                     }`}
                   >
-                    <Layers className="w-4 h-4" />
                     <span>Client Services &amp; Projects</span>
                   </button>
 
@@ -384,13 +368,12 @@ export default function ContactPage({ onNavigate }) {
                       setFormType('training');
                       setIsSubmitted(false);
                     }}
-                    className={`flex-1 py-2.5 px-3 sm:px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                    className={`flex-1 py-2.5 px-3 sm:px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center cursor-pointer ${
                       formType === 'training'
                         ? 'bg-blue-600 text-white shadow-md'
                         : 'text-slate-600 hover:text-slate-950 hover:bg-slate-200/70'
                     }`}
                   >
-                    <GraduationCap className="w-4 h-4" />
                     <span>Training &amp; Admissions</span>
                   </button>
                 </div>
@@ -402,10 +385,10 @@ export default function ContactPage({ onNavigate }) {
                       {formType === 'services' ? 'CLIENT SERVICES INQUIRY' : 'ACADEMY TRAINING INQUIRY'}
                     </span>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight font-poppins mb-1">
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight font-sans mb-1">
                     {formType === 'services' ? 'Project Scope & Architecture Inquiry' : 'Training & Program Admissions'}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-500 font-poppins leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-500 font-sans leading-relaxed">
                     {formType === 'services'
                       ? 'Share your project objectives below. Our technical leads will review your specs and send a tailored project roadmap.'
                       : 'Inquire about batch schedules, course modules, offline/online training modes, or certification details.'
@@ -414,12 +397,12 @@ export default function ContactPage({ onNavigate }) {
                 </div>
 
                 {isSubmitted ? (
-                  <div className="p-8 sm:p-10 rounded-2xl bg-emerald-50/90 border border-emerald-200 text-center space-y-4 font-poppins animate-fadeIn">
+                  <div className="p-8 sm:p-10 rounded-2xl bg-emerald-50/90 border border-emerald-200 text-center space-y-4 font-sans animate-fadeIn">
                     <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center shadow-inner">
                       <CheckCircle2 className="w-7 h-7" />
                     </div>
                     <div className="space-y-1">
-                      <h4 className="text-xl font-extrabold text-emerald-950 font-poppins">
+                      <h4 className="text-xl font-extrabold text-emerald-950 font-sans">
                         {formType === 'services' ? 'Project Inquiry Received!' : 'Training Inquiry Submitted!'}
                       </h4>
                       <p className="text-xs text-emerald-800 font-medium">
@@ -427,7 +410,7 @@ export default function ContactPage({ onNavigate }) {
                       </p>
                     </div>
                     
-                    <p className="text-xs text-slate-600 leading-relaxed max-w-md mx-auto font-poppins pt-2">
+                    <p className="text-xs text-slate-600 leading-relaxed max-w-md mx-auto font-sans pt-2">
                       {formType === 'services'
                         ? <>Thank you for reaching out to <strong>Integrate Thought</strong>. Our engineering leads are analyzing your specs and will reply within <strong>4 business hours</strong>.</>
                         : <>Thank you for reaching out to <strong>Integrate Thought Training Academy</strong>. Our admissions lead will contact you within <strong>2 business hours</strong>.</>
@@ -450,29 +433,27 @@ export default function ContactPage({ onNavigate }) {
                 ) : formType === 'services' ? (
                   
                   /* CLIENT SERVICES FORM (PRIMARY) */
-                  <form onSubmit={handleSubmit} className="space-y-6 font-poppins">
+                  <form onSubmit={handleSubmit} className="space-y-6 font-sans">
                     
                     {/* Service Selection Pills */}
                     <div className="space-y-2.5">
-                      <label className="block text-[11px] font-poppins font-bold text-slate-500 uppercase tracking-widest">
+                      <label className="block text-[11px] font-sans font-bold text-slate-500 uppercase tracking-widest">
                         I'M INTERESTED IN *
                       </label>
                       <div className="flex flex-wrap gap-2">
                         {SERVICE_OPTIONS.map((srv) => {
-                          const IconComp = srv.icon;
                           const isSelected = selectedService === srv.label;
                           return (
                             <button
                               type="button"
                               key={srv.id}
                               onClick={() => setSelectedService(srv.label)}
-                              className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-poppins font-semibold transition-all duration-200 cursor-pointer ${
+                              className={`inline-flex items-center px-4 py-2.5 rounded-xl text-xs font-sans font-semibold transition-all duration-200 cursor-pointer ${
                                 isSelected
                                   ? 'bg-slate-950 text-white shadow-md scale-[1.02]'
                                   : 'bg-slate-100/90 text-slate-700 hover:bg-slate-200/80 border border-slate-200/80'
                               }`}
                             >
-                              <IconComp className={`w-3.5 h-3.5 ${isSelected ? 'text-blue-400' : 'text-slate-500'}`} />
                               <span>{srv.label}</span>
                             </button>
                           );
@@ -481,92 +462,72 @@ export default function ContactPage({ onNavigate }) {
                     </div>
 
                     {/* Name & Email Inputs */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-poppins">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-sans">
                       
                       {/* Name Field */}
                       <div className="space-y-1.5">
-                        <label className="block text-[11px] font-poppins font-bold text-slate-500 uppercase tracking-widest">
+                        <label className="block text-[11px] font-sans font-bold text-slate-500 uppercase tracking-widest">
                           YOUR NAME *
                         </label>
-                        <div className="relative">
-                          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                            <User className="w-4 h-4" />
-                          </div>
-                          <input
-                            type="text"
-                            required
-                            value={serviceFormData.name}
-                            onChange={(e) => setServiceFormData({ ...serviceFormData, name: e.target.value })}
-                            placeholder="John Doe"
-                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-950/10 text-sm text-slate-900 bg-white transition-all font-poppins placeholder:text-slate-400"
-                          />
-                        </div>
+                        <input
+                          type="text"
+                          required
+                          value={serviceFormData.name}
+                          onChange={(e) => setServiceFormData({ ...serviceFormData, name: e.target.value })}
+                          placeholder="John Doe"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-950/10 text-sm text-slate-900 bg-white transition-all font-sans placeholder:text-slate-400"
+                        />
                       </div>
 
                       {/* Email Field */}
                       <div className="space-y-1.5">
-                        <label className="block text-[11px] font-poppins font-bold text-slate-500 uppercase tracking-widest">
+                        <label className="block text-[11px] font-sans font-bold text-slate-500 uppercase tracking-widest">
                           EMAIL ADDRESS *
                         </label>
-                        <div className="relative">
-                          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                            <Mail className="w-4 h-4" />
-                          </div>
-                          <input
-                            type="email"
-                            required
-                            value={serviceFormData.email}
-                            onChange={(e) => setServiceFormData({ ...serviceFormData, email: e.target.value })}
-                            placeholder="john@company.com"
-                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-950/10 text-sm text-slate-900 bg-white transition-all font-poppins placeholder:text-slate-400"
-                          />
-                        </div>
+                        <input
+                          type="email"
+                          required
+                          value={serviceFormData.email}
+                          onChange={(e) => setServiceFormData({ ...serviceFormData, email: e.target.value })}
+                          placeholder="john@company.com"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-950/10 text-sm text-slate-900 bg-white transition-all font-sans placeholder:text-slate-400"
+                        />
                       </div>
 
                     </div>
 
                     {/* Phone Number Field */}
-                    <div className="space-y-1.5 font-poppins">
-                      <label className="block text-[11px] font-poppins font-bold text-slate-500 uppercase tracking-widest">
+                    <div className="space-y-1.5 font-sans">
+                      <label className="block text-[11px] font-sans font-bold text-slate-500 uppercase tracking-widest">
                         PHONE / WHATSAPP NUMBER *
                       </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                          <Phone className="w-4 h-4" />
-                        </div>
-                        <input
-                          type="tel"
-                          required
-                          value={serviceFormData.phone}
-                          onChange={(e) => setServiceFormData({ ...serviceFormData, phone: e.target.value })}
-                          placeholder="+91 6303148269"
-                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-950/10 text-sm text-slate-900 bg-white transition-all font-poppins placeholder:text-slate-400"
-                        />
-                      </div>
+                      <input
+                        type="tel"
+                        required
+                        value={serviceFormData.phone}
+                        onChange={(e) => setServiceFormData({ ...serviceFormData, phone: e.target.value })}
+                        placeholder="+91 6303148269"
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-950/10 text-sm text-slate-900 bg-white transition-all font-sans placeholder:text-slate-400"
+                      />
                     </div>
 
                     {/* Project Overview Textarea with Interactive Quick Prompt Helpers */}
-                    <div className="space-y-2 font-poppins">
+                    <div className="space-y-2 font-sans">
                       <div className="flex items-center justify-between">
-                        <label className="block text-[11px] font-poppins font-bold text-slate-500 uppercase tracking-widest">
+                        <label className="block text-[11px] font-sans font-bold text-slate-500 uppercase tracking-widest">
                           PROJECT OVERVIEW &amp; REQUIREMENTS *
                         </label>
                         <span className="text-[10px] text-slate-400 font-medium">Click chip to add text</span>
                       </div>
 
-                      <div className="relative">
-                        <div className="absolute top-3 left-3.5 pointer-events-none text-slate-400">
-                          <MessageSquare className="w-4 h-4" />
-                        </div>
-                        <textarea
-                          required
-                          rows={4}
-                          value={serviceFormData.message}
-                          onChange={(e) => setServiceFormData({ ...serviceFormData, message: e.target.value })}
-                          placeholder="Tell us what you're looking to build, key goals, timeline, or tech stack requirements..."
-                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-950/10 text-sm text-slate-900 bg-white transition-all resize-none font-poppins placeholder:text-slate-400 leading-relaxed"
-                        />
-                      </div>
+                      <textarea
+                        required
+                        rows={4}
+                        value={serviceFormData.message}
+                        onChange={(e) => setServiceFormData({ ...serviceFormData, message: e.target.value })}
+                        placeholder="Tell us what you're looking to build, key goals, timeline, or tech stack requirements..."
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-950/10 text-sm text-slate-900 bg-white transition-all resize-none font-sans placeholder:text-slate-400 leading-relaxed"
+                      />
 
                       {/* Quick Prompt Helper Chips */}
                       <div className="pt-1">
@@ -592,7 +553,7 @@ export default function ContactPage({ onNavigate }) {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-4 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-bold text-sm tracking-wide transition-all shadow-lg active:scale-98 cursor-pointer font-poppins flex items-center justify-center gap-2 group disabled:opacity-75"
+                      className="w-full py-4 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-bold text-sm tracking-wide transition-all shadow-lg active:scale-98 cursor-pointer font-sans flex items-center justify-center gap-2 group disabled:opacity-75"
                     >
                       {isSubmitting ? (
                         <>
@@ -611,94 +572,82 @@ export default function ContactPage({ onNavigate }) {
                 ) : (
 
                   /* TRAINING ADMISSIONS FORM (SWITCHABLE TAB) */
-                  <form onSubmit={handleSubmit} className="space-y-6 font-poppins">
+                  <form onSubmit={handleSubmit} className="space-y-6 font-sans">
                     
                     {/* Course Selection Dropdown */}
                     <div className="space-y-1.5">
-                      <label className="block text-[11px] font-poppins font-bold text-slate-500 uppercase tracking-widest">
+                      <label className="block text-[11px] font-sans font-bold text-slate-500 uppercase tracking-widest">
                         SELECT TRAINING PROGRAM *
                       </label>
-                      <div className="relative">
-                        <BookOpen className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                        <select
-                          value={trainingFormData.course}
-                          onChange={(e) => setTrainingFormData({ ...trainingFormData, course: e.target.value })}
-                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 text-xs sm:text-sm font-semibold text-slate-900 bg-white"
-                        >
-                          {TRAINING_COURSES.map((course, idx) => (
-                            <option key={idx} value={course}>
-                              {course}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                      <select
+                        value={trainingFormData.course}
+                        onChange={(e) => setTrainingFormData({ ...trainingFormData, course: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 text-xs sm:text-sm font-semibold text-slate-900 bg-white"
+                      >
+                        {TRAINING_COURSES.map((course, idx) => (
+                          <option key={idx} value={course}>
+                            {course}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
                     {/* Name & Email Inputs */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-poppins">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-sans">
                       
                       {/* Name Field */}
                       <div className="space-y-1.5">
-                        <label className="block text-[11px] font-poppins font-bold text-slate-500 uppercase tracking-widest">
+                        <label className="block text-[11px] font-sans font-bold text-slate-500 uppercase tracking-widest">
                           YOUR FULL NAME *
                         </label>
-                        <div className="relative">
-                          <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                          <input
-                            type="text"
-                            required
-                            value={trainingFormData.name}
-                            onChange={(e) => setTrainingFormData({ ...trainingFormData, name: e.target.value })}
-                            placeholder="John Doe"
-                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white transition-all font-poppins placeholder:text-slate-400"
-                          />
-                        </div>
+                        <input
+                          type="text"
+                          required
+                          value={trainingFormData.name}
+                          onChange={(e) => setTrainingFormData({ ...trainingFormData, name: e.target.value })}
+                          placeholder="John Doe"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white transition-all font-sans placeholder:text-slate-400"
+                        />
                       </div>
 
                       {/* Email Field */}
                       <div className="space-y-1.5">
-                        <label className="block text-[11px] font-poppins font-bold text-slate-500 uppercase tracking-widest">
+                        <label className="block text-[11px] font-sans font-bold text-slate-500 uppercase tracking-widest">
                           EMAIL ADDRESS *
                         </label>
-                        <div className="relative">
-                          <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                          <input
-                            type="email"
-                            required
-                            value={trainingFormData.email}
-                            onChange={(e) => setTrainingFormData({ ...trainingFormData, email: e.target.value })}
-                            placeholder="student@company.com"
-                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white transition-all font-poppins placeholder:text-slate-400"
-                          />
-                        </div>
+                        <input
+                          type="email"
+                          required
+                          value={trainingFormData.email}
+                          onChange={(e) => setTrainingFormData({ ...trainingFormData, email: e.target.value })}
+                          placeholder="student@company.com"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white transition-all font-sans placeholder:text-slate-400"
+                        />
                       </div>
 
                     </div>
 
                     {/* Phone & Mode Inputs */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-poppins">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-sans">
                       
                       {/* Phone Field */}
                       <div className="space-y-1.5">
-                        <label className="block text-[11px] font-poppins font-bold text-slate-500 uppercase tracking-widest">
+                        <label className="block text-[11px] font-sans font-bold text-slate-500 uppercase tracking-widest">
                           PHONE / WHATSAPP NUMBER *
                         </label>
-                        <div className="relative">
-                          <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                          <input
-                            type="tel"
-                            required
-                            value={trainingFormData.phone}
-                            onChange={(e) => setTrainingFormData({ ...trainingFormData, phone: e.target.value })}
-                            placeholder="+91 6303148269"
-                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white transition-all font-poppins placeholder:text-slate-400"
-                          />
-                        </div>
+                        <input
+                          type="tel"
+                          required
+                          value={trainingFormData.phone}
+                          onChange={(e) => setTrainingFormData({ ...trainingFormData, phone: e.target.value })}
+                          placeholder="+91 6303148269"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 text-sm text-slate-900 bg-white transition-all font-sans placeholder:text-slate-400"
+                        />
                       </div>
 
                       {/* Training Mode Field */}
                       <div className="space-y-1.5">
-                        <label className="block text-[11px] font-poppins font-bold text-slate-500 uppercase tracking-widest">
+                        <label className="block text-[11px] font-sans font-bold text-slate-500 uppercase tracking-widest">
                           PREFERRED TRAINING MODE *
                         </label>
                         <select
@@ -715,27 +664,22 @@ export default function ContactPage({ onNavigate }) {
                     </div>
 
                     {/* Training Query Overview */}
-                    <div className="space-y-2 font-poppins">
+                    <div className="space-y-2 font-sans">
                       <div className="flex items-center justify-between">
-                        <label className="block text-[11px] font-poppins font-bold text-slate-500 uppercase tracking-widest">
+                        <label className="block text-[11px] font-sans font-bold text-slate-500 uppercase tracking-widest">
                           YOUR TRAINING QUERY / SPECIFIC QUESTIONS *
                         </label>
                         <span className="text-[10px] text-slate-400 font-medium">Click chip to add text</span>
                       </div>
 
-                      <div className="relative">
-                        <div className="absolute top-3 left-3.5 pointer-events-none text-slate-400">
-                          <MessageSquare className="w-4 h-4" />
-                        </div>
-                        <textarea
-                          required
-                          rows={3}
-                          value={trainingFormData.message}
-                          onChange={(e) => setTrainingFormData({ ...trainingFormData, message: e.target.value })}
-                          placeholder="Ask about batch start dates, course syllabus, prerequisites, or corporate group training..."
-                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-950/10 text-sm text-slate-900 bg-white transition-all resize-none font-poppins placeholder:text-slate-400 leading-relaxed"
-                        />
-                      </div>
+                      <textarea
+                        required
+                        rows={3}
+                        value={trainingFormData.message}
+                        onChange={(e) => setTrainingFormData({ ...trainingFormData, message: e.target.value })}
+                        placeholder="Ask about batch start dates, course syllabus, prerequisites, or corporate group training..."
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200/90 focus:outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-950/10 text-sm text-slate-900 bg-white transition-all resize-none font-sans placeholder:text-slate-400 leading-relaxed"
+                      />
 
                       {/* Quick Prompt Helper Chips */}
                       <div className="pt-1">
@@ -761,7 +705,7 @@ export default function ContactPage({ onNavigate }) {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm tracking-wide transition-all shadow-lg active:scale-98 cursor-pointer font-poppins flex items-center justify-center gap-2 group disabled:opacity-75"
+                      className="w-full py-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm tracking-wide transition-all shadow-lg active:scale-98 cursor-pointer font-sans flex items-center justify-center gap-2 group disabled:opacity-75"
                     >
                       {isSubmitting ? (
                         <>
@@ -786,27 +730,27 @@ export default function ContactPage({ onNavigate }) {
         </section>
 
         {/* FAQ ACCORDION SECTION */}
-        <section className="max-w-4xl mx-auto px-6 pb-20 border-t border-slate-200/80 pt-16 font-poppins w-full">
+        <section className="max-w-4xl mx-auto px-6 pb-20 border-t border-slate-200/80 pt-16 font-sans w-full">
           <div className="text-center mb-10 space-y-2">
-            <span className="text-xs font-poppins font-bold tracking-widest text-slate-500 uppercase">
+            <span className="text-xs font-sans font-bold tracking-widest text-slate-500 uppercase">
               TRANSPARENT PROCESS
             </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight font-poppins">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight font-sans">
               Frequently Asked Questions
             </h3>
           </div>
 
-          <div className="space-y-3 font-poppins">
+          <div className="space-y-3 font-sans">
             {FAQS.map((faq, idx) => {
               const isOpen = openFaq === idx;
               return (
                 <div
                   key={idx}
-                  className="bg-white/90 backdrop-blur-md border border-slate-200/90 rounded-2xl overflow-hidden transition-all shadow-sm font-poppins"
+                  className="bg-white/90 backdrop-blur-md border border-slate-200/90 rounded-2xl overflow-hidden transition-all shadow-sm font-sans"
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full px-6 py-4 text-left flex items-center justify-between text-slate-950 font-bold text-sm sm:text-base font-poppins cursor-pointer hover:bg-slate-50/80 transition-colors"
+                    className="w-full px-6 py-4 text-left flex items-center justify-between text-slate-950 font-bold text-sm sm:text-base font-sans cursor-pointer hover:bg-slate-50/80 transition-colors"
                   >
                     <span>{faq.q}</span>
                     <ChevronDown
@@ -816,7 +760,7 @@ export default function ContactPage({ onNavigate }) {
                     />
                   </button>
                   {isOpen && (
-                    <div className="px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed font-poppins border-t border-slate-100/80 pt-3 bg-slate-50/40">
+                    <div className="px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans border-t border-slate-100/80 pt-3 bg-slate-50/40">
                       {faq.a}
                     </div>
                   )}
@@ -826,9 +770,9 @@ export default function ContactPage({ onNavigate }) {
           </div>
 
           {/* Quick Direct Call Callout */}
-          <div className="mt-12 p-6 rounded-3xl bg-blue-50/80 border border-blue-100 text-center flex flex-col sm:flex-row items-center justify-between gap-4 font-poppins">
+          <div className="mt-12 p-6 rounded-3xl bg-blue-50/80 border border-blue-100 text-center flex flex-col sm:flex-row items-center justify-between gap-4 font-sans">
             <div className="text-left space-y-1">
-              <h4 className="text-sm font-bold text-slate-950 font-poppins">
+              <h4 className="text-sm font-bold text-slate-950 font-sans">
                 Need to speak immediately?
               </h4>
               <p className="text-xs text-slate-600">

@@ -19,7 +19,6 @@ import {
   Compass,
   AppWindow,
   Palette,
-  Sparkles,
   ArrowUpRight,
   ChevronDown,
   ChevronUp
@@ -168,14 +167,29 @@ const SERVICES_CATALOG = [
   ]
 ];
 
-export default function ServicesPage({ onNavigate }) {
+export default function ServicesPage({ onNavigate, initialStep = 0, initialService = '' }) {
   // Step Index State (0: Set 1, 1: Set 2, 2: Set 3, 3: Set 4, 4: Tail Section)
-  const [activeStep, setActiveStep] = useState(0);
-  const [selectedService, setSelectedService] = useState('');
+  const [activeStep, setActiveStep] = useState(initialStep);
+  const [selectedService, setSelectedService] = useState(initialService);
   const [formData, setFormData] = useState({ name: '', email: '', details: '' });
   const [quoteSubmitted, setQuoteSubmitted] = useState(false);
 
   const totalSteps = 5; // 4 Card Sets + 1 Tail Form & Footer
+
+  useEffect(() => {
+    if (initialStep !== undefined && initialStep !== null) {
+      setActiveStep(initialStep);
+    }
+    if (initialService) {
+      const allServices = SERVICES_CATALOG.flat();
+      const match = allServices.find((s) =>
+        s.title.toLowerCase() === initialService.toLowerCase() ||
+        s.title.toLowerCase().includes(initialService.toLowerCase()) ||
+        initialService.toLowerCase().includes(s.title.toLowerCase())
+      );
+      setSelectedService(match ? match.title : initialService);
+    }
+  }, [initialStep, initialService]);
 
   const handleCardClick = (title) => {
     setSelectedService(title);
@@ -298,8 +312,7 @@ export default function ServicesPage({ onNavigate }) {
         
         {/* HERO TITLE HEADER POSITIONED DIRECTLY ABOVE THE CARDS */}
         <div className="text-center max-w-4xl mx-auto mb-4 sm:mb-6 pointer-events-none z-10 shrink-0">
-          <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-slate-200/80 border border-slate-300 text-slate-700 text-[10px] sm:text-[11px] font-mono font-semibold tracking-widest uppercase mb-1.5 shadow-sm">
-            <Sparkles className="w-3 h-3 text-slate-900" />
+          <div className="inline-flex items-center px-3 py-0.5 rounded-full bg-slate-200/80 border border-slate-300 text-slate-700 text-[10px] sm:text-[11px] font-mono font-semibold tracking-widest uppercase mb-1.5 shadow-sm">
             <span>OUR SERVICES CATALOG</span>
           </div>
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 leading-tight font-sans">

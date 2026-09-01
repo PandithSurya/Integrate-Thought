@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ArrowLeft, Check, Sparkles, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, Check, ArrowUpRight } from 'lucide-react';
 
 const ALL_SERVICES = [
   {
@@ -89,8 +89,7 @@ export default function ServicesPage({ onBackToHome }) {
 
       {/* Page Title & Hero */}
       <div className="max-w-4xl mx-auto text-center mb-16">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#00b4d8]/10 border border-[#00b4d8]/30 text-xs font-mono tracking-widest text-[#00b4d8] uppercase mb-4">
-          <Sparkles className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#00b4d8]/10 border border-[#00b4d8]/30 text-xs font-mono tracking-widest text-[#00b4d8] uppercase mb-4">
           <span>EVERY CAPABILITY IN DETAIL</span>
         </div>
         <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6">

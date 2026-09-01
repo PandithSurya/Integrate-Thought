@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Sparkles, BookOpen, ArrowRight, Grid } from 'lucide-react';
+import { ExternalLink, BookOpen, ArrowRight, Grid } from 'lucide-react';
 
 // ============================================================================
 // DATA DEFINITIONS
@@ -352,8 +352,7 @@ export default function FullPageExperience() {
       >
         {/* Section Header */}
         <div className="max-w-4xl mx-auto mb-16 text-center">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-purple-950/80 border border-purple-800/60 text-xs font-mono tracking-widest text-purple-300 uppercase mb-4 shadow-lg">
-            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+          <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-purple-950/80 border border-purple-800/60 text-xs font-mono tracking-widest text-purple-300 uppercase mb-4 shadow-lg">
             <span>04 / FEATURED CLIENT WORKS</span>
           </div>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-4">

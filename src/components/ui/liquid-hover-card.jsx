@@ -114,21 +114,21 @@ export function LiquidHoverCard({ course, onSelect }) {
         </svg>
 
         {/* Floating Category Badge */}
-        <div className="absolute top-4 left-4 z-10 font-poppins">
+        <div className="absolute top-4 left-4 z-10 font-sans">
           <span className="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest bg-slate-950/85 backdrop-blur-md text-white border border-white/20 uppercase shadow-md">
             {course.category}
           </span>
         </div>
 
         {/* Duration Badge on Top Right */}
-        <div className="absolute top-4 right-4 z-10 font-poppins">
+        <div className="absolute top-4 right-4 z-10 font-sans">
           <span className="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider bg-blue-600/90 backdrop-blur-md text-white shadow-md">
             {course.duration}
           </span>
         </div>
 
         {/* Level Overlay Badge at bottom left of image */}
-        <div className="absolute bottom-10 left-4 z-10 flex items-center gap-2 text-xs font-semibold text-white/90 font-poppins">
+        <div className="absolute bottom-10 left-4 z-10 flex items-center gap-2 text-xs font-semibold text-white/90 font-sans">
           <span className="px-2.5 py-0.5 rounded-md bg-slate-900/90 backdrop-blur-md text-slate-200 text-[10px] font-bold uppercase tracking-wider border border-white/10">
             {course.level}
           </span>
@@ -136,11 +136,11 @@ export function LiquidHoverCard({ course, onSelect }) {
       </div>
 
       {/* CARD CONTENT */}
-      <div className="p-6 sm:p-7 pt-2 flex flex-col justify-between flex-1 space-y-4 font-poppins">
+      <div className="p-6 sm:p-7 pt-2 flex flex-col justify-between flex-1 space-y-4 font-sans">
         <div className="space-y-3">
           
           {/* Duration & Status */}
-          <div className="flex items-center justify-between text-xs font-semibold text-slate-500 font-poppins pt-1">
+          <div className="flex items-center justify-between text-xs font-semibold text-slate-500 font-sans pt-1">
             <div className="flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-blue-600" />
               <span className="font-bold text-slate-950">{course.duration}</span>
@@ -152,12 +152,12 @@ export function LiquidHoverCard({ course, onSelect }) {
           </div>
 
           {/* Title */}
-          <h3 className="text-lg sm:text-xl font-extrabold text-slate-950 tracking-tight leading-snug font-poppins group-hover:text-blue-700 transition-colors">
+          <h3 className="text-lg sm:text-xl font-extrabold text-slate-950 tracking-tight leading-snug font-sans group-hover:text-blue-700 transition-colors">
             {course.title}
           </h3>
 
           {/* Description */}
-          <p className="text-xs text-slate-600 leading-relaxed font-poppins line-clamp-2">
+          <p className="text-xs text-slate-600 leading-relaxed font-sans line-clamp-2">
             {course.description}
           </p>
 
@@ -177,12 +177,12 @@ export function LiquidHoverCard({ course, onSelect }) {
         </div>
 
         {/* FOOTER & ENROLL BUTTON */}
-        <div className="pt-4 border-t border-slate-100 flex items-center justify-between font-poppins">
+        <div className="pt-4 border-t border-slate-100 flex items-center justify-between font-sans">
           <div>
             <span className="text-[10px] font-bold text-slate-400 block uppercase tracking-wider">
               PROGRAM DURATION
             </span>
-            <span className="text-sm font-extrabold text-slate-950 font-poppins">
+            <span className="text-sm font-extrabold text-slate-950 font-sans">
               {course.duration}
             </span>
           </div>

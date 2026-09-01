@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Navbar from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import {
-  Sparkles,
   ArrowRight,
   ShieldCheck,
   Workflow,
@@ -266,8 +265,7 @@ export default function AboutPage({ onNavigate }) {
 
         {/* HERO SECTION */}
         <section className="pt-40 sm:pt-48 pb-16 px-6 max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-100/80 border border-blue-200/80 text-blue-900 text-[11px] font-mono font-semibold tracking-widest uppercase mb-6 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-blue-900" />
+          <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-blue-100/80 border border-blue-200/80 text-blue-900 text-[11px] font-mono font-semibold tracking-widest uppercase mb-6 shadow-sm">
             <span>ABOUT US</span>
           </div>
 

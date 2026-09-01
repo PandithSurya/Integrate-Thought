@@ -54,8 +54,8 @@ export default function PurposeSection() {
           className="transition-transform duration-75 ease-out pointer-events-auto"
         >
           {/* Section Identifier Tag with Solid Magenta Logo Accent (#ec4899) */}
-          <div className="flex items-center gap-3 mb-6 sm:mb-8">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ec4899] animate-pulse shadow-[0_0_12px_rgba(236,72,153,0.8)]" />
+          <div className="flex items-center gap-2.5 mb-6 sm:mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#ec4899]" />
             <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-[#ec4899] uppercase">
               02 / OUR PURPOSE
             </span>
