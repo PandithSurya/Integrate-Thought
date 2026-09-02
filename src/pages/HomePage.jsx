@@ -91,16 +91,6 @@ const WORKS_DATA = [
     description: "A luxury digital experience designed for WNB Turkish Barber, offering seamless service selection, instant appointment bookings, and an interactive grooming portfolio.",
   },
   {
-    id: 2,
-    title: "BRIM Burgers",
-    client: "BRIM BURGERS",
-    cat: "Halal F&B Franchise",
-    tagline: "Multi-Location Franchise Platform & Gourmet Menu Engine",
-    img: "/Hero-Images/brim-tawny-hero.png",
-    url: "https://brim-tawny.vercel.app/franchise",
-    description: "An immersive digital franchise hub and interactive menu engine built for BRIM Burgers, highlighting gourmet halal burgers and franchise inquiry pipelines.",
-  },
-  {
     id: 3,
     title: "Mayavi Media",
     client: "MAYAVI MEDIA CREATIONS",

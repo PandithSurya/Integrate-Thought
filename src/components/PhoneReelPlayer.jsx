@@ -75,8 +75,27 @@ export default function PhoneReelPlayer({ className = '' }) {
   return (
     <div className={`relative flex items-center justify-center select-none ${className}`}>
       
+      {/* SUBTLE AMBIENT BLUE BACKLIGHT BEHIND PHONE */}
+      <div className="absolute inset-0 pointer-events-none -z-10 flex items-center justify-center">
+        {/* Soft wide diffuse blue ambient aura */}
+        <div 
+          className="w-[120%] sm:w-[125%] h-[112%] sm:h-[116%] rounded-[60px] blur-2xl sm:blur-3xl opacity-65 sm:opacity-75 transition-opacity duration-700 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse at center, rgba(0, 180, 216, 0.36) 0%, rgba(2, 132, 199, 0.22) 42%, rgba(56, 189, 248, 0.08) 68%, transparent 85%)',
+          }}
+        />
+        {/* Tighter chassis backlight halo */}
+        <div 
+          className="absolute w-[104%] h-[103%] rounded-[48px] blur-xl opacity-75 pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle at 50% 48%, rgba(0, 180, 216, 0.42) 0%, rgba(14, 165, 233, 0.2) 60%, transparent 80%)',
+          }}
+        />
+      </div>
+
       {/* BALANCED PREMIUM SMARTPHONE FRAME (BALANCED 6-7px BEZEL) */}
-      <div className="relative w-[230px] sm:w-[250px] md:w-[270px] lg:w-[285px] h-[480px] sm:h-[515px] md:h-[540px] lg:h-[560px] rounded-[46px] bg-[#16181c] p-[6px] sm:p-[7px] border border-slate-700/60 shadow-[0_25px_65px_-15px_rgba(0,0,0,0.32),0_0_0_1px_rgba(255,255,255,0.12)] transition-all duration-300">
+      <div className="relative w-[230px] sm:w-[250px] md:w-[270px] lg:w-[285px] h-[480px] sm:h-[515px] md:h-[540px] lg:h-[560px] rounded-[46px] bg-[#16181c] p-[6px] sm:p-[7px] border border-slate-700/60 shadow-[0_25px_65px_-15px_rgba(0,0,0,0.32),0_0_55px_rgba(0,180,216,0.22),0_0_0_1px_rgba(255,255,255,0.12)] transition-all duration-300">
+
         
         {/* Sleek Titanium Rim Highlight */}
         <div className="absolute inset-0 rounded-[45px] pointer-events-none ring-1 ring-white/15" />

@@ -45,22 +45,6 @@ const WORKS_DATA = [
       '3D Landscape Prototyping',
     ],
   },
-  {
-    id: '02',
-    title: 'Brim Burgers',
-    subtitle: 'Smashed. Halal. Unforgettable.',
-    headline: "How Brim Burgers Digitalized Glasgow's Smashed Burger Destination",
-    description: 'Bold brand identity and high-converting digital ordering experience for Glasgow premium fast-casual landmark.',
-    url: 'https://jay0073.github.io/brim-demo/',
-    coverBg: 'bg-[#1b1028] border-pink-500/40',
-    innerCardBg: 'bg-gradient-to-br from-[#ec4899] via-[#d946ef] to-[#8b5cf6]',
-    badge: 'CASE STUDY 02',
-    bullets: [
-      'High-Energy Brand Identity',
-      'Seamless Digital Ordering',
-      'Glasgow Culinary Landmark',
-    ],
-  },
 ];
 
 // ============================================================================

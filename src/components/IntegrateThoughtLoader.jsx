@@ -108,33 +108,34 @@ export default function IntegrateThoughtLoader({
           aria-live="polite"
           aria-label="Loading Integrate Thought"
         >
-          {/* OPTICALLY CENTERED UNIFIED BRAND LOCKUP (ZOOMS OUT ON EXIT) */}
+          {/* OPTICALLY CENTERED UNIFIED BRAND LOCKUP */}
           <motion.div
             exit={{
               opacity: 0,
-              scale: 0.78, // Smooth cinematic zoom out
-              filter: 'blur(6px)',
+              filter: 'blur(4px)',
               transition: {
-                duration: 0.48,
-                ease: [0.22, 1, 0.36, 1], // Elegant deceleration
+                duration: 0.45,
+                ease: [0.16, 1, 0.3, 1],
               },
             }}
-            className="relative z-20 flex flex-col items-center justify-center text-center px-4 pointer-events-none -translate-y-2 sm:-translate-y-3 will-change-[transform,opacity,filter]"
+            className="relative z-20 flex flex-col items-center justify-center text-center px-4 pointer-events-none -translate-y-2 sm:-translate-y-3 will-change-[opacity,filter]"
           >
-            {/* HERO BRAND LOGO MARK (NATURAL 1.5:1 PROPORTION, ZERO LETTERBOX DEAD SPACE) */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center justify-center"
-            >
+            {/* HERO BRAIN LOGO MARK WITH SPECULAR SHINE ANIMATION */}
+            <div className="relative flex items-center justify-center">
               <img
                 src="/logo.png"
                 alt="Integrate Thought"
-                className="h-28 sm:h-36 md:h-44 lg:h-48 w-auto aspect-[1536/1024] object-contain filter drop-shadow-[0_12px_32px_rgba(0,0,0,0.08)]"
+                className="h-28 sm:h-36 md:h-44 lg:h-48 w-auto aspect-[1536/1024] object-contain filter drop-shadow-[0_12px_28px_rgba(0,0,0,0.08)] select-none"
                 draggable={false}
               />
-            </motion.div>
+
+              {/* Pristine Specular Shine Sweep across the Brain Logo */}
+              {!prefersReducedMotion && (
+                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
+                  <div className="absolute inset-y-0 w-2/3 bg-gradient-to-r from-transparent via-white/70 to-transparent pointer-events-none animate-brain-shine" />
+                </div>
+              )}
+            </div>
 
             {/* TIGHT, HARMONIOUS MULTILINGUAL BRAND NAME LOCKUP */}
             <div className="mt-3.5 sm:mt-4 md:mt-5 h-8 sm:h-9 md:h-10 flex items-center justify-center w-full min-w-[240px] sm:min-w-[360px] md:min-w-[480px]">
@@ -170,6 +171,54 @@ export default function IntegrateThoughtLoader({
                 </motion.span>
               </AnimatePresence>
             </div>
+
+            {/* OFFICIAL BRAND TAGLINE LOCKUP: THINK IT • BUILD IT • INTEGRATE IT */}
+            <motion.div
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-3 sm:mt-3.5 flex items-center justify-center gap-2 sm:gap-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] select-none font-sans"
+            >
+              <span
+                className={`transition-all duration-300 ${
+                  prefersReducedMotion
+                    ? 'text-slate-800 font-bold'
+                    : currentIndex === 0
+                    ? 'text-slate-950 font-bold scale-[1.04]'
+                    : currentIndex > 0
+                    ? 'text-slate-700'
+                    : 'text-slate-400/50'
+                }`}
+              >
+                Think it
+              </span>
+              <span className="text-slate-300 text-[9px] select-none">•</span>
+              <span
+                className={`transition-all duration-300 ${
+                  prefersReducedMotion
+                    ? 'text-slate-800 font-bold'
+                    : currentIndex === 1
+                    ? 'text-slate-950 font-bold scale-[1.04]'
+                    : currentIndex > 1
+                    ? 'text-slate-700'
+                    : 'text-slate-400/50'
+                }`}
+              >
+                Build it
+              </span>
+              <span className="text-slate-300 text-[9px] select-none">•</span>
+              <span
+                className={`transition-all duration-300 ${
+                  prefersReducedMotion
+                    ? 'text-[#00b4d8] font-bold'
+                    : currentIndex >= 2
+                    ? 'text-[#00b4d8] font-bold scale-[1.04]'
+                    : 'text-slate-400/50'
+                }`}
+              >
+                Integrate it
+              </span>
+            </motion.div>
           </motion.div>
         </motion.div>
       )}
