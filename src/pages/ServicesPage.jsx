@@ -313,9 +313,6 @@ export default function ServicesPage({ onNavigate, initialStep = 0, initialServi
         
         {/* HERO TITLE HEADER POSITIONED DIRECTLY ABOVE THE CARDS */}
         <div className="text-center max-w-4xl mx-auto mb-4 sm:mb-6 pointer-events-none z-10 shrink-0">
-          <div className="section-badge-light mb-2.5">
-            <span>01 / OUR SERVICES CATALOG</span>
-          </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 leading-tight font-sans">
             Comprehensive Digital &amp; AI Engineering Solutions
           </h1>
@@ -395,9 +392,6 @@ export default function ServicesPage({ onNavigate, initialStep = 0, initialServi
           
           {/* Section Badge & Title */}
           <div className="text-center mb-5 sm:mb-6">
-            <div className="section-badge-light mb-2.5">
-              <span>02 / GET A CUSTOM QUOTE</span>
-            </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight font-sans leading-tight">
               Request a Service Quote
             </h2>

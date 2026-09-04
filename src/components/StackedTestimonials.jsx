@@ -165,9 +165,6 @@ export function StackedTestimonials({ items = TESTIMONIALS_DATA }) {
       
       {/* Header Title Section (Standardized Left Alignment) */}
       <div className="w-full text-left items-start mb-6 sm:mb-8">
-        <div className="section-badge-light mb-2.5 self-start">
-          <span>05 / VERIFIED FEEDBACK</span>
-        </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-2 font-sans leading-tight text-left">
           Client Perspectives
         </h2>

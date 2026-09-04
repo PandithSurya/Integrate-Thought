@@ -175,13 +175,6 @@ export default function ContactPage({ onNavigate }) {
 
         {/* HERO SECTION */}
         <section className="pt-36 sm:pt-44 pb-12 px-6 max-w-5xl mx-auto text-center font-sans">
-          
-          {/* Live Availability Badge */}
-          <div className="section-badge-light mb-6">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
-            <span>01 / CLIENT INQUIRIES &bull; OPEN FOR 2026</span>
-          </div>
-
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.08] max-w-4xl mx-auto mb-6 font-sans">
             Let's Build Something{' '}
             <span className="text-blue-700">
@@ -731,9 +724,6 @@ export default function ContactPage({ onNavigate }) {
         {/* FAQ ACCORDION SECTION */}
         <section className="max-w-4xl mx-auto px-6 pb-20 border-t border-slate-200/80 pt-16 font-sans w-full">
           <div className="text-center mb-10">
-            <div className="section-badge-light mb-3">
-              <span>02 / TRANSPARENT PROCESS</span>
-            </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight font-sans leading-tight">
               Frequently Asked Questions
             </h2>

@@ -194,3 +194,148 @@
 .animate-marquee-reverse:hover {
   animation-play-state: paused;
 }
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 40s linear infinite;
+}
+
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-up {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+.animate-marquee-up {
+  display: flex;
+  flex-direction: column;
+  animation: marquee-up 32s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-up:hover {
+  animation-play-state: paused;
+}
+
+/* Global Prefers-Reduced-Motion Fallbacks */
+@media (prefers-reduced-motion: reduce) {
+  html, body {
+    scroll-behavior: auto !important;
+  }
+  
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Magic UI Border Beam Animation */
+@keyframes border-beam {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.border-beam-container {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: var(--border-width, 1.5px) solid transparent;
+  -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff);
+  -webkit-mask-clip: padding-box, border-box;
+  -webkit-mask-composite: source-in, xor;
+  mask: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff);
+  mask-clip: padding-box, border-box;
+  mask-composite: intersect;
+  z-index: 20;
+}
+
+.border-beam-container::after {
+  content: "";
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  width: var(--size, 130px);
+  animation: border-beam var(--duration, 8s) infinite linear;
+  animation-delay: var(--delay, 0s);
+  background: linear-gradient(to left, var(--color-from, #0284c7), var(--color-to, #38bdf8), transparent);
+  offset-anchor: var(--anchor, 90%) 50%;
+  offset-path: rect(0 auto auto 0 round var(--size, 130px));
+}
+
+/* Dual-Engine Card Icon Badge Scale-Pulse on Hover */
+@keyframes badge-scale-pulse {
+  0%, 100% {
+    transform: scale(1.08);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.group:hover .group-hover-icon-pulse {
+  animation: badge-scale-pulse 1.8s ease-in-out infinite;
+}
+
+/* Magic UI Shimmer Button Animations */
+@keyframes shimmer-slide {
+  to {
+    transform: translate(calc(100cqw - 100%), 0);
+  }
+}
+
+@keyframes spin-around {
+  0% {
+    transform: translateZ(0) rotate(0);
+  }
+  15%, 35% {
+    transform: translateZ(0) rotate(90deg);
+  }
+  65%, 85% {
+    transform: translateZ(0) rotate(270deg);
+  }
+  100% {
+    transform: translateZ(0) rotate(360deg);
+  }
+}
+
+.animate-shimmer-slide {
+  animation: shimmer-slide var(--speed, 3s) ease-in-out infinite alternate;
+}
+
+.animate-spin-around {
+  animation: spin-around calc(var(--speed, 3s) * 2) infinite linear;
+}
+
+/* Primary Button Shimmer-Sweep Hover Animation */
+@keyframes button-shimmer-sweep {
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(220%) skewX(-20deg);
+  }
+}
+
+.animate-btn-shimmer {
+  animation: button-shimmer-sweep 2s linear infinite;
+}

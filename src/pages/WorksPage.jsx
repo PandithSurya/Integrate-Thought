@@ -236,10 +236,6 @@ export default function WorksPage({ onNavigate }) {
 
         {/* Hero Section */}
         <section className="pt-40 sm:pt-44 pb-12 px-6 max-w-6xl mx-auto text-center">
-          <div className="section-badge-light mb-4">
-            <span>01 / CLIENT SHOWCASE &amp; PORTFOLIO</span>
-          </div>
-
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.08] max-w-4xl mx-auto mb-4 font-sans">
             Work That Moves the Needle.
           </h1>

@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar';
 import CompanyMarqueeBanner from '../components/CompanyMarqueeBanner';
 import { StackedTestimonials } from '../components/StackedTestimonials';
 import PhoneReelPlayer from '../components/PhoneReelPlayer';
+import BrandsTrustUsSection from '../components/BrandsTrustUsSection';
 
 const SERVICES_DATA = [
   {
@@ -195,6 +196,13 @@ export default function HomePage({ onNavigate }) {
   const [progress, setProgress] = useState(0);
   const [selectedStageModal, setSelectedStageModal] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const tailInnerRef = useRef(null);
+  const [maxTailScroll, setMaxTailScroll] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return Math.max(100, Math.round(window.innerHeight * 0.44));
+    }
+    return 360;
+  });
 
   useEffect(() => {
     const checkMobile = () => {
@@ -221,6 +229,37 @@ export default function HomePage({ onNavigate }) {
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
+
+  // Dynamically compute exact scroll needed for Phase 6 footer to land flush at bottom with zero gap
+  useEffect(() => {
+    if (isMobile) return;
+    const el = tailInnerRef.current;
+    if (!el) return;
+
+    const measure = () => {
+      // Sum child heights to get true unconstrained content height
+      const childrenH = Array.from(el.children).reduce((acc, child) => acc + (child.offsetHeight || 0), 0);
+      const contentH = Math.max(el.scrollHeight, childrenH);
+      const viewH = window.innerHeight;
+      const needed = contentH - viewH;
+      const fallback = Math.round(viewH * 0.44);
+      setMaxTailScroll(needed > 50 ? needed : fallback);
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    Array.from(el.children).forEach((child) => ro.observe(child));
+    window.addEventListener('resize', measure);
+
+    const timer = setTimeout(measure, 350);
+
+    return () => {
+      clearTimeout(timer);
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [isMobile]);
 
 
 
@@ -315,7 +354,7 @@ export default function HomePage({ onNavigate }) {
   const worksSheetTranslateY = (1 - phase4TransitionP) * 100 - phase5TransitionP * 100;
   const processSheetTranslateY = (1 - phase5TransitionP) * 100 - phase6TransitionP * 100;
   const tailSheetTranslateY = (1 - phase6TransitionP) * 100;
-  const tailInnerTranslateY = -tailProgress * 78;
+  const tailInnerTranslateY = -tailProgress * maxTailScroll;
   const phase4Progress = Math.min(1, Math.max(0, (progress - 0.40) / 0.20));
 
   // ==========================================================================
@@ -325,7 +364,7 @@ export default function HomePage({ onNavigate }) {
     return (
       <div className="relative w-full min-h-screen bg-[#f8fafc] text-slate-950 font-sans selection:bg-[#00b4d8] selection:text-black">
         {/* Universal Adaptive Navbar Header */}
-        <Navbar progress={0.5} onNavigate={handleNavClick} activePage="Home" />
+        <Navbar progress={0.5} onNavigate={onNavigate} activePage="Home" />
 
         {/* Interactive Background Grid Canvas at z-0 (Light Theme) */}
         <div className="fixed inset-0 pointer-events-none z-0">
@@ -349,10 +388,6 @@ export default function HomePage({ onNavigate }) {
 
         {/* 1. MAIN HERO / PURPOSE SECTION FOR MOBILE */}
         <section id="purpose-section-mobile" className="relative z-10 w-full pt-28 pb-12 px-6 sm:px-8 max-w-2xl mx-auto flex flex-col items-start text-left">
-          <div className="section-badge-light mb-3 self-start">
-            <span>01 / CORE MISSION</span>
-          </div>
-
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.15] text-slate-950 uppercase font-sans mb-3 text-left">
             Building Digital <br />
             Systems That <br />
@@ -392,9 +427,6 @@ export default function HomePage({ onNavigate }) {
         <section className="relative z-20 w-full py-12 px-6 sm:px-8 bg-white text-slate-950 border-t border-slate-100 shadow-sm">
           <div className="max-w-2xl mx-auto w-full">
             <div className="mb-6 text-left items-start">
-              <div className="section-badge-light mb-2.5 self-start">
-                <span>02 / OUR SERVICES</span>
-              </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight text-left">
                 Architecting High-Impact Systems
               </h2>
@@ -473,9 +505,6 @@ export default function HomePage({ onNavigate }) {
         <section id="works-section-mobile" className="relative z-30 w-full py-12 px-6 sm:px-8 bg-[#f4f7fa] text-slate-950 border-t border-slate-100 shadow-sm">
           <div className="max-w-2xl mx-auto w-full">
             <div className="mb-6 text-left items-start">
-              <div className="section-badge-light mb-2.5 self-start">
-                <span>03 / SELECTED WORKS</span>
-              </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight text-left">
                 Work That Moves the Needle
               </h2>
@@ -552,9 +581,6 @@ export default function HomePage({ onNavigate }) {
         <section className="relative z-40 w-full py-12 px-6 sm:px-8 bg-[#f5f3ec] text-slate-900 border-t border-slate-200/60 shadow-sm">
           <div className="max-w-2xl mx-auto w-full">
             <div className="text-left items-start mb-6">
-              <div className="section-badge-light mb-2.5 self-start">
-                <span>04 / OPERATING STANDARDS</span>
-              </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 font-sans leading-tight mb-1.5 text-left">
                 Our Operating Standards
               </h2>
@@ -577,7 +603,12 @@ export default function HomePage({ onNavigate }) {
           </div>
         </section>
 
-        {/* 5. TESTIMONIALS, MARQUEE & FOOTER SECTION */}
+        {/* 5. BRANDS THAT TRUST US SECTION FOR MOBILE */}
+        <div className="relative z-45 w-full bg-white text-slate-950 border-t border-slate-100">
+          <BrandsTrustUsSection isMobile={true} />
+        </div>
+
+        {/* 6. TESTIMONIALS, MARQUEE & FOOTER SECTION */}
         <section className="relative z-50 w-full bg-white text-slate-900 pt-8 border-t border-slate-100">
           <StackedTestimonials />
           <CompanyMarqueeBanner />
@@ -630,7 +661,7 @@ export default function HomePage({ onNavigate }) {
     <div className="fixed inset-0 w-full h-screen overflow-hidden z-10 bg-[#f8fafc] text-slate-950 select-none font-sans">
       
       {/* Universal Fixed Adaptive Navbar Header */}
-      <Navbar progress={progress} onNavigate={handleNavClick} activePage="Home" />
+      <Navbar progress={progress} onNavigate={onNavigate} activePage="Home" />
 
       {/* Interactive Kinetic Grid Canvas at z-0 (Light Theme) */}
       <KineticGrid
@@ -665,10 +696,6 @@ export default function HomePage({ onNavigate }) {
           
           {/* Part 1: Text Block */}
           <div className="lg:col-span-7 flex flex-col items-start text-left w-full">
-            <div className="section-badge-light mb-4 sm:mb-5 self-start">
-              <span>01 / CORE MISSION</span>
-            </div>
-
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[56px] xl:text-[62px] font-extrabold tracking-tight leading-[1.04] text-slate-950 uppercase font-sans text-left">
               Building Digital <br />
               Systems That <br />
@@ -737,9 +764,6 @@ export default function HomePage({ onNavigate }) {
           {/* Header Row */}
           <div className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-4 shrink-0 text-left items-start">
             <div className="text-left items-start">
-              <div className="section-badge-light mb-2 self-start">
-                <span>02 / OUR SERVICES</span>
-              </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 font-sans leading-tight text-left">
                 Architecting High-Impact Systems
               </h2>
@@ -888,9 +912,6 @@ export default function HomePage({ onNavigate }) {
       >
         <div className="w-full max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 sm:pt-24 shrink-0 z-40 flex flex-col md:flex-row md:items-end justify-between gap-4 text-left items-start mb-4">
           <div className="text-left items-start">
-            <div className="section-badge-light mb-2.5 self-start">
-              <span>03 / SELECTED WORKS</span>
-            </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 mb-2 font-sans leading-tight text-left">
               Work That Moves the Needle
             </h2>
@@ -989,9 +1010,6 @@ export default function HomePage({ onNavigate }) {
       >
         <div className="w-full max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 sm:pt-24 flex flex-col flex-1 pb-6">
           <div className="w-full text-left items-start shrink-0 mb-6 sm:mb-8">
-            <div className="section-badge-light mb-2.5 self-start">
-              <span>04 / OPERATING STANDARDS</span>
-            </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-2 font-sans leading-tight text-left">
               Our Operating Standards
             </h2>
@@ -1020,18 +1038,22 @@ export default function HomePage({ onNavigate }) {
           pointerEvents: phase6TransitionP < 0.05 ? 'none' : 'auto',
           willChange: 'transform',
         }}
-        className={`absolute inset-0 w-full h-full bg-white text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.15)] flex flex-col justify-between z-50 pointer-events-auto select-none ${
-          phase6TransitionP >= 0.95 ? 'overflow-y-auto' : 'overflow-hidden'
-        }`}
+        className="absolute inset-0 w-full h-full bg-white text-slate-900 shadow-[0_-30px_80px_rgba(0,0,0,0.15)] z-50 pointer-events-auto select-none overflow-hidden"
       >
         <div
+          ref={tailInnerRef}
           style={{
-            transform: `translate3d(0, ${tailInnerTranslateY}vh, 0)`,
+            transform: `translate3d(0, ${tailInnerTranslateY}px, 0)`,
             willChange: 'transform',
           }}
-          className="w-full flex flex-col justify-between min-h-full pb-10"
+          className="w-full flex flex-col justify-between min-h-full"
         >
-          <div className="w-full pt-16 sm:pt-20 pb-2">
+          {/* BRANDS THAT TRUST US SECTION */}
+          <div className="w-full pt-16 sm:pt-20 bg-white">
+            <BrandsTrustUsSection progress={progress} isMobile={false} />
+          </div>
+
+          <div className="w-full py-8">
             <StackedTestimonials />
           </div>
 

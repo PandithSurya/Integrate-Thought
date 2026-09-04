@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react';
 export default function Navbar({ onNavigate, activePage = 'Home' }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks = ['Home', 'Services', 'Works', 'IT School', 'Contact'];
+  const navLinks = ['Home', 'About', 'Services', 'Works', 'IT School', 'Contact'];
 
   // Match activeLink from activePage prop (case insensitive)
   const normalizedActive = activePage ? activePage.toLowerCase() : 'home';
@@ -14,7 +14,7 @@ export default function Navbar({ onNavigate, activePage = 'Home' }) {
     setMobileMenuOpen(false);
 
     if (onNavigate) {
-      onNavigate(link);
+      onNavigate(link, { fromNav: true });
     }
   };
 

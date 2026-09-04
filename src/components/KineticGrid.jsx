@@ -88,8 +88,9 @@ export default function KineticGrid({
     const parsedHover = hoverColor ? parseColor(hoverColor) : null;
 
     const initGrid = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
+      const isSectionScoped = Boolean(className && className.includes('absolute') && canvas.parentElement);
+      const width = isSectionScoped ? canvas.parentElement.clientWidth : window.innerWidth;
+      const height = isSectionScoped ? canvas.parentElement.clientHeight : window.innerHeight;
       const isMobile = width < 640;
       const dpr = isMobile ? 1 : (window.devicePixelRatio || 1);
 
@@ -118,13 +119,13 @@ export default function KineticGrid({
           const existing = stateRef.current.nodes[r]?.[c];
 
           rowNodes.push({
-            ox: targetX,
-            oy: targetY,
             x: existing ? existing.x : targetX,
             y: existing ? existing.y : targetY,
+            ox: targetX,
+            oy: targetY,
             vx: existing ? existing.vx : 0,
             vy: existing ? existing.vy : 0,
-            disp: 0,
+            disp: existing ? existing.disp : 0,
           });
         }
         nodes.push(rowNodes);
@@ -140,15 +141,22 @@ export default function KineticGrid({
     const handleResize = () => initGrid();
 
     const handleMouseMove = (e) => {
-      stateRef.current.mouse.x = e.clientX;
-      stateRef.current.mouse.y = e.clientY;
-      stateRef.current.mouse.active = true;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const isInside = x >= 0 && x <= rect.width && y >= 0 && y <= rect.height;
 
-      const points = stateRef.current.laserPoints;
-      const lastPt = points[points.length - 1];
+      stateRef.current.mouse.x = x;
+      stateRef.current.mouse.y = y;
+      stateRef.current.mouse.active = isInside;
 
-      if (!lastPt || Math.hypot(e.clientX - lastPt.x, e.clientY - lastPt.y) > 2) {
-        points.push({ x: e.clientX, y: e.clientY, time: performance.now() });
+      if (isInside) {
+        const points = stateRef.current.laserPoints;
+        const lastPt = points[points.length - 1];
+
+        if (!lastPt || Math.hypot(x - lastPt.x, y - lastPt.y) > 2) {
+          points.push({ x, y, time: performance.now() });
+        }
       }
     };
 
@@ -157,11 +165,16 @@ export default function KineticGrid({
     };
 
     const handleClick = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (x < 0 || x > rect.width || y < 0 || y > rect.height) return;
+
       stateRef.current.pulses.push({
-        x: e.clientX,
-        y: e.clientY,
+        x,
+        y,
         currentRadius: 0,
-        maxRadius: Math.max(window.innerWidth, window.innerHeight) * 0.65,
+        maxRadius: Math.max(rect.width, rect.height) * 0.65,
         speed: 10 + (clickIntensity * 0.15),
         intensity: clickIntensity,
       });
@@ -199,8 +212,9 @@ export default function KineticGrid({
 
       stateRef.current.activeSectionColor = activeColor;
 
-      const width = window.innerWidth;
-      const height = window.innerHeight;
+      const isSectionScoped = Boolean(className && className.includes('absolute') && canvas.parentElement);
+      const width = isSectionScoped ? canvas.parentElement.clientWidth : window.innerWidth;
+      const height = isSectionScoped ? canvas.parentElement.clientHeight : window.innerHeight;
       const isMobile = width < 640;
       const { nodes, cols, rows, mouse, smoothMouse, laserPoints, pulses } = stateRef.current;
 

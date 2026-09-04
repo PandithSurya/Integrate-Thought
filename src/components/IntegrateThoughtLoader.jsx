@@ -173,52 +173,13 @@ export default function IntegrateThoughtLoader({
             </div>
 
             {/* OFFICIAL BRAND TAGLINE LOCKUP: THINK IT • BUILD IT • INTEGRATE IT */}
-            <motion.div
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-3 sm:mt-3.5 flex items-center justify-center gap-2 sm:gap-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] select-none font-sans"
-            >
-              <span
-                className={`transition-all duration-300 ${
-                  prefersReducedMotion
-                    ? 'text-slate-800 font-bold'
-                    : currentIndex === 0
-                    ? 'text-slate-950 font-bold scale-[1.04]'
-                    : currentIndex > 0
-                    ? 'text-slate-700'
-                    : 'text-slate-400/50'
-                }`}
-              >
-                Think it
-              </span>
+            <div className="mt-3 sm:mt-3.5 flex items-center justify-center gap-2 sm:gap-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] select-none font-sans">
+              <span className="text-slate-800 font-bold">Think it</span>
               <span className="text-slate-300 text-[9px] select-none">•</span>
-              <span
-                className={`transition-all duration-300 ${
-                  prefersReducedMotion
-                    ? 'text-slate-800 font-bold'
-                    : currentIndex === 1
-                    ? 'text-slate-950 font-bold scale-[1.04]'
-                    : currentIndex > 1
-                    ? 'text-slate-700'
-                    : 'text-slate-400/50'
-                }`}
-              >
-                Build it
-              </span>
+              <span className="text-slate-800 font-bold">Build it</span>
               <span className="text-slate-300 text-[9px] select-none">•</span>
-              <span
-                className={`transition-all duration-300 ${
-                  prefersReducedMotion
-                    ? 'text-[#00b4d8] font-bold'
-                    : currentIndex >= 2
-                    ? 'text-[#00b4d8] font-bold scale-[1.04]'
-                    : 'text-slate-400/50'
-                }`}
-              >
-                Integrate it
-              </span>
-            </motion.div>
+              <span className="text-slate-800 font-bold">Integrate it</span>
+            </div>
           </motion.div>
         </motion.div>
       )}

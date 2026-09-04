@@ -208,13 +208,6 @@ export default function CoursesPage({ onNavigate }) {
 
         {/* HERO SECTION */}
         <section className="pt-36 sm:pt-44 pb-12 px-6 max-w-5xl mx-auto text-center font-sans">
-          
-          {/* Status Badge */}
-          <div className="section-badge-light mb-6">
-            <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0"></span>
-            <span>01 / IT SCHOOL &bull; NEW BATCHES OPEN</span>
-          </div>
-
           {/* Headline */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.08] max-w-4xl mx-auto mb-6 font-sans">
             Industry-Oriented Skill Programs for{' '}
