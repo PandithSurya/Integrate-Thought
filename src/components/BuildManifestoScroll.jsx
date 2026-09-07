@@ -5,9 +5,21 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const WORDS = [
-  { id: 'better', text: 'better,' },
-  { id: 'faster', text: 'faster,' },
-  { id: 'stronger', text: 'stronger.' },
+  {
+    id: 'better',
+    text: 'better,',
+    color: { r: 2, g: 132, b: 199 }, // Sapphire Sky Blue (#0284c7)
+  },
+  {
+    id: 'faster',
+    text: 'faster,',
+    color: { r: 234, g: 88, b: 12 }, // Kinetic Solar Orange (#ea580c)
+  },
+  {
+    id: 'stronger',
+    text: 'stronger.',
+    color: { r: 124, g: 58, b: 237 }, // Royal Violet (#7c3aed)
+  },
 ];
 
 const MANIFESTO_LINES = [
@@ -184,7 +196,7 @@ export default function BuildManifestoScroll({ isPageRevealed = true }) {
   const underlineProgress = Math.max(0, Math.min(1, (manifestoLetterProgress - 0.72) / 0.20));
 
   // Helper for letter illumination & rising from down motion
-  const getCharStyle = (charP, isPunctuation = false) => {
+  const getCharStyle = (charP, isPunctuation = false, targetColor = { r: 2, g: 6, b: 23 }) => {
     const clamped = Math.max(0, Math.min(1, charP));
 
     // Smooth cubic curve for the rising motion
@@ -197,13 +209,14 @@ export default function BuildManifestoScroll({ isPageRevealed = true }) {
 
     // Color interpolation for light theme:
     // Faint unrevealed: slate-300 (rgb 203, 213, 225)
-    // Target revealed: deep authoritative slate-950 (rgb 2, 6, 23)
-    let r = Math.round(203 + (2 - 203) * clamped);
-    let g = Math.round(213 + (6 - 213) * clamped);
-    let b = Math.round(225 + (23 - 225) * clamped);
+    // Target revealed: custom targetColor or deep authoritative slate-950 (rgb 2, 6, 23)
+    let r = Math.round(203 + (targetColor.r - 203) * clamped);
+    let g = Math.round(213 + (targetColor.g - 213) * clamped);
+    let b = Math.round(225 + (targetColor.b - 225) * clamped);
 
-    // If it's punctuation (comma or period) and revealed, highlight with signature sky blue (#0284c7)
-    if (isPunctuation && clamped > 0.5) {
+    // If it's punctuation in the default slate-950 manifesto lines, highlight with signature sky blue (#0284c7)
+    const isDefaultSlate = targetColor.r === 2 && targetColor.g === 6 && targetColor.b === 23;
+    if (isDefaultSlate && isPunctuation && clamped > 0.5) {
       const pFactor = (clamped - 0.5) * 2;
       r = Math.round(r + (2 - r) * pFactor);
       g = Math.round(g + (132 - g) * pFactor);
@@ -221,7 +234,7 @@ export default function BuildManifestoScroll({ isPageRevealed = true }) {
   };
 
   // Helper to render word letter-by-letter with rising motion
-  const renderScrubWord = (text, wordP) => {
+  const renderScrubWord = (text, wordP, targetColor) => {
     const chars = text.split('');
     const totalChars = chars.length;
 
@@ -234,7 +247,7 @@ export default function BuildManifestoScroll({ isPageRevealed = true }) {
       return (
         <span
           key={i}
-          style={getCharStyle(charProgress, isPunctuation)}
+          style={getCharStyle(charProgress, isPunctuation, targetColor)}
           className="inline-block"
         >
           {char}
@@ -302,7 +315,7 @@ export default function BuildManifestoScroll({ isPageRevealed = true }) {
                 }}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                {renderScrubWord(WORDS[0].text, word1LetterProgress)}
+                {renderScrubWord(WORDS[0].text, word1LetterProgress, WORDS[0].color)}
               </div>
             )}
 
@@ -315,7 +328,7 @@ export default function BuildManifestoScroll({ isPageRevealed = true }) {
                 }}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                {renderScrubWord(WORDS[1].text, word2LetterProgress)}
+                {renderScrubWord(WORDS[1].text, word2LetterProgress, WORDS[1].color)}
               </div>
             )}
 
@@ -328,7 +341,7 @@ export default function BuildManifestoScroll({ isPageRevealed = true }) {
                 }}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                {renderScrubWord(WORDS[2].text, word3LetterProgress)}
+                {renderScrubWord(WORDS[2].text, word3LetterProgress, WORDS[2].color)}
               </div>
             )}
           </div>

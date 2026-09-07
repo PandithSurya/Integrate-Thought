@@ -28,7 +28,7 @@ export function Footer({ onNavigate }) {
   };
 
   return (
-    <footer className="w-full bg-white text-slate-900 pt-6 sm:pt-8 pb-8 sm:pb-10 font-sans select-none">
+    <footer className="relative z-20 w-full bg-white text-slate-900 pt-8 sm:pt-10 pb-8 sm:pb-10 font-sans select-none border-t border-slate-200/80">
       <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* TOP 3-COLUMN LAYOUT */}

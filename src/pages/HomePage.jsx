@@ -364,7 +364,7 @@ export default function HomePage({ onNavigate }) {
     return (
       <div className="relative w-full min-h-screen bg-[#f8fafc] text-slate-950 font-sans selection:bg-[#00b4d8] selection:text-black">
         {/* Universal Adaptive Navbar Header */}
-        <Navbar progress={0.5} onNavigate={onNavigate} activePage="Home" />
+        <Navbar onNavigate={onNavigate} activePage="Home" />
 
         {/* Interactive Background Grid Canvas at z-0 (Light Theme) */}
         <div className="fixed inset-0 pointer-events-none z-0">

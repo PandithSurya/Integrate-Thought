@@ -185,6 +185,7 @@ const WORKS_SHOWCASE = [
 export default function WorksPage({ onNavigate }) {
   const [selectedWork, setSelectedWork] = useState(null);
   const [isClosing, setIsClosing] = useState(false);
+  const [activeHoverId, setActiveHoverId] = useState(null);
 
   const handleOpenModal = (work) => {
     setSelectedWork(work);
@@ -196,7 +197,27 @@ export default function WorksPage({ onNavigate }) {
     setTimeout(() => {
       setSelectedWork(null);
       setIsClosing(false);
+      setActiveHoverId(null);
     }, 280);
+  };
+
+  const handleCardClick = (e, work) => {
+    e.stopPropagation();
+    const isMobileView = typeof window !== 'undefined' && window.innerWidth < 768;
+
+    if (isMobileView) {
+      if (activeHoverId === work.id) {
+        // Second click on the same card: open case study modal
+        handleOpenModal(work);
+        setActiveHoverId(null);
+      } else {
+        // First click: trigger hover animation
+        setActiveHoverId(work.id);
+      }
+    } else {
+      // Desktop: direct click opens case study (hover is handled by mouse)
+      handleOpenModal(work);
+    }
   };
 
   useEffect(() => {
@@ -208,6 +229,16 @@ export default function WorksPage({ onNavigate }) {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedWork]);
+
+  useEffect(() => {
+    const handleGlobalClick = (e) => {
+      if (!e.target.closest('.work-card-container')) {
+        setActiveHoverId(null);
+      }
+    };
+    window.addEventListener('click', handleGlobalClick);
+    return () => window.removeEventListener('click', handleGlobalClick);
+  }, []);
 
   return (
     <div className="relative min-h-screen w-full bg-[#eef4fa] text-slate-900 font-sans flex flex-col justify-between select-none overflow-x-hidden">
@@ -232,7 +263,7 @@ export default function WorksPage({ onNavigate }) {
 
       <div className="relative z-10">
         {/* Navigation Header */}
-        <Navbar progress={0.32} onNavigate={onNavigate} activePage="Works" />
+        <Navbar onNavigate={onNavigate} activePage="Works" />
 
         {/* Hero Section */}
         <section className="pt-40 sm:pt-44 pb-12 px-6 max-w-6xl mx-auto text-center">
@@ -247,78 +278,106 @@ export default function WorksPage({ onNavigate }) {
         {/* 3 CARDS PER ROW GRID CONTAINER WITH GENEROUS SPACING */}
         <section className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12 pb-24">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
-            {WORKS_SHOWCASE.map((work) => (
-              <div
-                key={work.id}
-                onClick={() => handleOpenModal(work)}
-                className="group relative w-full h-[370px] sm:h-[400px] cursor-pointer [perspective:1400px]"
-              >
-                {/* LAYER 3: DEEPEST BACK PAGE (Tilts top-right on hover in a cross fanned manner) */}
-                <div
-                  className="absolute inset-0 rounded-[24px] bg-[#d9e4f2] border border-blue-200/60 p-5 shadow-sm transition-all duration-500 ease-out group-hover:translate-x-10 group-hover:-translate-y-3 group-hover:rotate-[5deg] group-hover:scale-[0.95] group-hover:shadow-md"
-                />
+            {WORKS_SHOWCASE.map((work) => {
+              const isHovered = activeHoverId === work.id;
 
-                {/* LAYER 2: SOLID ACCENT COLOR TAB PAGE (Tilts slightly right & holds CLICK TO READ) */}
+              return (
                 <div
-                  className={`absolute inset-0 rounded-[24px] ${work.tabBgClass} shadow-md flex flex-col justify-center items-end pr-2.5 transition-all duration-500 ease-out group-hover:translate-x-6 group-hover:rotate-[2deg] group-hover:shadow-xl`}
+                  key={work.id}
+                  onClick={(e) => handleCardClick(e, work)}
+                  className={`work-card-container group relative w-full max-w-[340px] md:max-w-none mx-auto aspect-[4/5] cursor-pointer [perspective:1400px] touch-manipulation transition-all duration-300 ${
+                    isHovered ? 'z-30' : 'z-10'
+                  }`}
                 >
-                  {/* Sticking Vertical Text Tab */}
-                  <div className="h-full flex items-center justify-center">
-                    <span className="text-[11px] font-mono font-bold tracking-[0.25em] text-white uppercase select-none [writing-mode:vertical-lr] rotate-180 flex items-center gap-1.5 opacity-90 group-hover:opacity-100">
-                      <span>CLICK TO READ</span>
-                    </span>
-                  </div>
-                </div>
+                  {/* LAYER 3: DEEPEST BACK PAGE (Tilts top-right on hover in a cross fanned manner) */}
+                  <div
+                    className={`absolute inset-0 rounded-[24px] bg-[#d9e4f2] border border-blue-200/60 p-5 shadow-sm transition-all duration-500 ease-out group-hover:translate-x-10 group-hover:-translate-y-3 group-hover:rotate-[5deg] group-hover:scale-[0.95] group-hover:shadow-md ${
+                      isHovered
+                        ? 'translate-x-8 sm:translate-x-10 -translate-y-3 rotate-[5deg] scale-[0.95] shadow-md'
+                        : ''
+                    }`}
+                  />
 
-                {/* LAYER 1: FRONT BOOKLET COVER CARD (Swings open to the left on hover) */}
-                <div
-                  className="absolute inset-0 rounded-[24px] bg-[#ffffff] border border-slate-200/90 p-5 sm:p-6 shadow-[0_10px_25px_rgba(0,0,0,0.06)] flex flex-col justify-between transition-all duration-500 ease-out [transform-origin:left_center] group-hover:-rotate-[3deg] group-hover:[-rotate-y-18deg] group-hover:-translate-x-3 group-hover:scale-[1.01] group-hover:shadow-[0_25px_50px_rgba(0,0,0,0.18)]"
-                >
-                  {/* Top Category Badge */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-semibold tracking-widest text-slate-700 uppercase px-3 py-1 rounded-full bg-slate-100 border border-slate-200">
-                      {work.cat}
-                    </span>
-                  </div>
-
-                  {/* Main Title & Embedded Image Preview */}
-                  <div className="my-auto space-y-2.5 pt-2">
-                    <h3 className={`text-base sm:text-lg font-black tracking-tight leading-[1.25] ${work.textColor} font-sans`}>
-                      {work.title}
-                    </h3>
-
-                    {/* Embedded Hero Image Preview Frame */}
-                    <div className="w-full h-28 sm:h-32 rounded-xl overflow-hidden border border-slate-200/80 shadow-sm relative my-2 bg-slate-900">
-                      <img
-                        src={work.img}
-                        alt={work.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
-                    </div>
-
-                    <p className="text-xs text-slate-600 leading-relaxed font-normal font-sans line-clamp-2">
-                      {work.description}
-                    </p>
-                  </div>
-
-                  {/* Bottom Client Footer */}
-                  <div className="pt-3 border-t border-slate-200/90 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-[10px] shadow-sm">
-                        {work.client.charAt(0)}
-                      </div>
-                      <span className="text-xs font-bold text-slate-900 tracking-tight font-sans">
-                        {work.client}
+                  {/* LAYER 2: SOLID ACCENT COLOR TAB PAGE (Tilts slightly right & holds CLICK TO READ) */}
+                  <div
+                    className={`absolute inset-0 rounded-[24px] ${work.tabBgClass} shadow-md flex flex-col justify-center items-end pr-2.5 transition-all duration-500 ease-out group-hover:translate-x-6 group-hover:rotate-[2deg] group-hover:shadow-xl ${
+                      isHovered
+                        ? 'translate-x-5 sm:translate-x-6 rotate-[2deg] shadow-xl'
+                        : ''
+                    }`}
+                  >
+                    {/* Sticking Vertical Text Tab */}
+                    <div className="h-full flex items-center justify-center">
+                      <span
+                        className={`text-[11px] font-mono font-bold tracking-[0.25em] text-white uppercase select-none [writing-mode:vertical-lr] rotate-180 flex items-center gap-1.5 transition-opacity ${
+                          isHovered ? 'opacity-100' : 'opacity-90'
+                        } group-hover:opacity-100`}
+                      >
+                        <span>{isHovered ? 'TAP TO READ' : 'CLICK TO READ'}</span>
                       </span>
                     </div>
-                    <span className="text-[11px] font-mono text-slate-500 font-semibold group-hover:text-slate-900 transition-colors">
-                      View Details &rarr;
-                    </span>
                   </div>
-                </div>
 
-              </div>
-            ))}
+                  {/* LAYER 1: FRONT BOOKLET COVER CARD (Swings open to the left on hover) */}
+                  <div
+                    className={`absolute inset-0 rounded-[24px] bg-[#ffffff] border border-slate-200/90 p-5 sm:p-6 shadow-[0_10px_25px_rgba(0,0,0,0.06)] flex flex-col justify-between transition-all duration-500 ease-out [transform-origin:left_center] group-hover:-rotate-[3deg] group-hover:[-rotate-y-18deg] group-hover:-translate-x-3 group-hover:scale-[1.01] group-hover:shadow-[0_25px_50px_rgba(0,0,0,0.18)] ${
+                      isHovered
+                        ? '-rotate-[3deg] [-rotate-y-18deg] -translate-x-2 sm:-translate-x-3 scale-[1.01] shadow-[0_25px_50px_rgba(0,0,0,0.18)]'
+                        : ''
+                    }`}
+                  >
+                    {/* Top Category Badge */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono font-semibold tracking-widest text-slate-700 uppercase px-3 py-1 rounded-full bg-slate-100 border border-slate-200">
+                        {work.cat}
+                      </span>
+                    </div>
+
+                    {/* Main Title & Embedded Image Preview */}
+                    <div className="my-auto space-y-2.5 pt-2">
+                      <h3 className={`text-base sm:text-lg font-black tracking-tight leading-[1.25] ${work.textColor} font-sans`}>
+                        {work.title}
+                      </h3>
+
+                      {/* Embedded Hero Image Preview Frame */}
+                      <div className="w-full h-28 sm:h-32 rounded-xl overflow-hidden border border-slate-200/80 shadow-sm relative my-2 bg-slate-900">
+                        <img
+                          src={work.img}
+                          alt={work.title}
+                          className={`w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${
+                            isHovered ? 'scale-105' : ''
+                          }`}
+                        />
+                      </div>
+
+                      <p className="text-xs text-slate-600 leading-relaxed font-normal font-sans line-clamp-2">
+                        {work.description}
+                      </p>
+                    </div>
+
+                    {/* Bottom Client Footer */}
+                    <div className="pt-3 border-t border-slate-200/90 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-[10px] shadow-sm">
+                          {work.client.charAt(0)}
+                        </div>
+                        <span className="text-xs font-bold text-slate-900 tracking-tight font-sans">
+                          {work.client}
+                        </span>
+                      </div>
+                      <span
+                        className={`text-[11px] font-mono font-semibold transition-colors ${
+                          isHovered ? `${work.textColor} font-bold` : 'text-slate-500'
+                        } group-hover:text-slate-900`}
+                      >
+                        {isHovered ? 'Tap to view case study →' : 'View Details →'}
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+              );
+            })}
           </div>
         </section>
       </div>

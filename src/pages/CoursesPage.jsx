@@ -204,7 +204,7 @@ export default function CoursesPage({ onNavigate }) {
 
       <div className="relative z-10 font-sans flex-1 flex flex-col">
         {/* Navigation Header */}
-        <Navbar progress={0.32} onNavigate={onNavigate} activePage="IT School" />
+        <Navbar onNavigate={onNavigate} activePage="IT School" />
 
         {/* HERO SECTION */}
         <section className="pt-36 sm:pt-44 pb-12 px-6 max-w-5xl mx-auto text-center font-sans">
