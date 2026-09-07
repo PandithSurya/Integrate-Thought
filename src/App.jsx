@@ -8,17 +8,36 @@ import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
 import IntegrateThoughtLoader from './components/IntegrateThoughtLoader';
 
+const normalizePage = (p) => {
+  if (!p) return 'home';
+  const s = p.toLowerCase();
+  if (s === 'courses' || s === 'training' || s === 'it school' || s === 'itschool') return 'it school';
+  return s;
+};
+
+const getPageFromUrl = () => {
+  if (typeof window === 'undefined') return { page: 'home', params: {} };
+  const searchParams = new URLSearchParams(window.location.search);
+  const p = searchParams.get('page');
+  const hash = window.location.hash.replace('#', '').toLowerCase();
+  const page = normalizePage(p || hash || 'home');
+
+  const params = {};
+  for (const [k, v] of searchParams.entries()) {
+    if (k !== 'page' && k !== 'loader') {
+      params[k] = v;
+    }
+  }
+  return { page, params };
+};
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const p = new URLSearchParams(window.location.search).get('page');
-      if (p) return p.toLowerCase();
-      const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (hash) return hash;
-    }
-    return 'home';
+    return getPageFromUrl().page;
   });
-  const [pageParams, setPageParams] = useState({});
+  const [pageParams, setPageParams] = useState(() => {
+    return getPageFromUrl().params;
+  });
   const [showInitialLoader, setShowInitialLoader] = useState(() => {
     if (typeof window !== 'undefined') {
       if (new URLSearchParams(window.location.search).get('loader') === 'false') return false;
@@ -35,6 +54,39 @@ export default function App() {
     return false;
   });
 
+  // Keep initial history entry in sync with page
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const { page, params } = getPageFromUrl();
+      window.history.replaceState({ page, params }, '', window.location.href);
+    }
+  }, []);
+
+  // Listen for browser Back and Forward navigation events
+  useEffect(() => {
+    const handlePopState = (event) => {
+      const { page: urlPage, params: urlParams } = getPageFromUrl();
+      const state = event.state || {};
+      const targetPage = normalizePage(state.page || urlPage);
+      const targetParams = state.params || urlParams || {};
+
+      setCurrentPage(targetPage);
+      setPageParams(targetParams);
+      setIsNavigating(false);
+      setIsPageRevealed(true);
+
+      if (typeof window !== 'undefined' && window.lenis?.scrollTo) {
+        window.lenis.scrollTo(0, { immediate: true });
+      }
+      window.scrollTo(0, 0);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   // Establish initial application readiness without exceeding sensible limits
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -45,20 +97,36 @@ export default function App() {
 
   const handleNavigate = (page, params = {}, options = {}) => {
     if (!page) return;
-    const target = page.toLowerCase();
+    const target = normalizePage(page);
 
     // Check if navigation was triggered from Navbar
     const isFromNav = Boolean(options?.fromNav || params?.fromNav);
+    const isPageSwitch = target !== normalizePage(currentPage);
 
-    // Normalize page identifiers to check if the page actually changed
-    const normalizePage = (p) => {
-      if (!p) return 'home';
-      const s = p.toLowerCase();
-      if (s === 'courses' || s === 'training' || s === 'it school' || s === 'itschool') return 'it school';
-      return s;
-    };
+    // Update browser URL and history state
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.origin + window.location.pathname);
+      const currentSearchParams = new URLSearchParams(window.location.search);
+      if (currentSearchParams.has('loader')) {
+        url.searchParams.set('loader', currentSearchParams.get('loader'));
+      }
 
-    const isPageSwitch = normalizePage(target) !== normalizePage(currentPage);
+      if (target !== 'home') {
+        url.searchParams.set('page', target);
+      }
+
+      Object.keys(params).forEach((key) => {
+        if (key !== 'fromNav' && params[key] !== undefined && params[key] !== null) {
+          url.searchParams.set(key, params[key]);
+        }
+      });
+
+      if (options?.replace) {
+        window.history.replaceState({ page: target, params }, '', url.toString());
+      } else if (isPageSwitch || Object.keys(params).length > 0) {
+        window.history.pushState({ page: target, params }, '', url.toString());
+      }
+    }
 
     setPageParams(params);
     setCurrentPage(target);

@@ -2,6 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import Navbar from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import KineticGrid from '../components/KineticGrid';
+import BuildManifestoScroll from '../components/BuildManifestoScroll';
+import DualEngineSection from '../components/DualEngineSection';
+import HowWeThinkSection from '../components/HowWeThinkSection';
+import AboutHeroSection from '../components/AboutHeroSection';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { CustomEase } from 'gsap/CustomEase';
@@ -63,25 +67,18 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
   const dot2Ref = useRef(null);
   const dot3Ref = useRef(null);
 
-  // Section 05 Focus Cards hover states
-  const [hoveredLeader, setHoveredLeader] = useState(null);
-  const [hoveredSpecialist, setHoveredSpecialist] = useState(null);
+  // Section 05 Team Cards hover state for sibling blur effect
+  const [hoveredMember, setHoveredMember] = useState(null);
 
   useEffect(() => {
     document.title = 'About Us | Integrate Thought — Digital Engineering & Academy';
     window.scrollTo(0, 0);
 
-    if (!isPageRevealed || !headlineRef.current) return;
+    if (!isPageRevealed) return;
 
     const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const underlineTarget =
-      headlineRef.current.querySelector('.hero-system-underline') || underlineRef.current;
-
     if (isReduced) {
-      if (underlineTarget) {
-        gsap.set(underlineTarget, { scaleX: 1 });
-      }
       if (archHeadlineRef.current) {
         gsap.set(archHeadlineRef.current.querySelectorAll('.arch-word'), { opacity: 1, y: 0, filter: 'none' });
       }
@@ -94,65 +91,15 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
       return;
     }
 
+    if (window.lenis) {
+      window.lenis.on('scroll', ScrollTrigger.update);
+    }
+
     let split;
     let tl;
     let scrollTriggerInstance;
     let archScrollTrigger;
     let beamScrollTrigger;
-
-    try {
-      split = new SplitText(headlineRef.current, {
-        type: 'lines',
-        linesClass: 'split-line',
-      });
-
-      tl = gsap.timeline({ delay: 0.05 });
-
-      tl.from(split.lines, {
-        y: 18,
-        opacity: 0,
-        duration: 0.45,
-        stagger: 0.1,
-        ease: 'fadeUpEase',
-      });
-
-      const activeUnderline =
-        headlineRef.current.querySelector('.hero-system-underline') || underlineTarget;
-
-      if (activeUnderline) {
-        gsap.set(activeUnderline, { scaleX: 0, transformOrigin: 'left center' });
-        tl.to(
-          activeUnderline,
-          {
-            scaleX: 1,
-            duration: 0.32,
-            ease: 'fadeUpEase',
-          },
-          '+=0.08'
-        );
-      }
-    } catch (err) {
-      console.warn('SplitText animation error:', err);
-    }
-
-    // Parallax drift on the product mockup card
-    if (cardRef.current && heroSectionRef.current) {
-      const parallaxTween = gsap.to(cardRef.current, {
-        y: 28,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroSectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.2,
-        },
-      });
-      scrollTriggerInstance = parallaxTween.scrollTrigger;
-
-      if (window.lenis) {
-        window.lenis.on('scroll', ScrollTrigger.update);
-      }
-    }
 
     // Section 03 Origin — Word-by-word reveal of "It's an architecture failure."
     if (archHeadlineRef.current) {
@@ -171,6 +118,7 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
             trigger: archHeadlineRef.current,
             start: 'top 82%',
             toggleActions: 'play none none reverse',
+            invalidateOnRefresh: true,
           },
         }
       );
@@ -179,20 +127,28 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
 
     // Section 03 Origin — Tracing Beam scrubbed down the 3 cards & lighting dots
     if (originCardsRef.current && tracingBeamLineRef.current) {
+      gsap.set(tracingBeamLineRef.current, { scaleY: 0, transformOrigin: 'top center' });
+      if (tracingBeamGlowRef.current) {
+        gsap.set(tracingBeamGlowRef.current, { opacity: 0, top: '0%' });
+      }
+
       const beamTl = gsap.timeline({
         scrollTrigger: {
           trigger: originCardsRef.current,
           start: 'top 75%',
           end: 'bottom 65%',
           scrub: 0.5,
+          invalidateOnRefresh: true,
         },
       });
 
       // 1. Scrub the tracing beam line scaleY from 0 to 1
-      beamTl.to(
+      beamTl.fromTo(
         tracingBeamLineRef.current,
+        { scaleY: 0, transformOrigin: 'top center' },
         {
           scaleY: 1,
+          transformOrigin: 'top center',
           ease: 'none',
           duration: 1,
         },
@@ -257,7 +213,26 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
       beamScrollTrigger = beamTl.scrollTrigger;
     }
 
+    // Sort triggers in DOM order and refresh so pin spacing from BuildManifestoScroll is accounted for
+    ScrollTrigger.sort();
+    ScrollTrigger.refresh();
+
+    const refreshTimer1 = setTimeout(() => {
+      ScrollTrigger.sort();
+      ScrollTrigger.refresh();
+    }, 150);
+
+    const refreshTimer2 = setTimeout(() => {
+      ScrollTrigger.sort();
+      ScrollTrigger.refresh();
+    }, 450);
+
     return () => {
+      clearTimeout(refreshTimer1);
+      clearTimeout(refreshTimer2);
+      if (window.lenis) {
+        window.lenis.off('scroll', ScrollTrigger.update);
+      }
       if (split) split.revert();
       if (tl) tl.kill();
       if (scrollTriggerInstance) scrollTriggerInstance.kill();
@@ -268,73 +243,49 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
 
   const [activePillar, setActivePillar] = useState('engineering');
 
-  // Exact Team details provided by leadership
-  const LEADERSHIP_TEAM = [
+  // Unified Team Members array matching editorial layout
+  const TEAM_MEMBERS = [
     {
       name: 'Aravind Kamoju',
-      role: 'Chief Executive Officer',
-      initials: 'AK',
-      domain: 'Strategy & Brand Vision',
-      badge: 'Executive',
-      bio: 'Leading the overarching strategic trajectory of Integrate Thought, bridging commercial client partnerships with long-term technological vision.',
-      accent: 'from-sky-500/20 to-blue-600/10 text-sky-600 border-sky-200/80',
+      role: 'CEO',
+      fullTitle: 'Chief Executive Officer',
+      image: '/Hero-Images/ap-mohan-hero.png',
     },
     {
       name: 'Venkatesh',
-      role: 'Chief Technology Officer',
-      initials: 'V',
-      domain: 'Systems Architecture & AI',
-      badge: 'Architecture',
-      bio: 'Directing technical strategy, system reliability, RAG retrieval frameworks, and modern architectural standards across production deployments.',
-      accent: 'from-violet-500/20 to-purple-600/10 text-violet-600 border-violet-200/80',
+      role: 'CTO',
+      fullTitle: 'Chief Technology Officer',
+      image: '/Hero-Images/dr-rathod-hero.png',
     },
     {
       name: 'Manohar',
-      role: 'Operations Manager',
-      initials: 'M',
-      domain: 'Operational Logistics & Delivery',
-      badge: 'Operations',
-      bio: 'Orchestrating agile delivery workflows, client engagement pipelines, cross-functional sprint cadences, and internal operations.',
-      accent: 'from-amber-500/20 to-orange-600/10 text-amber-600 border-amber-200/80',
+      role: 'OPERATIONS MANAGER',
+      fullTitle: 'Operations Manager',
+      image: '/Hero-Images/mayavi-mc-hero.png',
     },
     {
       name: 'Ravi Teja',
-      role: 'Development Head',
-      initials: 'RT',
-      domain: 'Engineering Execution & Standards',
-      badge: 'Development',
-      bio: 'Overseeing codebase health, multi-tier engineering pipelines, code reviews, and mentoring senior developer output.',
-      accent: 'from-emerald-500/20 to-teal-600/10 text-emerald-600 border-emerald-200/80',
+      role: 'DEVELOPMENT HEAD',
+      fullTitle: 'Development Head',
+      image: '/Hero-Images/wnbturkish-hero.png',
     },
-  ];
-
-  const ENGINEERING_SPECIALISTS = [
     {
       name: 'Aravindh',
-      role: 'Full Stack Developer',
-      initials: 'A',
-      domain: 'Modern React & Web Platforms',
-      badge: 'Frontend & API',
-      bio: 'Crafting responsive user interfaces, state synchronization engines, and high-performance interactive web experiences.',
-      accent: 'text-blue-600 bg-blue-50 border-blue-200',
+      role: 'FULL STACK DEVELOPER',
+      fullTitle: 'Full Stack Developer',
+      image: '/Hero-Images/brim-burgers-hero.png',
     },
     {
       name: 'Surya Teja',
-      role: 'Backend & AI Developer',
-      initials: 'ST',
-      domain: 'Autonomous Pipelines & RAG Systems',
-      badge: 'AI & Data',
-      bio: 'Architecting vector pipelines, LLM retrieval chains, secure microservices, and automated webhook event systems.',
-      accent: 'text-purple-600 bg-purple-50 border-purple-200',
+      role: 'BACKEND & AI DEVELOPER',
+      fullTitle: 'Backend & AI Developer',
+      image: '/Hero-Images/avs-hospitals-hero.png',
     },
     {
       name: 'Sai Krishna',
-      role: 'Full Stack Developer',
-      initials: 'SK',
-      domain: 'Full-Stack Applications & Cloud',
-      badge: 'End-to-End Build',
-      bio: 'Engineering scalable database schemas, backend endpoints, containerized workflows, and resilient digital architectures.',
-      accent: 'text-indigo-600 bg-indigo-50 border-indigo-200',
+      role: 'FULL STACK DEVELOPER',
+      fullTitle: 'Full Stack Developer',
+      image: '/Hero-Images/old-glen-hero.png',
     },
   ];
 
@@ -644,278 +595,25 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#eef4fa] text-slate-900 font-sans select-none overflow-x-hidden flex flex-col justify-between">
+    <div className="min-h-screen w-full bg-[#eef4fa] text-slate-900 font-sans select-none overflow-x-clip flex flex-col justify-between">
       <div>
         {/* Universal Navbar */}
         <Navbar activePage="About" onNavigate={onNavigate} />
 
         {/* ============================================================ */}
-        {/* 01 — HERO SECTION: THE ASYMMETRIC EDITORIAL THESIS */}
+        {/* 01 — HERO: WARM ORGANIC STUDIO EDITORIAL                     */}
         {/* ============================================================ */}
-        <section
-          ref={heroSectionRef}
-          className="relative overflow-hidden w-full pt-36 sm:pt-42 lg:pt-48 pb-20 sm:pb-28 border-b border-slate-200/80 bg-[#eef4fa]"
-        >
-          {/* Subtle Interactive KineticGrid Canvas Confined to the First Section */}
-          <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-            <KineticGrid
-              className="!absolute inset-0 w-full h-full"
-              spacing={64}
-              dotSize={2}
-              gridStroke={1}
-              gridOpacity={0.18}
-              repulsion={5}
-              radius={60}
-              stiffness={1.0}
-              damping={0.09}
-              clickIntensity={30}
-              trailIntensity={0.15}
-              backgroundColor="#eef4fa"
-              lineColor="#cbd5e1"
-              dotColor="#94a3b8"
-              hoverColor="#0284c7"
-            />
-          </div>
-
-          <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
-            {/* Top Minimalist Context Eyebrow Bar */}
-            <div className="flex items-center justify-between gap-4 pb-8 sm:pb-12 border-b border-slate-200/70 text-[11px] sm:text-xs font-mono font-bold tracking-[0.2em] text-slate-500 uppercase">
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#0284c7]" />
-                <span>About / Integrate Thought</span>
-              </div>
-              <div className="hidden sm:flex items-center gap-3 text-slate-400">
-                <span>Studio &amp; Academy</span>
-                <span className="text-slate-300">/</span>
-                <span>Hyderabad, India</span>
-              </div>
-            </div>
-
-            {/* Asymmetric 12-Column Editorial Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 pt-10 sm:pt-14 items-start">
-              {/* Left Column (7 cols): Dominant Conceptual Headline */}
-              <div className="lg:col-span-7 space-y-8">
-                <h1
-                  ref={headlineRef}
-                  className="text-4xl sm:text-5xl lg:text-[3.6rem] xl:text-[4.1rem] font-extrabold text-slate-950 tracking-[-0.03em] leading-[1.08] font-sans"
-                >
-                  <div>We believe technology</div>
-                  <div>is built twice.</div>
-                  <div className="text-[#0284c7]">
-                    <span className="relative inline-block">
-                      First in the system.
-                      <span
-                        ref={underlineRef}
-                        className="hero-system-underline absolute left-0 -bottom-1 sm:-bottom-1.5 h-[3.5px] w-full bg-gradient-to-r from-[#0284c7] via-[#38bdf8] to-[#0284c7] rounded-full origin-left scale-x-0 pointer-events-none"
-                      />
-                    </span>
-                  </div>
-                  <div className="text-slate-950">Then in the people behind it.</div>
-                </h1>
-
-                {/* Understated Single Continuation Cue */}
-                <div className="pt-2 sm:pt-4">
-                  <a
-                    href="#story"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const el = document.getElementById('story');
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="inline-flex items-center gap-2.5 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-800 hover:text-[#0284c7] transition-colors group cursor-pointer"
-                  >
-                    <span>Explore our story &amp; methodology</span>
-                    <ArrowDown className="w-3.5 h-3.5 transition-transform group-hover:translate-y-1 text-[#0284c7]" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Right Column (5 cols): Visual Anchor + Supporting Copy */}
-              <div className="lg:col-span-5 space-y-6 lg:pt-1">
-                {/* System Visual Anchor Frame with Parallax and BorderBeam Glow */}
-                <div
-                  ref={cardRef}
-                  className="relative bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-xs hover:border-slate-300 transition-colors"
-                >
-                  {/* Subtle animated border glow (border-beam / shine-border style) */}
-                  <BorderBeam
-                    duration={7}
-                    size={140}
-                    borderWidth={2}
-                    colorFrom="#0284c7"
-                    colorTo="#38bdf8"
-                  />
-
-                  {/* Subtle System Metadata Header */}
-                  <div className="px-4 py-2.5 bg-slate-100/90 border-b border-slate-200/80 flex items-center justify-between text-[10px] font-mono text-slate-500">
-                    <span className="font-bold text-slate-700">SYS_DEPLOY // 01</span>
-                    <span className="text-slate-400">Production Architecture</span>
-                  </div>
-
-                  {/* Aspect-Locked Viewport (16/10) */}
-                  <div className="relative aspect-[16/10] bg-slate-950 overflow-hidden">
-                    <img
-                      src="/Hero-Images/avs-hospitals-hero.png"
-                      alt="Integrate Thought Production System Architecture"
-                      className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-[1.02]"
-                      loading="eager"
-                    />
-                  </div>
-
-                  {/* Subtle System Status Footer */}
-                  <div className="px-4 py-2 bg-slate-50/80 border-t border-slate-100 flex items-center justify-between text-[10px] font-mono text-slate-500">
-                    <span>AVS Clinical Portal Engine</span>
-                    <span className="text-emerald-600 font-semibold flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      Live Deployment
-                    </span>
-                  </div>
-                </div>
-
-                {/* Supporting Explanation Narrative */}
-                <div className="space-y-2">
-                  <div className="text-[11px] font-mono font-bold tracking-wider text-slate-400 uppercase">
-                    The Model
-                  </div>
-                  <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-normal font-sans">
-                    Integrate Thought operates as a dual-engine engineering studio and talent incubator.
-                    We architect bespoke web platforms and autonomous AI systems for growing businesses—and
-                    we run an applied academy cultivating the engineers capable of building them.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <AboutHeroSection onNavigate={onNavigate} />
 
         {/* ============================================================ */}
-        {/* 02 — THE DUAL ENGINE MODEL: SOLUTIONS & ACADEMY */}
+        {/* INTERACTIVE VALUE ARCHITECTURE SCROLL MANIFESTO */}
         {/* ============================================================ */}
-        <section id="story" className="py-20 px-6 sm:px-10 lg:px-12 max-w-6xl mx-auto">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight leading-tight font-sans">
-              Our Dual-Engine Architecture
-            </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed mt-3">
-              We operate two deeply intertwined pillars: high-caliber software solutions for enterprises,
-              and intensive, industry-grade training for rising technical talent. One sharpens the other.
-            </p>
-          </div>
+        <BuildManifestoScroll isPageRevealed={isPageRevealed} />
 
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportOnce}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch"
-          >
-            {/* PILLAR 1: DIGITAL ENGINEERING & AI SOLUTIONS */}
-            <motion.div variants={fadeUp} className="h-full">
-              <MagicCard
-                glowFrom="rgba(2, 132, 199, 0.16)"
-                glowTo="rgba(56, 189, 248, 0.04)"
-                gradientSize={340}
-                className="bg-white border border-slate-200/90 rounded-3xl p-8 sm:p-10 shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:shadow-xl hover:shadow-slate-200/80 hover:border-slate-300 cursor-pointer h-full"
-              >
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 transition-transform duration-300 group-hover:scale-110 group-hover-icon-pulse">
-                    <Code2 className="w-6 h-6" />
-                  </div>
-                  <div className="text-xs font-mono font-bold tracking-wider text-sky-600 uppercase">
-                    Pillar 01 / Enterprise Solutions
-                  </div>
-                  <h3 className="text-2xl font-extrabold text-slate-950 tracking-tight font-sans">
-                    Digital Engineering &amp; AI Systems
-                  </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    We design, build, and deploy high-performance custom web applications, autonomous AI agents,
-                    private RAG data systems, and automated operational pipelines. We solve the real workflow
-                    friction holding businesses back.
-                  </p>
-
-                  <div className="pt-2 space-y-2.5">
-                    <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
-                      <span>Bespoke Web Applications &amp; Resilient Frontend Architecture</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
-                      <span>Private Enterprise RAG Systems &amp; Autonomous AI Agents</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
-                      <span>Cross-Tool API Integration &amp; Workflow Automations</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-xs font-mono text-slate-500">20+ Partner Brands</span>
-                  <button
-                    onClick={() => onNavigate('Services')}
-                    className="text-xs font-bold font-sans text-sky-600 hover:text-sky-800 flex items-center gap-1 cursor-pointer group/btn"
-                  >
-                    <span>Explore Engineering Services</span>
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
-                  </button>
-                </div>
-              </MagicCard>
-            </motion.div>
-
-            {/* PILLAR 2: IT SCHOOL & TALENT UPSKILLING */}
-            <motion.div variants={fadeUp} className="h-full">
-              <MagicCard
-                glowFrom="rgba(99, 102, 241, 0.16)"
-                glowTo="rgba(168, 85, 247, 0.04)"
-                gradientSize={340}
-                className="bg-white border border-slate-200/90 rounded-3xl p-8 sm:p-10 shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:shadow-xl hover:shadow-slate-200/80 hover:border-slate-300 cursor-pointer h-full"
-              >
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 transition-transform duration-300 group-hover:scale-110 group-hover-icon-pulse">
-                    <GraduationCap className="w-6 h-6" />
-                  </div>
-                  <div className="text-xs font-mono font-bold tracking-wider text-indigo-600 uppercase">
-                    Pillar 02 / Academy &amp; Upskilling
-                  </div>
-                  <h3 className="text-2xl font-extrabold text-slate-950 tracking-tight font-sans">
-                    IT School &amp; Practical Internships
-                  </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    We believe real engineering isn't learned from textbook slides. Our training programs and
-                    internship tracks immerse students and early-career developers into production environments,
-                    working directly on staging builds alongside our senior engineers.
-                  </p>
-
-                  <div className="pt-2 space-y-2.5">
-                    <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0" />
-                      <span>Full-Stack Development, Node, React &amp; Cloud Frameworks</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0" />
-                      <span>Applied AI Automation, LLM Workflows &amp; Vector Databases</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0" />
-                      <span>Hands-On Internship Opportunities with Live Code Reviews</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-xs font-mono text-slate-500">Live Project Cohorts</span>
-                  <button
-                    onClick={() => onNavigate('IT School')}
-                    className="text-xs font-bold font-sans text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer group/btn"
-                  >
-                    <span>View IT School Programs</span>
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
-                  </button>
-                </div>
-              </MagicCard>
-            </motion.div>
-          </motion.div>
-        </section>
+        {/* ============================================================ */}
+        {/* 02 — THE DUAL ENGINE MODEL: ZIG-ZAG ARCHITECTURE & SERVICES */}
+        {/* ============================================================ */}
+        <DualEngineSection onNavigate={onNavigate} />
 
         {/* ============================================================ */}
         {/* 03 — THE STORY: ORIGIN & THE PROBLEM */}
@@ -952,8 +650,8 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
                 {/* Animated Scrubbed Tracing Beam Line */}
                 <div
                   ref={tracingBeamLineRef}
-                  className="w-full h-full absolute top-0 left-0 bg-gradient-to-b from-[#ef4444] via-[#0284c7] to-[#10b981] rounded-full origin-top scale-y-0 shadow-[0_0_8px_rgba(2,132,199,0.5)]"
-                  style={{ willChange: 'transform' }}
+                  className="w-full h-full absolute top-0 left-0 bg-gradient-to-b from-[#ef4444] via-[#0284c7] to-[#10b981] rounded-full origin-top shadow-[0_0_8px_rgba(2,132,199,0.5)]"
+                  style={{ willChange: 'transform', transformOrigin: 'top center', transform: 'scaleY(0)' }}
                 />
 
                 {/* Leading Glowing Tracer Head */}
@@ -1025,225 +723,67 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
         </section>
 
         {/* ============================================================ */}
-        {/* 04 — CORE PRINCIPLES */}
+        {/* 04 — CORE PRINCIPLES: HOW WE THINK & BUILD */}
         {/* ============================================================ */}
-        <section className="py-20 px-6 sm:px-10 lg:px-12 max-w-6xl mx-auto border-t border-slate-200/80">
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-            <div className="text-xs font-mono font-bold tracking-wider text-slate-500 uppercase">
-              How We Think &amp; Build
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight leading-tight font-sans">
-              Non-Negotiable Core Principles
-            </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              These four tenets govern every line of code we write, every AI agent we deploy, and every student we mentor.
-            </p>
-          </div>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportOnce}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch"
-          >
-            {CORE_PRINCIPLES.map((principle) => {
-              const IconComp = principle.icon;
-              return (
-                <motion.div key={principle.id} variants={fadeUp} className="h-full">
-                  <MagicCard
-                    glowFrom="rgba(2, 132, 199, 0.16)"
-                    glowTo="rgba(56, 189, 248, 0.04)"
-                    gradientSize={340}
-                    className="bg-white border border-slate-200/90 rounded-3xl p-8 shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:shadow-xl hover:shadow-slate-200/80 hover:border-slate-300 cursor-pointer h-full flex flex-col justify-between"
-                  >
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-900 transition-transform duration-300 group-hover:scale-110">
-                          <IconComp className="w-5 h-5" />
-                        </div>
-                        <span className="text-xs font-mono font-bold text-slate-400">
-                          {principle.category}
-                        </span>
-                      </div>
-
-                      <h3 className="text-xl font-extrabold text-slate-950 tracking-tight font-sans">
-                        {principle.title}
-                      </h3>
-
-                      <p className="text-slate-600 text-sm leading-relaxed">
-                        {principle.description}
-                      </p>
-                    </div>
-
-                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-400">
-                      <motion.span
-                        variants={{
-                          hidden: { opacity: 0, scale: 0.82 },
-                          visible: {
-                            opacity: 1,
-                            scale: 1,
-                            transition: {
-                              delay: 0.22,
-                              duration: 0.35,
-                              ease: [0.16, 1, 0.3, 1],
-                            },
-                          },
-                        }}
-                        className="inline-block"
-                      >
-                        Principle {principle.id}
-                      </motion.span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-900 group-hover:bg-[#0284c7] transition-colors" />
-                    </div>
-                  </MagicCard>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </section>
+        <HowWeThinkSection />
 
         {/* ============================================================ */}
-        {/* 05 — THE PEOPLE: LEADERSHIP & ENGINEERING COLLECTIVE */}
+        {/* 05 — THE TEAM: EDITORIAL TEAM GRID */}
         {/* ============================================================ */}
-        <section className="py-20 px-6 sm:px-10 lg:px-12 max-w-6xl mx-auto border-t border-slate-200/80">
-          <div className="max-w-3xl mb-14 space-y-3">
-            <div className="text-xs font-mono font-bold tracking-wider text-slate-500 uppercase">
-              The Collective Behind the Systems
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight leading-tight font-sans">
-              Leadership &amp; Engineering Collective
-            </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              No generic stock photos. No inflated titles. Just an intentional group of builders,
-              system architects, and educators dedicated to technical craft.
-            </p>
-          </div>
+        <section className="py-20 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto">
+          {/* Top Dashed Hairline Divider */}
+          <div className="w-full border-t border-dashed border-slate-300/80 mb-12 sm:mb-16" />
 
-          {/* Core Leadership Row */}
-          <div className="mb-10">
-            <div className="text-xs font-mono font-bold tracking-wider text-slate-500 uppercase mb-5 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#0284c7]" />
-              <span>Executive &amp; Operational Leadership</span>
+          {/* 4-Column Editorial Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+            {/* Col 1: Team Heading */}
+            <div className="lg:col-span-3">
+              <h2 className="text-xl sm:text-2xl font-sans font-medium text-slate-950 tracking-tight">
+                Team
+              </h2>
             </div>
 
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportOnce}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
-            >
-              {LEADERSHIP_TEAM.map((member, index) => {
-                const isHovered = hoveredLeader === index;
-                const isSiblingHovered = hoveredLeader !== null && !isHovered;
+            {/* Cols 2-4: Team Cards with Hover Blur Effect */}
+            <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-10 sm:gap-y-12">
+              {TEAM_MEMBERS.map((member, index) => {
+                const isHovered = hoveredMember === index;
+                const isSiblingHovered = hoveredMember !== null && !isHovered;
 
                 return (
-                  <motion.div
+                  <div
                     key={member.name}
-                    variants={fadeUp}
-                    onMouseEnter={() => setHoveredLeader(index)}
-                    onMouseLeave={() => setHoveredLeader(null)}
+                    onMouseEnter={() => setHoveredMember(index)}
+                    onMouseLeave={() => setHoveredMember(null)}
                     className={cn(
-                      "bg-white border rounded-2xl p-6 flex flex-col justify-between space-y-4 cursor-pointer transition-all duration-300 ease-out",
-                      isHovered && "scale-[1.02] shadow-xl shadow-slate-200/80 border-slate-300 z-10 opacity-100",
-                      isSiblingHovered && "opacity-50 blur-[1.5px] scale-[0.98] shadow-none border-slate-200/60",
-                      hoveredLeader === null && "border-slate-200/90 shadow-xs hover:shadow-md"
+                      "group cursor-pointer transition-all duration-300 ease-out",
+                      isHovered && "scale-[1.02] opacity-100 z-10",
+                      isSiblingHovered && "opacity-40 blur-[2px] scale-[0.98]",
+                      hoveredMember === null && "opacity-100 blur-0 scale-100"
                     )}
                   >
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <div className="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200/80 flex items-center justify-center font-mono font-extrabold text-base text-slate-900">
-                          {member.initials}
-                        </div>
-                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">
-                          {member.badge}
-                        </span>
-                      </div>
+                    {/* Aspect-Locked Portrait Frame */}
+                    <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-slate-100/90 border border-slate-200/60 shadow-2xs group-hover:shadow-lg group-hover:shadow-slate-200/60 transition-all duration-300">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
 
-                      <div>
-                        <h3 className="text-lg font-extrabold text-slate-950 tracking-tight font-sans">
-                          {member.name}
-                        </h3>
-                        <div className="text-xs font-bold text-[#0284c7] font-sans mt-0.5">
-                          {member.role}
-                        </div>
-                        <div className="text-[11px] font-mono text-slate-500 mt-1">
-                          {member.domain}
-                        </div>
-                      </div>
-
-                      <p className="text-xs text-slate-600 leading-relaxed pt-2 border-t border-slate-100">
-                        {member.bio}
+                    {/* Member Name & Role */}
+                    <div className="mt-3 sm:mt-3.5 space-y-0.5">
+                      <h3 className="text-sm sm:text-base font-bold text-slate-950 font-sans tracking-tight leading-snug">
+                        {member.name}
+                      </h3>
+                      <p className="text-[10px] sm:text-[11px] font-mono font-medium tracking-wider text-slate-500 uppercase">
+                        {member.role}
                       </p>
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
-            </motion.div>
-          </div>
-
-          {/* Engineering Specialists Row */}
-          <div>
-            <div className="text-xs font-mono font-bold tracking-wider text-slate-500 uppercase mb-5 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span>Core Engineering Specialists</span>
             </div>
-
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportOnce}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-5"
-            >
-              {ENGINEERING_SPECIALISTS.map((dev, index) => {
-                const isHovered = hoveredSpecialist === index;
-                const isSiblingHovered = hoveredSpecialist !== null && !isHovered;
-
-                return (
-                  <motion.div
-                    key={dev.name}
-                    variants={fadeUp}
-                    onMouseEnter={() => setHoveredSpecialist(index)}
-                    onMouseLeave={() => setHoveredSpecialist(null)}
-                    className={cn(
-                      "bg-white border rounded-2xl p-6 flex flex-col justify-between space-y-4 cursor-pointer transition-all duration-300 ease-out",
-                      isHovered && "scale-[1.02] shadow-xl shadow-slate-200/80 border-slate-300 z-10 opacity-100",
-                      isSiblingHovered && "opacity-50 blur-[1.5px] scale-[0.98] shadow-none border-slate-200/60",
-                      hoveredSpecialist === null && "border-slate-200/90 shadow-xs hover:shadow-md"
-                    )}
-                  >
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <div className="w-11 h-11 rounded-xl bg-slate-100 border border-slate-200/80 flex items-center justify-center font-mono font-extrabold text-sm text-slate-900">
-                          {dev.initials}
-                        </div>
-                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">
-                          {dev.badge}
-                        </span>
-                      </div>
-
-                      <div>
-                        <h3 className="text-base font-extrabold text-slate-950 tracking-tight font-sans">
-                          {dev.name}
-                        </h3>
-                        <div className="text-xs font-bold text-slate-700 font-sans mt-0.5">
-                          {dev.role}
-                        </div>
-                        <div className="text-[11px] font-mono text-slate-500 mt-1">
-                          {dev.domain}
-                        </div>
-                      </div>
-
-                      <p className="text-xs text-slate-600 leading-relaxed pt-2 border-t border-slate-100">
-                        {dev.bio}
-                      </p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
           </div>
         </section>
 
