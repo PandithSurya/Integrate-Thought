@@ -243,49 +243,37 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
 
   const [activePillar, setActivePillar] = useState('engineering');
 
-  // Unified Team Members array matching editorial layout
+  // Unified Team Members array matching editorial layout (5 core members)
   const TEAM_MEMBERS = [
     {
       name: 'Aravind Kamoju',
       role: 'CEO',
       fullTitle: 'Chief Executive Officer',
-      image: '/Hero-Images/ap-mohan-hero.png',
-    },
-    {
-      name: 'Venkatesh',
-      role: 'CTO',
-      fullTitle: 'Chief Technology Officer',
-      image: '/Hero-Images/dr-rathod-hero.png',
-    },
-    {
-      name: 'Manohar',
-      role: 'OPERATIONS MANAGER',
-      fullTitle: 'Operations Manager',
-      image: '/Hero-Images/mayavi-mc-hero.png',
+      image: '/Team/aravindkamoju.jpeg',
     },
     {
       name: 'Ravi Teja',
       role: 'DEVELOPMENT HEAD',
       fullTitle: 'Development Head',
-      image: '/Hero-Images/wnbturkish-hero.png',
+      image: '/Team/raviteja.jpeg',
     },
     {
       name: 'Aravindh',
       role: 'FULL STACK DEVELOPER',
       fullTitle: 'Full Stack Developer',
-      image: '/Hero-Images/brim-burgers-hero.png',
+      image: '/Team/aravindh.jpeg',
     },
     {
       name: 'Surya Teja',
       role: 'BACKEND & AI DEVELOPER',
       fullTitle: 'Backend & AI Developer',
-      image: '/Hero-Images/avs-hospitals-hero.png',
+      image: '/Team/surya.jpeg',
     },
     {
       name: 'Sai Krishna',
       role: 'FULL STACK DEVELOPER',
       fullTitle: 'Full Stack Developer',
-      image: '/Hero-Images/old-glen-hero.png',
+      image: '/Team/saikrishna.jpeg',
     },
   ];
 
@@ -730,7 +718,7 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
         {/* ============================================================ */}
         {/* 05 — THE TEAM: EDITORIAL TEAM GRID */}
         {/* ============================================================ */}
-        <section className="py-20 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto">
+        <section id="team" className="py-20 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto">
           {/* Top Dashed Hairline Divider */}
           <div className="w-full border-t border-dashed border-slate-300/80 mb-12 sm:mb-16" />
 
