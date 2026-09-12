@@ -252,7 +252,7 @@ export default function AboutPage({ onNavigate, isPageRevealed = true }) {
       image: '/Team/aravindkamoju.jpeg',
     },
     {
-      name: 'Ravi Teja',
+      name: 'Venkatesh',
       role: 'DEVELOPMENT HEAD',
       fullTitle: 'Development Head',
       image: '/Team/raviteja.jpeg',
